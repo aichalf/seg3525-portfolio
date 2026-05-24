@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aicha Lfakir — Portfolio</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --bg: #f7f2eb;
+      --surface: #fffaf3;
+      --surface-2: #ede3d5;
+      --ink: #211610;
+      --ink-soft: #6b4c38;
+      --accent: #b77a58;
+      --accent-dark: #7b4f38;
+      --olive: #59634a;
+      --line: #d6c5b3;
+      --shadow: 0 18px 40px rgba(33, 22, 16, .08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Outfit", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: "Cormorant Garamond", serif;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    p { color: var(--ink-soft); margin: 0; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent-dark); }
+
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0;
+      background: var(--accent);
+      z-index: 9999;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Navigation */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      min-height: 68px;
+      background: rgba(33, 22, 16, .96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(183, 122, 88, .35);
+    }
+
+    .nav-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 1.4rem;
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.45rem;
+      font-style: italic;
+      color: var(--surface);
+      letter-spacing: .03em;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.6rem;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-links a {
+      color: #d9c4ad;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      position: relative;
+      padding: .3rem 0;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 1px;
+      width: 0;
+      background: var(--surface);
+      transition: width .25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--surface);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .lang-btn {
+      border: 0;
+      background: transparent;
+      color: #d9c4ad;
+      padding: .48rem .9rem;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: var(--ink);
+    }
+
+    .menu-btn {
+      display: none;
+      border: 1px solid rgba(183, 122, 88, .6);
+      background: transparent;
+      color: var(--surface);
+      border-radius: 999px;
+      padding: .35rem .6rem;
+      font-size: .78rem;
+      letter-spacing: .08em;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: calc(100vh - 68px);
+      display: flex;
+      align-items: center;
+      background:
+        radial-gradient(circle at 85% 18%, rgba(183, 122, 88, .14), transparent 32%),
+        linear-gradient(135deg, var(--surface) 0%, var(--bg) 58%, var(--surface-2) 100%);
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      right: -110px;
+      top: 10%;
+      width: 380px;
+      height: 380px;
+      border: 1px solid rgba(183, 122, 88, .35);
+      border-radius: 50%;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: 14%;
+      bottom: -130px;
+      width: 260px;
+      height: 260px;
+      border: 1px solid rgba(89, 99, 74, .28);
+      border-radius: 50%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr);
+      gap: 4rem;
+      align-items: center;
+      padding: 5.2rem 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .75rem;
+      color: var(--accent-dark);
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-size: clamp(4rem, 9vw, 7.4rem);
+      line-height: .88;
+      letter-spacing: -.04em;
+      max-width: 780px;
+    }
+
+    .hero h1 em {
+      color: var(--accent-dark);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero-lead {
+      max-width: 660px;
+      font-size: 1.12rem;
+      margin-top: 1.8rem;
+      color: var(--ink-soft);
+    }
+
+    .hero-role {
+      margin-top: 1.1rem;
+      color: var(--olive);
+      font-size: .86rem;
+      font-weight: 600;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: .9rem;
+      flex-wrap: wrap;
+      margin-top: 2.4rem;
+    }
+
+    .btn-portfolio {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .88rem 1.55rem;
+      border: 1.5px solid var(--ink);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
+    }
+
+    .btn-primary-custom {
+      background: var(--ink);
+      color: var(--surface);
+    }
+
+    .btn-primary-custom:hover {
+      background: transparent;
+      color: var(--ink);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary-custom {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--accent);
+    }
+
+    .btn-secondary-custom:hover {
+      background: var(--accent);
+      color: var(--ink);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hero-card {
+      background: rgba(255, 250, 243, .9);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+    }
+
+    .hero-card-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.6rem;
+      font-style: italic;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 1rem;
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: .7rem;
+      align-items: start;
+      padding: .7rem 0;
+      color: var(--ink-soft);
+      font-size: .9rem;
+      border-bottom: 1px solid rgba(214, 197, 179, .6);
+    }
+
+    .meta-row:last-child { border-bottom: 0; }
+    .meta-icon { color: var(--accent-dark); font-weight: 700; }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem;
+      margin-top: 1.6rem;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .38);
+      color: var(--ink-soft);
+      padding: .36rem .72rem;
+      border-radius: 999px;
+      font-size: .78rem;
+    }
+
+    /* Sections */
+    .section {
+      padding: 5.8rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section.alt { background: var(--surface-2); }
+    .section.light { background: var(--bg); }
+
+    .section-header {
+      max-width: 760px;
+      margin-bottom: 3rem;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      color: var(--accent-dark);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: .7rem;
+    }
+
+    .section-kicker::before {
+      content: "";
+      width: 26px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section h2 {
+      font-size: clamp(2.1rem, 4vw, 3.4rem);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .section-intro {
+      max-width: 620px;
+      color: var(--ink-soft);
+      font-size: 1rem;
+    }
+
+    .body-text {
+      color: var(--ink-soft);
+      font-size: .97rem;
+      line-height: 1.9;
+    }
+
+    .info-card,
+    .skill-card,
+    .approach-card,
+    .project-card,
+    .timeline-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      height: 100%;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .info-card:hover,
+    .skill-card:hover,
+    .approach-card:hover,
+    .project-card:hover,
+    .timeline-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+      border-color: rgba(183, 122, 88, .7);
+    }
+
+    .info-card { padding: 1.6rem; }
+
+    .skill-card {
+      padding: 1.4rem;
+    }
+
+    .skill-card h3,
+    .approach-card h3,
+    .project-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: .55rem;
+    }
+
+    .skill-card p,
+    .approach-card p,
+    .project-card p {
+      font-size: .9rem;
+      line-height: 1.75;
+    }
+
+    .skill-label {
+      display: inline-block;
+      color: var(--accent-dark);
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      margin-bottom: .55rem;
+    }
+
+    .approach-card {
+      padding: 1.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .approach-number {
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2.9rem;
+      line-height: 1;
+      color: var(--accent);
+      font-style: italic;
+      margin-bottom: .7rem;
+    }
+
+    .principles {
+      margin-top: 2.5rem;
+      padding: 1.5rem;
+      background: rgba(255, 250, 243, .65);
+      border: 1px dashed rgba(123, 79, 56, .45);
+    }
+
+    .principles strong {
+      color: var(--ink);
+    }
+
+    .project-card {
+      overflow: hidden;
+    }
+
+    .project-visual {
+      height: 120px;
+      background:
+        linear-gradient(135deg, rgba(183, 122, 88, .18), rgba(89, 99, 74, .18)),
+        var(--surface-2);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-dark);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2.2rem;
+      font-style: italic;
+    }
+
+    .project-body {
+      padding: 1.45rem;
+    }
+
+    .project-type {
+      display: block;
+      color: var(--accent-dark);
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: .5rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      margin-top: 1rem;
+      padding-bottom: .12rem;
+      border-bottom: 1px solid var(--accent);
+      color: var(--ink);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 1.8rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: .45rem;
+      top: .4rem;
+      bottom: .4rem;
+      width: 1px;
+      background: var(--accent);
+    }
+
+    .timeline-card {
+      position: relative;
+      padding: 1.3rem 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-card::before {
+      content: "";
+      position: absolute;
+      left: -1.77rem;
+      top: 1.55rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+    }
+
+    .timeline-date {
+      color: var(--accent-dark);
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: .25rem;
+    }
+
+    .timeline-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: .35rem;
+    }
+
+    .footer {
+      background: var(--ink);
+      color: var(--surface);
+      padding: 3rem 0 2rem;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-bottom: 1px solid rgba(183, 122, 88, .35);
+      padding-bottom: 1.5rem;
+    }
+
+    .footer-brand {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.6rem;
+      font-style: italic;
+    }
+
+    .footer-links {
+      display: flex;
+      list-style: none;
+      gap: 1.4rem;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #d9c4ad;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .footer-copy {
+      margin-top: 1.5rem;
+      color: #b99c7e;
+      font-size: .78rem;
+      text-align: center;
+    }
+
+    /* Language visibility */
+    [data-lang="en"] { display: none; }
+    body.lang-en [data-lang="fr"] { display: none; }
+    body.lang-en [data-lang="en"] { display: revert; }
+
+    @media (max-width: 920px) {
+      .menu-btn { display: inline-flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 68px;
+        background: rgba(33, 22, 16, .98);
+        flex-direction: column;
+        padding: 1.4rem;
+        border-bottom: 1px solid rgba(183, 122, 88, .35);
+      }
+      .nav-links.open { display: flex; }
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 4rem 0;
+      }
+      .hero-card { max-width: 520px; }
+    }
+
+    @media (max-width: 620px) {
+      .nav-inner { padding: 0 .9rem; }
+      .brand { font-size: 1.18rem; }
+      .hero h1 { font-size: 4rem; }
+      .hero-lead { font-size: 1rem; }
+      .section { padding: 4.2rem 0; }
+      .footer-top { align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="progress"></div>
+
+  <nav class="site-nav" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <a href="#hero" class="brand">Aicha Lfakir</a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about"><span data-lang="fr">À propos</span><span data-lang="en">About</span></a></li>
+        <li><a href="#approach"><span data-lang="fr">Approche</span><span data-lang="en">Approach</span></a></li>
+        <li><a href="#projects"><span data-lang="fr">Projets</span><span data-lang="en">Projects</span></a></li>
+        <li><a href="#background"><span data-lang="fr">Parcours</span><span data-lang="en">Background</span></a></li>
+        <li><a href="mailto:lfslim98@gmail.com">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="menu-btn" type="button" onclick="toggleMenu()">Menu</button>
+        <div class="lang-switcher" aria-label="Sélecteur de langue">
+          <button class="lang-btn active" type="button" id="btnFr" onclick="setLang('fr')">FR</button>
+          <button class="lang-btn" type="button" id="btnEn" onclick="setLang('en')">EN</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="reveal">
+            <div class="eyebrow">
+              <span data-lang="fr">Portfolio · Interfaces & données</span>
+              <span data-lang="en">Portfolio · Interfaces & data</span>
+            </div>
+
+            <h1>
+              Aicha <br />
+              <em>Lfakir</em>
+            </h1>
+
+            <p class="hero-role">
+              <span data-lang="fr">Science des données · Machine Learning · Design d’interface</span>
+              <span data-lang="en">Data Science · Machine Learning · Interface Design</span>
+            </p>
+
+            <p class="hero-lead">
+              <span data-lang="fr">
+                Je conçois des interfaces claires qui transforment des informations complexes en expériences numériques lisibles, utiles et bien structurées.
+              </span>
+              <span data-lang="en">
+                I design clear interfaces that transform complex information into readable, useful, and well-structured digital experiences.
+              </span>
+            </p>
+
+            <div class="hero-actions">
+              <a href="#projects" class="btn-portfolio btn-primary-custom">
+                <span data-lang="fr">Voir mes projets</span>
+                <span data-lang="en">View projects</span>
+                <span aria-hidden="true">→</span>
+              </a>
+              <a href="#approach" class="btn-portfolio btn-secondary-custom">
+                <span data-lang="fr">Mon approche</span>
+                <span data-lang="en">My approach</span>
+              </a>
+            </div>
+
+            <div class="hero-tags" aria-label="Compétences principales">
+              <span class="tag">Python</span>
+              <span class="tag">R</span>
+              <span class="tag">SQL</span>
+              <span class="tag">Power BI</span>
+              <span class="tag">Machine Learning</span>
+              <span class="tag">HTML/CSS</span>
+            </div>
+          </div>
+
+          <aside class="hero-card reveal" aria-label="Résumé du profil">
+            <div class="hero-card-title">
+              <span data-lang="fr">Profil rapide</span>
+              <span data-lang="en">Quick profile</span>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-icon">01</span>
+              <div>
+                <strong>
+                  <span data-lang="fr">Formation</span>
+                  <span data-lang="en">Education</span>
+                </strong><br />
+                <span data-lang="fr">BSc Mathématiques & Informatique, option science des données</span>
+                <span data-lang="en">BSc Mathematics & Computer Science, Data Science option</span>
+              </div>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-icon">02</span>
+              <div>
+                <strong>
+                  <span data-lang="fr">Objectif</span>
+                  <span data-lang="en">Goal</span>
+                </strong><br />
+                <span data-lang="fr">Créer des interfaces qui rendent les données plus compréhensibles.</span>
+                <span data-lang="en">Create interfaces that make data easier to understand.</span>
+              </div>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-icon">03</span>
+              <div>
+                <strong>
+                  <span data-lang="fr">Langues</span>
+                  <span data-lang="en">Languages</span>
+                </strong><br />
+                <span data-lang="fr">Français · Anglais · Arabe · Turc</span>
+                <span data-lang="en">French · English · Arabic · Turkish</span>
+              </div>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-icon">04</span>
+              <div>
+                <strong>Contact</strong><br />
+                <a href="mailto:lfslim98@gmail.com">lfslim98@gmail.com</a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section light" id="about">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 reveal">
+            <div class="section-header">
+              <div class="section-kicker">
+                <span data-lang="fr">01 — À propos</span>
+                <span data-lang="en">01 — About</span>
+              </div>
+              <h2>
+                <span data-lang="fr">Qui suis-je ?</span>
+                <span data-lang="en">Who am I?</span>
+              </h2>
+            </div>
+          </div>
+
+          <div class="col-lg-7 reveal">
+            <p class="body-text">
+              <span data-lang="fr">
+                Je suis étudiante en double diplôme en mathématiques et en informatique, option science des données, à l’Université d’Ottawa. Mon parcours combine la rigueur mathématique, la programmation, la modélisation statistique et l’apprentissage automatique. À travers ce portfolio, je présente progressivement des projets d’interface qui relient analyse, structure visuelle et expérience utilisateur.
+              </span>
+              <span data-lang="en">
+                I am a double-degree student in Mathematics and Computer Science, Data Science option, at the University of Ottawa. My background combines mathematical rigour, programming, statistical modelling, and machine learning. Through this portfolio, I progressively present interface projects that connect analysis, visual structure, and user experience.
+              </span>
+            </p>
+
+            <p class="body-text mt-3">
+              <span data-lang="fr">
+                Je ne limite pas mon profil à un seul domaine : je m’intéresse aux projets qui utilisent les données pour soutenir la compréhension, la décision et l’expérience utilisateur, que ce soit en finance, affaires, éducation, santé, cybersécurité ou visualisation interactive.
+              </span>
+              <span data-lang="en">
+                I do not limit my profile to one domain: I am interested in projects that use data to support understanding, decision-making, and user experience, whether in finance, business, education, health, cybersecurity, or interactive visualization.
+              </span>
+            </p>
+
+            <div class="row g-3 mt-4">
+              <div class="col-md-6">
+                <div class="skill-card">
+                  <span class="skill-label">Data</span>
+                  <h3>Python · R · SQL</h3>
+                  <p>
+                    <span data-lang="fr">Analyse, préparation et exploration de données.</span>
+                    <span data-lang="en">Data analysis, preparation, and exploration.</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="skill-card">
+                  <span class="skill-label">Models</span>
+                  <h3>Machine Learning</h3>
+                  <p>
+                    <span data-lang="fr">Classification, régression, évaluation et interprétation des résultats.</span>
+                    <span data-lang="en">Classification, regression, evaluation, and interpretation of results.</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="skill-card">
+                  <span class="skill-label">Visualization</span>
+                  <h3>Power BI</h3>
+                  <p>
+                    <span data-lang="fr">Tableaux de bord et communication visuelle des données.</span>
+                    <span data-lang="en">Dashboards and visual communication of data.</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="skill-card">
+                  <span class="skill-label">Interface</span>
+                  <h3>HTML · CSS · Bootstrap</h3>
+                  <p>
+                    <span data-lang="fr">Structure, hiérarchie visuelle et pages web responsives.</span>
+                    <span data-lang="en">Structure, visual hierarchy, and responsive web pages.</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="approach">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-kicker">
+            <span data-lang="fr">02 — Comment je travaille</span>
+            <span data-lang="en">02 — How I work</span>
+          </div>
+          <h2>
+            <span data-lang="fr">Une approche structurée et visuelle</span>
+            <span data-lang="en">A structured and visual approach</span>
+          </h2>
+          <p class="section-intro">
+            <span data-lang="fr">
+              Ma méthode commence par la compréhension du problème, puis par l’organisation de l’information. J’accorde une attention particulière à la lisibilité, au contraste, à la hiérarchie visuelle, à l’équilibre et à la cohérence entre les sections.
+            </span>
+            <span data-lang="en">
+              My process starts with understanding the problem, then organizing the information. I pay close attention to readability, contrast, visual hierarchy, balance, and consistency across sections.
+            </span>
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-3 reveal">
+            <div class="approach-card">
+              <span class="approach-number">01</span>
+              <h3>
+                <span data-lang="fr">Comprendre</span>
+                <span data-lang="en">Understand</span>
+              </h3>
+              <p>
+                <span data-lang="fr">Clarifier le problème, le public visé et l’information essentielle à présenter.</span>
+                <span data-lang="en">Clarify the problem, the intended audience, and the essential information to present.</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 reveal">
+            <div class="approach-card">
+              <span class="approach-number">02</span>
+              <h3>
+                <span data-lang="fr">Structurer</span>
+                <span data-lang="en">Structure</span>
+              </h3>
+              <p>
+                <span data-lang="fr">Organiser la page en sections claires pour aider l’utilisateur à parcourir le contenu rapidement.</span>
+                <span data-lang="en">Organize the page into clear sections to help users scan the content quickly.</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 reveal">
+            <div class="approach-card">
+              <span class="approach-number">03</span>
+              <h3>
+                <span data-lang="fr">Hiérarchiser</span>
+                <span data-lang="en">Prioritize</span>
+              </h3>
+              <p>
+                <span data-lang="fr">Utiliser la taille, l’espace, le contraste et les couleurs d’accent pour guider le regard.</span>
+                <span data-lang="en">Use size, spacing, contrast, and accent colours to guide the viewer’s attention.</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 reveal">
+            <div class="approach-card">
+              <span class="approach-number">04</span>
+              <h3>
+                <span data-lang="fr">Améliorer</span>
+                <span data-lang="en">Refine</span>
+              </h3>
+              <p>
+                <span data-lang="fr">Ajuster la lisibilité, l’équilibre et la cohérence visuelle après observation et rétroaction.</span>
+                <span data-lang="en">Refine readability, balance, and visual consistency after observation and feedback.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+</div>
+    </section>
+
+    <section class="section light" id="projects">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-kicker">
+            <span data-lang="fr">03 — Études de cas</span>
+            <span data-lang="en">03 — Case studies</span>
+          </div>
+          <h2>
+            <span data-lang="fr">Quatre projets à venir</span>
+            <span data-lang="en">Four upcoming projects</span>
+          </h2>
+          <p class="section-intro">
+            <span data-lang="fr">
+              Ces quatre cartes servent de liens vers les futurs designs du semestre : un site de services, un jeu de mémoire, un site e-commerce et une interface d’analyse/visualisation.
+            </span>
+            <span data-lang="en">
+              These four cards link to the future semester designs: a service website, a memory game, an e-commerce website, and an analysis/visualization interface.
+            </span>
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-3 reveal">
+            <article class="project-card">
+              <div class="project-visual">01</div>
+              <div class="project-body">
+                <span class="project-type">Design 01</span>
+                <h3>
+                  <span data-lang="fr">Site de services</span>
+                  <span data-lang="en">Service website</span>
+                </h3>
+                <p>
+                  <span data-lang="fr">Conception d’un site clair pour présenter des services, bâtir la confiance et guider vers une prise de contact.</span>
+                  <span data-lang="en">Design of a clear website to present services, build trust, and guide users toward contact.</span>
+                </p>
+                <a class="project-link" href="service-website.html">
+                  <span data-lang="fr">À venir</span>
+                  <span data-lang="en">Coming soon</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-3 reveal">
+            <article class="project-card">
+              <div class="project-visual">02</div>
+              <div class="project-body">
+                <span class="project-type">Design 02</span>
+                <h3>
+                  <span data-lang="fr">Jeu de mémoire</span>
+                  <span data-lang="en">Memory game</span>
+                </h3>
+                <p>
+                  <span data-lang="fr">Conception d’un jeu interactif centré sur les états visuels, le retour utilisateur et la simplicité des règles.</span>
+                  <span data-lang="en">Design of an interactive game focused on visual states, user feedback, and simple rules.</span>
+                </p>
+                <a class="project-link" href="memory-game.html">
+                  <span data-lang="fr">À venir</span>
+                  <span data-lang="en">Coming soon</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-3 reveal">
+            <article class="project-card">
+              <div class="project-visual">03</div>
+              <div class="project-body">
+                <span class="project-type">Design 03</span>
+                <h3>
+                  <span data-lang="fr">Site e-commerce</span>
+                  <span data-lang="en">E-commerce website</span>
+                </h3>
+                <p>
+                  <span data-lang="fr">Conception d’un parcours d’achat lisible : catalogue, fiche produit, panier et chemin de conversion.</span>
+                  <span data-lang="en">Design of a readable shopping flow: catalogue, product page, cart, and conversion path.</span>
+                </p>
+                <a class="project-link" href="ecommerce-website.html">
+                  <span data-lang="fr">À venir</span>
+                  <span data-lang="en">Coming soon</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-3 reveal">
+            <article class="project-card">
+              <div class="project-visual">04</div>
+              <div class="project-body">
+                <span class="project-type">Design 04</span>
+                <h3>
+                  <span data-lang="fr">Analyse & visualisation</span>
+                  <span data-lang="en">Analysis & visualization</span>
+                </h3>
+                <p>
+                  <span data-lang="fr">Conception d’un tableau de bord pour explorer des données, comparer des indicateurs et soutenir la décision.</span>
+                  <span data-lang="en">Design of a dashboard to explore data, compare indicators, and support decision-making.</span>
+                </p>
+                <a class="project-link" href="analytics-dashboard.html">
+                  <span data-lang="fr">À venir</span>
+                  <span data-lang="en">Coming soon</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="background">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-lg-5 reveal">
+            <div class="section-header">
+              <div class="section-kicker">
+                <span data-lang="fr">04 — Parcours</span>
+                <span data-lang="en">04 — Background</span>
+              </div>
+              <h2>
+                <span data-lang="fr">Formation et développement</span>
+                <span data-lang="en">Education and development</span>
+              </h2>
+            </div>
+
+            <div class="timeline">
+              <div class="timeline-card">
+                <div class="timeline-date">2022 — 2027</div>
+                <div class="timeline-title">
+                  <span data-lang="fr">BSc Mathématiques & Informatique</span>
+                  <span data-lang="en">BSc Mathematics & Computer Science</span>
+                </div>
+                <p>
+                  <span data-lang="fr">Université d’Ottawa · Option science des données</span>
+                  <span data-lang="en">University of Ottawa · Data Science option</span>
+                </p>
+              </div>
+
+              <div class="timeline-card">
+                <div class="timeline-date">2024</div>
+                <div class="timeline-title">Google Data Analytics Certificate</div>
+                <p>Google / Coursera</p>
+              </div>
+
+              <div class="timeline-card">
+                <div class="timeline-date">2024</div>
+                <div class="timeline-title">
+                  <span data-lang="fr">Finance & modélisation quantitative</span>
+                  <span data-lang="en">Finance & Quantitative Modeling</span>
+                </div>
+                <p>University of Pennsylvania / Coursera</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-7 reveal">
+            <div class="section-header">
+              <div class="section-kicker">
+                <span data-lang="fr">Projets académiques</span>
+                <span data-lang="en">Academic projects</span>
+              </div>
+              <h2>
+                <span data-lang="fr">Expérience appliquée</span>
+                <span data-lang="en">Applied experience</span>
+              </h2>
+            </div>
+
+            <div class="timeline">
+              <div class="timeline-card">
+                <div class="timeline-date">2024</div>
+                <div class="timeline-title">
+                  <span data-lang="fr">Modélisation prédictive — assurance médicale</span>
+                  <span data-lang="en">Predictive modelling — medical insurance</span>
+                </div>
+                <p>
+                  <span data-lang="fr">Régression, classification, validation croisée et amélioration du modèle.</span>
+                  <span data-lang="en">Regression, classification, cross-validation, and model improvement.</span>
+                </p>
+              </div>
+
+              <div class="timeline-card">
+                <div class="timeline-date">2024</div>
+                <div class="timeline-title">
+                  <span data-lang="fr">SVM — classification du cancer du sein</span>
+                  <span data-lang="en">SVM — breast cancer classification</span>
+                </div>
+                <p>
+                  <span data-lang="fr">Pipeline ML complet : préparation, noyaux linéaire/RBF et évaluation.</span>
+                  <span data-lang="en">Full ML pipeline: preparation, linear/RBF kernels, and evaluation.</span>
+                </p>
+              </div>
+
+              <div class="timeline-card">
+                <div class="timeline-date">2024</div>
+                <div class="timeline-title">Power BI Dashboard</div>
+                <p>
+                  <span data-lang="fr">Visualisation interactive pour rendre les facteurs de risque plus faciles à explorer.</span>
+                  <span data-lang="en">Interactive visualization to make risk factors easier to explore.</span>
+                </p>
+              </div>
+
+              <div class="timeline-card">
+                <div class="timeline-date">2023 — 2024</div>
+                <div class="timeline-title">
+                  <span data-lang="fr">Cybersécurité et régression logistique</span>
+                  <span data-lang="en">Cybersecurity and logistic regression</span>
+                </div>
+                <p>
+                  <span data-lang="fr">Évaluation de modèles, calibration et raisonnement statistique appliqué.</span>
+                  <span data-lang="en">Model evaluation, calibration, and applied statistical reasoning.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">Aicha Lfakir</div>
+        <ul class="footer-links">
+          <li><a href="mailto:lfslim98@gmail.com">Email</a></li>
+          <li><a href="https://github.com/aichalf" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/aicha-lfakir-370b31242/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+      <p class="footer-copy">© 2026 Aicha Lfakir · Ottawa, Canada · Portfolio</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("open");
+    }
+
+    function setLang(lang) {
+      document.body.classList.toggle("lang-en", lang === "en");
+      document.documentElement.lang = lang;
+      document.getElementById("btnFr").classList.toggle("active", lang === "fr");
+      document.getElementById("btnEn").classList.toggle("active", lang === "en");
+      localStorage.setItem("portfolioLang", lang);
+    }
+
+    const savedLang = localStorage.getItem("portfolioLang") || "fr";
+    setLang(savedLang);
+
+    window.addEventListener("scroll", () => {
+      const doc = document.documentElement;
+      const scrolled = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+      document.getElementById("progress").style.width = scrolled + "%";
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    document.querySelectorAll(".nav-links a").forEach((link) => {
+      link.addEventListener("click", () => {
+        document.getElementById("navLinks").classList.remove("open");
+      });
+    });
+  </script>
+</body>
+</html>
