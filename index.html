@@ -24,6 +24,7 @@
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    #contact {scroll-margin-top: 90px;}
     body {
       margin: 0;
       font-family: "Outfit", sans-serif;
@@ -633,6 +634,111 @@
     [data-lang="en"] { display: none; }
     body.lang-en [data-lang="fr"] { display: none; }
     body.lang-en [data-lang="en"] { display: revert; }
+    /* Better scaling for larger screens */
+@media (min-width: 1400px) {
+  .nav-inner {
+    max-width: 1320px;
+    min-height: 78px;
+  }
+
+  .site-nav {
+    min-height: 78px;
+  }
+
+  .brand {
+    font-size: 1.75rem;
+  }
+
+  .nav-links a {
+    font-size: .82rem;
+    letter-spacing: .14em;
+  }
+
+  .lang-btn {
+    font-size: .8rem;
+    padding: .58rem 1.05rem;
+  }
+
+  .container {
+    max-width: 1320px;
+  }
+
+  body {
+    font-size: 18px;
+  }
+
+  .hero {
+    min-height: calc(100vh - 78px);
+  }
+
+  .hero-content {
+    gap: 5rem;
+    padding: 6.8rem 0;
+  }
+
+  .hero h1 {
+    font-size: clamp(5.8rem, 8.5vw, 10rem);
+  }
+
+  .hero-role {
+    font-size: .98rem;
+  }
+
+  .hero-lead {
+    max-width: 760px;
+    font-size: 1.28rem;
+    line-height: 1.85;
+  }
+
+  .hero-card {
+    padding: 2.5rem;
+  }
+
+  .hero-card-title {
+    font-size: 1.9rem;
+  }
+
+  .meta-row {
+    font-size: 1rem;
+  }
+
+  .section {
+    padding: 7rem 0;
+  }
+
+  .section h2 {
+    font-size: clamp(3rem, 4vw, 4.8rem);
+  }
+
+  .section-intro,
+  .body-text {
+    font-size: 1.1rem;
+  }
+
+  .skill-card,
+  .approach-card,
+  .project-body,
+  .timeline-card {
+    padding: 1.8rem;
+  }
+
+  .project-visual {
+    height: 145px;
+    font-size: 2.7rem;
+  }
+
+  .footer {
+    padding: 4rem 0 2.5rem;
+  }
+
+  .footer-brand {
+    font-size: 1.9rem;
+  }
+
+  .footer-links a {
+    font-size: .85rem;
+  }
+}
 
     @media (max-width: 920px) {
       .menu-btn { display: inline-flex; }
@@ -1188,22 +1294,24 @@
       <div class="footer-brand">Aicha Lfakir</div>
 
       <ul class="footer-links">
-        <li>
-          <a href="mailto:lfslim98@gmail.com">Email</a>
-        </li>
+  <li>
+    <a href="mailto:lfslim98@gmail.com">
+      Email <span aria-hidden="true">✉</span>
+    </a>
+  </li>
 
-        <li>
-          <a href="https://github.com/aichalf" target="_blank" rel="noopener">
-            GitHub <span aria-hidden="true">↗</span>
-          </a>
-        </li>
+  <li>
+    <a href="https://github.com/aichalf" target="_blank" rel="noopener">
+      GitHub <span aria-hidden="true">↗</span>
+    </a>
+  </li>
 
-        <li>
-          <a href="https://www.linkedin.com/in/aicha-lfakir-370b31242/" target="_blank" rel="noopener">
-            LinkedIn <span aria-hidden="true">↗</span>
-          </a>
-        </li>
-      </ul>
+  <li>
+    <a href="https://www.linkedin.com/in/aicha-lfakir-370b31242/" target="_blank" rel="noopener">
+      LinkedIn <span aria-hidden="true">↗</span>
+    </a>
+  </li>
+</ul>
     </div>
 
     <p class="footer-copy">© 2026 Aicha Lfakir · Ottawa, Canada · Portfolio</p>
