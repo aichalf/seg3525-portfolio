@@ -699,9 +699,6 @@
           eyebrow: "Contact",
           title: "Nous joindre",
           intro: "Contactez la clinique ou passez nous voir pendant les heures d'ouverture.",
-          designerTitle: "Projet étudiant",
-          designerText: "Prototype fictif conçu par Aicha Lfakir pour SEG3525 - Conception et Analyse des Interfaces Usagers, Université d'Ottawa.",
-          back: "Retour au portfolio"
         },
         footer: { left: "© 2026 NutriVie · Prototype haute fidélité fictif", right: "Conçu par Aicha Lfakir" }
       },
@@ -763,9 +760,6 @@
           eyebrow: "Contact",
           title: "Reach us",
           intro: "Contact the clinic or visit us during opening hours.",
-          designerTitle: "Student project",
-          designerText: "Fictitious prototype designed by Aicha Lfakir for SEG3525 - User Interface Design and Analysis, University of Ottawa.",
-          back: "Back to portfolio"
         },
         footer: { left: "© 2026 NutriVie · Fictitious high-fidelity prototype", right: "Designed by Aicha Lfakir" }
       }
@@ -1022,20 +1016,37 @@
     }
 
     function Contact({ lang }) {
-      const t = content[lang].contact;
-      const contacts = contactData[lang];
-      return (
-        <section className="section" id="contact">
-          <div className="container">
-            <div className="section-title"><div className="eyebrow">{t.eyebrow}</div><h2>{t.title}</h2><p>{t.intro}</p></div>
-            <div className="row g-4">
-              <div className="col-lg-8"><div className="contact-card">{contacts.map(([icon, label, value]) => <div className="contact-line" key={label}><span className="icon-circle"><i className={`bi ${icon}`}></i></span><div><strong>{label}</strong><br /><span className="text-muted">{value}</span></div></div>)}</div></div>
-              <div className="col-lg-4"><div className="contact-card"><h3>{t.designerTitle}</h3><p className="text-muted">{t.designerText}</p><a className="btn-nutri" href="index.html#projects">{t.back}</a></div></div>
+  const t = content[lang].contact;
+  const contacts = contactData[lang];
+
+  return (
+    <section className="section" id="contact">
+      <div className="container">
+        <div className="section-title">
+          <div className="eyebrow">{t.eyebrow}</div>
+          <h2>{t.title}</h2>
+          <p>{t.intro}</p>
+        </div>
+
+        <div className="contact-card">
+          {contacts.map(([icon, label, value]) => (
+            <div className="contact-line" key={label}>
+              <span className="icon-circle">
+                <i className={`bi ${icon}`}></i>
+              </span>
+
+              <div>
+                <strong>{label}</strong>
+                <br />
+                <span className="text-muted">{value}</span>
+              </div>
             </div>
-          </div>
-        </section>
-      );
-    }
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
     function Footer({ lang }) {
       const t = content[lang].footer;
