@@ -560,38 +560,41 @@
     details[open] summary::after { content: "–"; }
     details p { margin: 0; padding: 0 1.2rem 1.2rem; color: var(--muted); }
 
-    .contact-card {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 2rem;
-      align-items: center;
-      padding: clamp(2rem, 5vw, 4rem);
-      border-radius: var(--radius-lg);
+    footer {
+      margin-top: 0;
       background: var(--forest);
       color: var(--white);
-      box-shadow: var(--shadow);
     }
-    .contact-card h2 { color: var(--white); }
-    .contact-card p { color: rgba(255,255,255,.76); }
-    .contact-list { display: grid; gap: .7rem; }
+    .footer-contact {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: center;
+      padding: clamp(3rem, 7vw, 5.5rem) 0;
+    }
+    .footer-contact h2 {
+      max-width: 720px;
+      color: var(--white);
+    }
+    .footer-contact p { color: rgba(255,255,255,.78); }
+    .contact-list { display: grid; gap: .9rem; }
     .contact-list a, .contact-list span {
       display: flex;
       align-items: center;
-      gap: .7rem;
+      gap: .75rem;
+      width: fit-content;
       font-weight: 600;
     }
+    .contact-list a:hover { color: var(--coral); }
     .contact-list i { color: var(--coral); }
-
-    footer {
-      padding: 1.5rem 0;
-      background: var(--forest-dark);
-      color: rgba(255,255,255,.72);
-    }
+    .footer-bottom-wrap { background: var(--forest-dark); }
     .footer-inner {
       display: flex;
       justify-content: space-between;
       gap: 1rem;
       align-items: center;
+      padding: 1.5rem 0;
+      color: rgba(255,255,255,.72);
       font-size: .9rem;
     }
     .footer-inner a { color: var(--coral); font-weight: 700; }
@@ -618,7 +621,7 @@
       .hero-grid,
       .approach-grid,
       .booking-layout,
-      .contact-card { grid-template-columns: 1fr; }
+      .footer-contact { grid-template-columns: 1fr; }
       .hero-visual { min-height: auto; }
       .hero-image { height: 520px; }
       .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -889,29 +892,27 @@
       </div>
     </section>
 
-    <section class="section" id="contact">
-      <div class="container">
-        <div class="contact-card">
-          <div>
-            <p class="eyebrow"><span data-lang="fr">Contact</span><span data-lang="en">Contact</span></p>
-            <h2><span data-lang="fr">Une question avant de réserver?</span><span data-lang="en">A question before booking?</span></h2>
-            <p><span data-lang="fr">Écrivez-nous pour vérifier quel service correspond le mieux à votre situation.</span><span data-lang="en">Contact us to confirm which service best fits your situation.</span></p>
-          </div>
-          <div class="contact-list">
-            <a href="mailto:bonjour@nutrivie.ca"><i class="bi bi-envelope"></i> bonjour@nutrivie.ca ↗</a>
-            <a href="tel:+16135550128"><i class="bi bi-telephone"></i> 613-555-0128</a>
-            <span><i class="bi bi-geo-alt"></i> Ottawa, Ontario</span>
-            <span><i class="bi bi-clock"></i> Lun–Ven · 8 h 30–18 h</span>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 
-  <footer>
-    <div class="container footer-inner">
-      <span>© 2026 NutriVie · <span data-lang="fr">Projet académique SEG3525</span><span data-lang="en">SEG3525 academic project</span></span>
-      <a href="index.html#projects"><span data-lang="fr">Retour au portfolio</span><span data-lang="en">Back to portfolio</span> ↗</a>
+  <footer id="contact">
+    <div class="container footer-contact">
+      <div>
+        <p class="eyebrow"><span data-lang="fr">Contact</span><span data-lang="en">Contact</span></p>
+        <h2><span data-lang="fr">Une question avant de réserver?</span><span data-lang="en">A question before booking?</span></h2>
+        <p><span data-lang="fr">Écrivez-nous pour vérifier quel service correspond le mieux à votre situation.</span><span data-lang="en">Contact us to confirm which service best fits your situation.</span></p>
+      </div>
+      <div class="contact-list">
+        <a href="mailto:bonjour@nutrivie.ca"><i class="bi bi-envelope"></i> bonjour@nutrivie.ca ↗</a>
+        <a href="tel:+16135550128"><i class="bi bi-telephone"></i> 613-555-0128</a>
+        <span><i class="bi bi-geo-alt"></i> Ottawa, Ontario</span>
+        <span><i class="bi bi-clock"></i> Lun–Ven · 8 h 30–18 h</span>
+      </div>
+    </div>
+    <div class="footer-bottom-wrap">
+      <div class="container footer-inner">
+        <span>© 2026 NutriVie · <span data-lang="fr">Projet académique SEG3525</span><span data-lang="en">SEG3525 academic project</span></span>
+        <a href="index.html#projects"><span data-lang="fr">Retour au portfolio</span><span data-lang="en">Back to portfolio</span> ↗</a>
+      </div>
     </div>
   </footer>
 
