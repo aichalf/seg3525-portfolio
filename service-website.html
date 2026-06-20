@@ -6,89 +6,85 @@
   <meta name="description" content="NutriVie, clinique fictive de nutrition à Ottawa. Comparez les services et réservez une consultation." />
   <title>NutriVie | Clinique de nutrition</title>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
 
   <style>
     :root {
-      --cream: #f7f1e8;
-      --cream-2: #fffaf3;
-      --cream-3: #efe3d4;
-      --sage: #6f8f72;
-      --sage-dark: #36543a;
-      --coral: #d9826b;
-      --coral-dark: #9e4f3e;
-      --ink: #2f241d;
-      --muted: #6e5a4d;
-      --line: #dfd1c2;
-      --shadow: 0 18px 45px rgba(47, 36, 29, 0.12);
-      --shadow-soft: 0 12px 30px rgba(47, 36, 29, 0.08);
+      --forest: #2f6658;
+      --forest-dark: #204a40;
+      --sage: #9fbfae;
+      --sage-soft: #e6f0eb;
+      --ivory: #faf7f0;
+      --ivory-2: #fffdf8;
+      --coral: #e28b6d;
+      --coral-dark: #b85e43;
+      --ink: #24332d;
+      --muted: #5f7069;
+      --beige: #e8ded0;
+      --white: #ffffff;
+      --success: #2f6658;
+      --shadow: 0 22px 55px rgba(36, 51, 45, 0.12);
+      --shadow-soft: 0 14px 34px rgba(36, 51, 45, 0.08);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "Outfit", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: "Outfit", sans-serif;
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.65;
       color: var(--ink);
-      background: var(--cream);
+      background: var(--ivory);
+      font-family: var(--sans);
+      line-height: 1.65;
       overflow-x: hidden;
     }
 
-    img { max-width: 100%; display: block; }
+    img { display: block; width: 100%; }
     a { color: inherit; text-decoration: none; }
-    button, input, select { font: inherit; }
+    button, input, select, textarea { font: inherit; }
+    button { color: inherit; }
 
-    h1, h2, h3, h4 {
-      margin-top: 0;
-      font-family: "Cormorant Garamond", serif;
-      color: var(--ink);
-    }
-
-    h1 { font-weight: 700; letter-spacing: -0.045em; }
-    h2 { font-weight: 700; letter-spacing: -0.025em; line-height: 0.98; }
-    h3 { font-weight: 700; line-height: 1.12; }
-
-    #progress {
-      position: fixed;
-      inset: 0 auto auto 0;
-      width: 0;
-      height: 3px;
-      background: var(--coral);
-      z-index: 10000;
-      transition: width 0.08s linear;
+    :focus-visible {
+      outline: 3px solid rgba(226, 139, 109, 0.55);
+      outline-offset: 3px;
     }
 
     .skip-link {
-      position: absolute;
-      left: -999px;
-      top: 0;
-      padding: 0.8rem 1rem;
-      color: white;
-      background: var(--ink);
-      z-index: 10001;
+      position: fixed;
+      top: -5rem;
+      left: 1rem;
+      z-index: 9999;
+      padding: .75rem 1rem;
+      background: var(--white);
+      border: 2px solid var(--forest);
+      color: var(--forest);
+      font-weight: 700;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    .container {
+      width: min(1180px, calc(100% - 2rem));
+      margin-inline: auto;
     }
 
-    .skip-link:focus { left: 1rem; top: 1rem; }
-
-    .site-nav {
+    .site-header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(47, 36, 29, 0.96);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(247, 241, 232, 0.18);
+      background: rgba(32, 74, 64, .96);
+      border-bottom: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(14px);
     }
 
     .nav-inner {
-      max-width: 1240px;
-      min-height: 76px;
-      margin: 0 auto;
-      padding: 0 1.25rem;
+      min-height: 74px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -96,1399 +92,931 @@
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 0.55rem;
-      color: var(--cream-2);
-      font-family: "Cormorant Garamond", serif;
+      gap: .7rem;
+      color: var(--white);
+      font-family: var(--serif);
       font-size: 1.85rem;
       font-weight: 700;
-      letter-spacing: 0.01em;
       white-space: nowrap;
     }
 
-    .brand span { color: var(--coral); }
-    .nav-right { display: flex; align-items: center; gap: 1rem; }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.15rem;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .nav-links a {
-      color: #e8d8c8;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .nav-links a:hover,
-    .nav-links a:focus { color: white; }
-
-    .lang-switcher {
-      display: inline-flex;
-      flex-shrink: 0;
-      overflow: hidden;
-      border: 1px solid rgba(232, 216, 200, 0.55);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .lang-btn {
-      border: 0;
-      padding: 0.42rem 0.68rem;
-      background: transparent;
-      color: #e8d8c8;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      cursor: pointer;
-    }
-
-    .lang-btn.active { background: var(--coral); color: white; }
-    .nav-toggle { display: none; }
-
-    .btn-nutri,
-    .btn-light-nutri,
-    .btn-ghost-nutri {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.45rem;
-      border-radius: 999px;
-      padding: 0.88rem 1.35rem;
-      font-weight: 700;
-      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-      cursor: pointer;
-    }
-
-    .btn-nutri {
-      border: 0;
-      color: white;
-      background: var(--coral);
-      box-shadow: 0 10px 22px rgba(217, 130, 107, 0.24);
-    }
-
-    .btn-nutri:hover,
-    .btn-nutri:focus {
-      transform: translateY(-2px);
-      color: white;
-      background: var(--coral-dark);
-    }
-
-    .btn-light-nutri {
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      color: var(--ink);
-      background: var(--cream-2);
-    }
-
-    .btn-light-nutri:hover,
-    .btn-light-nutri:focus {
-      transform: translateY(-2px);
-      color: var(--ink);
-      background: white;
-    }
-
-    .btn-ghost-nutri {
-      border: 1px solid var(--line);
-      color: var(--sage-dark);
-      background: transparent;
-    }
-
-    .btn-ghost-nutri:hover,
-    .btn-ghost-nutri:focus {
-      transform: translateY(-2px);
-      border-color: var(--sage);
-      color: var(--sage-dark);
-      background: #eef5ed;
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      min-height: calc(100vh - 76px);
-      display: flex;
-      align-items: center;
-      background:
-        radial-gradient(circle at 88% 22%, rgba(111, 143, 114, 0.20), transparent 32%),
-        radial-gradient(circle at 12% 92%, rgba(217, 130, 107, 0.18), transparent 34%),
-        linear-gradient(135deg, var(--cream-2), var(--cream));
-      border-bottom: 1px solid var(--line);
-    }
-
-    .hero-grid {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1.03fr 0.97fr;
-      gap: 4rem;
-      align-items: center;
-      padding: 5.5rem 0;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.65rem;
-      margin-bottom: 1rem;
-      color: var(--sage-dark);
-      font-family: "Outfit", sans-serif;
-      font-size: 0.78rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 42px;
-      height: 2px;
-      background: var(--coral);
-    }
-
-    .hero h1 {
-      max-width: 780px;
-      margin: 0;
-      font-size: clamp(4rem, 7.2vw, 7.4rem);
-      line-height: 0.86;
-    }
-
-    .hero h1 em { color: var(--sage-dark); font-style: italic; }
-
-    .hero-lead {
-      max-width: 650px;
-      margin: 1.6rem 0 0;
-      color: var(--muted);
-      font-size: clamp(1.08rem, 1.5vw, 1.22rem);
-      line-height: 1.7;
-    }
-
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 2rem; }
-    .trust-row { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
-
-    .trust-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.58rem 0.88rem;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--sage-dark);
-      background: rgba(255, 250, 243, 0.82);
-      font-size: 0.85rem;
-      font-weight: 700;
-    }
-
-    .hero-visual { position: relative; min-height: 560px; }
-
-    .hero-image {
-      width: 100%;
-      height: 560px;
-      object-fit: cover;
-      border: 1px solid var(--line);
-      border-radius: 32px;
-      box-shadow: var(--shadow);
-    }
-
-    .availability-card {
-      position: absolute;
-      left: -42px;
-      bottom: 34px;
-      width: min(390px, calc(100% - 30px));
-      padding: 1.25rem;
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      border-radius: 24px;
-      color: white;
-      background: rgba(47, 36, 29, 0.94);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-    }
-
-    .availability-card h3 {
-      margin-bottom: 0.65rem;
-      color: white;
-      font-size: 2rem;
-    }
-
-    .preview-line {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.65rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-      color: #eadbd0;
-    }
-
-    .preview-line:last-child { border-bottom: 0; }
-
-    .section { padding: 6rem 0; border-bottom: 1px solid var(--line); }
-    .section.alt { background: var(--cream-2); }
-
-    .section-title { max-width: 790px; margin-bottom: 3rem; }
-
-    .section-title h2 {
-      margin-bottom: 1rem;
-      font-size: clamp(3.1rem, 5.4vw, 5rem);
-    }
-
-    .section-title p {
-      max-width: 700px;
-      margin: 0;
-      color: var(--muted);
-      font-size: 1.12rem;
-      line-height: 1.7;
-    }
-
-    .service-card,
-    .why-card,
-    .faq-card,
-    .booking-card,
-    .process-panel {
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      background: white;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .service-card {
-      height: 100%;
-      overflow: hidden;
-      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .service-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(111, 143, 114, 0.6);
-      box-shadow: var(--shadow);
-    }
-
-    .service-image-wrap { position: relative; overflow: hidden; aspect-ratio: 4 / 3; }
-    .service-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-    .service-card:hover .service-image { transform: scale(1.035); }
-
-    .service-price-badge {
-      position: absolute;
-      right: 1rem;
-      top: 1rem;
-      padding: 0.45rem 0.72rem;
-      border-radius: 999px;
-      color: white;
-      background: rgba(47, 36, 29, 0.88);
-      font-size: 0.85rem;
-      font-weight: 800;
-      backdrop-filter: blur(8px);
-    }
-
-    .service-content { padding: 1.4rem; }
-
-    .service-card h3 {
-      min-height: 2.3em;
-      margin: 0;
-      font-size: 2rem;
-    }
-
-    .service-meta { display: flex; flex-wrap: wrap; gap: 0.55rem; margin: 0.9rem 0 1rem; }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.38rem 0.68rem;
-      border-radius: 999px;
-      color: var(--sage-dark);
-      background: #f1e7d9;
-      font-size: 0.78rem;
-      font-weight: 700;
-    }
-
-    .service-card p { min-height: 5.1em; margin-bottom: 1.15rem; color: var(--muted); }
-    .service-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
-    .service-actions .btn-nutri,
-    .service-actions .btn-ghost-nutri { padding-inline: 0.8rem; font-size: 0.92rem; }
-
-    .process-grid {
-      display: grid;
-      grid-template-columns: 1fr 0.95fr;
-      gap: 3rem;
-      align-items: stretch;
-    }
-
-    .process-panel { padding: 2rem; }
-    .process-step { display: grid; grid-template-columns: 64px 1fr; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
-    .process-step:last-child { border-bottom: 0; }
-
-    .step-number {
-      width: 58px;
-      height: 58px;
+    .brand-mark {
+      width: 38px;
+      height: 38px;
       display: grid;
       place-items: center;
       border-radius: 50%;
-      color: var(--sage-dark);
-      background: #e5efe4;
-      font-family: "Cormorant Garamond", serif;
-      font-size: 1.45rem;
-      font-weight: 700;
-    }
-
-    .process-step h3 { margin: 0 0 0.2rem; font-size: 1.75rem; }
-    .process-step p { margin: 0; color: var(--muted); }
-
-    .process-image {
-      width: 100%;
-      height: 100%;
-      min-height: 560px;
-      object-fit: cover;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .why-card { height: 100%; padding: 1.5rem; }
-
-    .icon-circle {
-      width: 50px;
-      height: 50px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: white;
-      background: var(--sage);
-      font-size: 1.25rem;
-    }
-
-    .why-card h3 { margin: 1rem 0 0.45rem; font-size: 1.85rem; }
-    .why-card p { margin: 0; color: var(--muted); }
-
-    .visual-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 1rem; }
-
-    .visual-tile {
-      position: relative;
-      overflow: hidden;
-      min-height: 380px;
-      border-radius: 26px;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .visual-tile img { width: 100%; height: 100%; object-fit: cover; }
-
-    .visual-tile::after {
-      content: "";
-      position: absolute;
-      inset: 45% 0 0;
-      background: linear-gradient(transparent, rgba(47, 36, 29, 0.86));
-    }
-
-    .visual-caption {
-      position: absolute;
-      z-index: 1;
-      left: 1.25rem;
-      right: 1.25rem;
-      bottom: 1.2rem;
-      color: white;
-    }
-
-    .visual-caption h3 { margin: 0 0 0.25rem; color: white; font-size: 2rem; }
-    .visual-caption p { margin: 0; color: rgba(255, 255, 255, 0.86); }
-
-    .booking-card { padding: 1.6rem; }
-
-    .summary-panel {
-      height: 100%;
-      padding: 1.6rem;
-      border-radius: 26px;
-      color: white;
-      background: var(--sage-dark);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .summary-panel h3 { margin-bottom: 0.4rem; color: white; font-size: 2.2rem; }
-    .summary-panel p { color: #d9e8da; }
-
-    .summary-item {
-      display: grid;
-      grid-template-columns: 130px 1fr;
-      gap: 0.75rem;
-      padding: 0.8rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .summary-item span:first-child { color: #cfe0d0; font-weight: 700; }
-    .form-label { color: var(--ink); font-weight: 800; }
-
-    .form-control,
-    .form-select {
-      padding: 0.85rem 0.95rem;
-      border-color: var(--line);
-      border-radius: 14px;
-    }
-
-    .form-control:focus,
-    .form-select:focus {
-      border-color: var(--sage);
-      box-shadow: 0 0 0 0.2rem rgba(111, 143, 114, 0.15);
-    }
-
-    .confirmation {
-      padding: 1.2rem;
-      border: 1px solid rgba(111, 143, 114, 0.35);
-      border-radius: 20px;
-      color: var(--sage-dark);
-      background: #eef7ef;
-    }
-
-    .faq-card { padding: 0.9rem; }
-
-    .faq-button {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      border: 0;
-      padding: 1rem;
+      background: var(--coral);
       color: var(--ink);
-      background: transparent;
-      text-align: left;
+      font-family: var(--sans);
       font-size: 1rem;
       font-weight: 800;
     }
 
-    .faq-answer { padding: 0 1rem 1rem; color: var(--muted); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.45rem;
+      color: rgba(255,255,255,.9);
+      font-size: .92rem;
+      font-weight: 600;
+    }
+    .nav-links a:hover { color: var(--coral); }
 
-    .footer {
-      color: #e8d8c8;
-      background: var(--ink);
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
     }
 
-    .footer-main { padding: 4.5rem 0 3rem; }
-    .footer-grid { display: grid; grid-template-columns: 1.2fr 0.8fr 1fr 1fr; gap: 2.5rem; }
-
-    .footer-brand { margin-bottom: 1rem; color: white; font-family: "Cormorant Garamond", serif; font-size: 2rem; font-weight: 700; }
-    .footer-brand span { color: var(--coral); }
-    .footer-copy { max-width: 340px; color: #cdbdaf; }
-    .footer h3 { margin-bottom: 1rem; color: white; font-size: 1.25rem; font-family: "Outfit", sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
-    .footer ul { list-style: none; padding: 0; margin: 0; }
-    .footer li { margin-bottom: 0.62rem; color: #cdbdaf; }
-    .footer a { color: #e8d8c8; }
-    .footer a:hover, .footer a:focus { color: white; }
-    .footer-contact-line { display: flex; gap: 0.6rem; margin-bottom: 0.7rem; color: #cdbdaf; }
-    .footer-contact-line i { margin-top: 0.18rem; color: var(--coral); }
-
-    .footer-bottom {
-      padding: 1.2rem 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
-      color: #bba99b;
-      font-size: 0.9rem;
+    .lang-switcher {
+      display: inline-flex;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: 999px;
+    }
+    .lang-btn {
+      min-width: 42px;
+      border: 0;
+      padding: .45rem .7rem;
+      color: rgba(255,255,255,.78);
+      background: transparent;
+      cursor: pointer;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+    .lang-btn[aria-pressed="true"] {
+      background: var(--coral);
+      color: var(--ink);
     }
 
-    @media (max-width: 1200px) {
-      .nav-links { gap: 0.85rem; }
-      .nav-links a { font-size: 0.69rem; }
-      .hero-grid { gap: 2.5rem; }
-      .availability-card { left: 20px; }
+    .menu-btn {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--white);
+      cursor: pointer;
     }
 
-    @media (max-width: 992px) {
-      .hero-grid,
-      .process-grid { grid-template-columns: 1fr; }
+    .hero {
+      position: relative;
+      padding: clamp(4.5rem, 8vw, 8rem) 0 5rem;
+      background:
+        radial-gradient(circle at 10% 15%, rgba(159,191,174,.35), transparent 28%),
+        linear-gradient(180deg, var(--ivory-2), var(--ivory));
+    }
 
-      .hero-grid { padding: 4.5rem 0; }
-      .hero-visual { min-height: auto; }
-      .hero-image { height: 500px; }
-      .availability-card { left: 24px; right: 24px; bottom: 24px; width: auto; }
-      .process-image { min-height: 420px; }
-      .visual-grid { grid-template-columns: 1fr 1fr; }
-      .visual-tile:first-child { grid-column: 1 / -1; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(360px, .98fr);
+      align-items: center;
+      gap: clamp(2rem, 6vw, 5.5rem);
+    }
 
+    .eyebrow {
+      margin: 0 0 .9rem;
+      color: var(--forest);
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      font-family: var(--serif);
+      color: var(--ink);
+    }
+    h1 {
+      margin-bottom: 1.2rem;
+      font-size: clamp(4rem, 8vw, 7rem);
+      line-height: .88;
+      letter-spacing: -.045em;
+    }
+    h1 em {
+      color: var(--forest);
+      font-style: normal;
+    }
+    h2 {
+      margin-bottom: 1rem;
+      font-size: clamp(2.8rem, 5vw, 4.6rem);
+      line-height: .95;
+      letter-spacing: -.025em;
+    }
+    h3 {
+      margin-bottom: .55rem;
+      font-size: 1.8rem;
+      line-height: 1.05;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin: 0 0 1.7rem;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-text {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      min-height: 48px;
+      border-radius: 999px;
+      padding: .75rem 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .btn-primary {
+      border: 1px solid var(--coral);
+      background: var(--coral);
+      color: var(--ink);
+      box-shadow: 0 10px 24px rgba(226,139,109,.28);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(226,139,109,.36); }
+    .btn-secondary {
+      border: 1px solid var(--forest);
+      background: transparent;
+      color: var(--forest);
+    }
+    .btn-secondary:hover { background: var(--sage-soft); transform: translateY(-2px); }
+    .btn-text {
+      min-height: auto;
+      border: 0;
+      padding: .2rem 0;
+      background: transparent;
+      color: var(--forest);
+      border-radius: 0;
+    }
+    .btn-text:hover { color: var(--coral-dark); }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .65rem;
+    }
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .48rem .75rem;
+      border: 1px solid var(--beige);
+      border-radius: 999px;
+      background: rgba(255,255,255,.58);
+      color: var(--muted);
+      font-size: .86rem;
+      font-weight: 600;
+    }
+    .trust-pill i { color: var(--forest); }
+
+    .hero-visual {
+      position: relative;
+      min-height: 590px;
+    }
+    .hero-image {
+      height: 590px;
+      object-fit: cover;
+      border-radius: 160px 26px 26px 26px;
+      box-shadow: var(--shadow);
+    }
+    .hero-badge {
+      position: absolute;
+      right: -20px;
+      bottom: 36px;
+      width: min(310px, 80%);
+      padding: 1.1rem;
+      border: 1px solid var(--beige);
+      border-radius: var(--radius-md);
+      background: rgba(255,253,248,.96);
+      box-shadow: var(--shadow-soft);
+    }
+    .hero-badge strong { display: block; margin-bottom: .4rem; color: var(--forest); }
+    .availability-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .5rem;
+    }
+    .availability-list span {
+      display: grid;
+      place-items: center;
+      min-height: 50px;
+      border-radius: 10px;
+      background: var(--sage-soft);
+      color: var(--forest-dark);
+      font-size: .82rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .section { padding: clamp(5rem, 8vw, 8rem) 0; }
+    .section-alt { background: var(--ivory-2); }
+    .section-dark { background: var(--forest-dark); color: var(--white); }
+    .section-dark h2, .section-dark h3 { color: var(--white); }
+    .section-dark .eyebrow { color: var(--coral); }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, .72fr);
+      align-items: end;
+      gap: 2rem;
+      margin-bottom: 2.6rem;
+    }
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 560px;
+    }
+    .section-dark .section-heading p { color: rgba(255,255,255,.72); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+    .service-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      overflow: hidden;
+      border: 1px solid var(--beige);
+      border-radius: var(--radius-lg);
+      background: var(--white);
+      box-shadow: var(--shadow-soft);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--sage);
+      box-shadow: var(--shadow);
+    }
+    .service-image {
+      height: 230px;
+      object-fit: cover;
+    }
+    .service-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 1.35rem;
+    }
+    .service-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: .7rem;
+      margin-bottom: .8rem;
+      color: var(--forest);
+      font-size: .82rem;
+      font-weight: 700;
+    }
+    .service-body p { margin: 0 0 1.2rem; color: var(--muted); }
+    .service-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .7rem;
+      margin-top: auto;
+    }
+    .service-actions .btn-primary,
+    .service-actions .btn-secondary {
+      width: 100%;
+      min-height: 44px;
+      padding-inline: .8rem;
+      font-size: .9rem;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .process-card {
+      position: relative;
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+    .process-number {
+      display: inline-grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      background: var(--coral);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+    .process-card p { margin: 0; color: rgba(255,255,255,.72); }
+
+    .approach-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: center;
+    }
+    .approach-image {
+      min-height: 520px;
+      object-fit: cover;
+      border-radius: 28px 130px 28px 28px;
+      box-shadow: var(--shadow);
+    }
+    .value-list { display: grid; gap: 1rem; margin-top: 1.8rem; }
+    .value-item {
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      gap: .9rem;
+      padding: 1rem;
+      border: 1px solid var(--beige);
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,.7);
+    }
+    .value-icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--sage-soft);
+      color: var(--forest);
+      font-size: 1.2rem;
+    }
+    .value-item strong { display: block; margin-bottom: .2rem; }
+    .value-item p { margin: 0; color: var(--muted); }
+
+    .booking-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(300px, .82fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .booking-form,
+    .booking-summary {
+      border: 1px solid var(--beige);
+      border-radius: var(--radius-lg);
+      background: var(--white);
+      box-shadow: var(--shadow-soft);
+    }
+    .booking-form { padding: clamp(1.4rem, 3vw, 2.2rem); }
+    .booking-summary { position: sticky; top: 96px; padding: 1.5rem; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .field { display: grid; gap: .42rem; }
+    .field.full { grid-column: 1 / -1; }
+    label { font-size: .9rem; font-weight: 700; }
+    input, select, textarea {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid #c9d8d1;
+      border-radius: 12px;
+      padding: .72rem .85rem;
+      background: var(--ivory-2);
+      color: var(--ink);
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--forest);
+      outline: 3px solid rgba(47,102,88,.16);
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+    .privacy-note { margin: 0; color: var(--muted); font-size: .82rem; }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: .85rem 0;
+      border-bottom: 1px solid var(--beige);
+    }
+    .summary-row:last-of-type { border-bottom: 0; }
+    .summary-row span { color: var(--muted); }
+    .summary-row strong { text-align: right; }
+    .summary-total {
+      margin: 1rem -1.5rem -1.5rem;
+      padding: 1rem 1.5rem;
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      background: var(--sage-soft);
+      color: var(--forest-dark);
+      font-weight: 700;
+    }
+
+    .confirmation {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--sage);
+      border-radius: 12px;
+      background: var(--sage-soft);
+      color: var(--forest-dark);
+    }
+    .confirmation.show { display: block; }
+
+    .faq-grid { display: grid; gap: .8rem; max-width: 880px; }
+    details {
+      border: 1px solid var(--beige);
+      border-radius: 16px;
+      background: var(--white);
+      overflow: hidden;
+    }
+    summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem 1.2rem;
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; color: var(--forest); font-size: 1.35rem; }
+    details[open] summary::after { content: "–"; }
+    details p { margin: 0; padding: 0 1.2rem 1.2rem; color: var(--muted); }
+
+    .contact-card {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 2rem;
+      align-items: center;
+      padding: clamp(2rem, 5vw, 4rem);
+      border-radius: var(--radius-lg);
+      background: var(--forest);
+      color: var(--white);
+      box-shadow: var(--shadow);
+    }
+    .contact-card h2 { color: var(--white); }
+    .contact-card p { color: rgba(255,255,255,.76); }
+    .contact-list { display: grid; gap: .7rem; }
+    .contact-list a, .contact-list span {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      font-weight: 600;
+    }
+    .contact-list i { color: var(--coral); }
+
+    footer {
+      padding: 1.5rem 0;
+      background: var(--forest-dark);
+      color: rgba(255,255,255,.72);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      font-size: .9rem;
+    }
+    .footer-inner a { color: var(--coral); font-weight: 700; }
+
+    [data-lang="en"] { display: none; }
+    html[lang="en"] [data-lang="fr"] { display: none !important; }
+    html[lang="en"] [data-lang="en"] { display: initial; }
+
+    @media (max-width: 980px) {
       .nav-links {
-        display: none;
-        position: absolute;
+        position: fixed;
+        top: 74px;
         left: 0;
         right: 0;
-        top: 76px;
+        display: none;
         flex-direction: column;
         align-items: flex-start;
-        padding: 1rem 1.25rem 1.25rem;
-        background: var(--ink);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 1.2rem;
+        background: var(--forest-dark);
+        border-bottom: 1px solid rgba(255,255,255,.15);
       }
-
       .nav-links.open { display: flex; }
-
-      .nav-toggle {
-        display: inline-flex;
-        border: 1px solid rgba(255, 255, 255, 0.35);
-        border-radius: 999px;
-        padding: 0.55rem 0.8rem;
-        color: white;
-        background: transparent;
-      }
+      .menu-btn { display: inline-grid; place-items: center; }
+      .hero-grid,
+      .approach-grid,
+      .booking-layout,
+      .contact-card { grid-template-columns: 1fr; }
+      .hero-visual { min-height: auto; }
+      .hero-image { height: 520px; }
+      .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .booking-summary { position: static; }
     }
 
-    @media (max-width: 768px) {
-      .section { padding: 4.8rem 0; }
-      .service-card h3 { min-height: auto; }
-      .service-card p { min-height: auto; }
-      .visual-grid { grid-template-columns: 1fr; }
-      .visual-tile:first-child { grid-column: auto; }
-      .visual-tile { min-height: 330px; }
-      .footer-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 576px) {
-      .hero h1 { font-size: 3.55rem; }
-      .hero-image { height: 430px; }
-      .availability-card { left: 14px; right: 14px; bottom: 14px; }
-      .section-title h2 { font-size: 3rem; }
-      .service-actions { grid-template-columns: 1fr; }
-      .process-panel { padding: 1.35rem; }
-      .process-step { grid-template-columns: 52px 1fr; }
-      .step-number { width: 48px; height: 48px; }
-      .summary-item { grid-template-columns: 1fr; gap: 0.1rem; }
+    @media (max-width: 680px) {
       .brand { font-size: 1.55rem; }
-      .nav-inner { padding-inline: 0.9rem; }
-      .nav-right { gap: 0.45rem; }
+      .brand-mark { width: 34px; height: 34px; }
+      .hero { padding-top: 3.5rem; }
+      h1 { font-size: clamp(3.5rem, 18vw, 5.3rem); }
+      .hero-image { height: 440px; border-radius: 100px 22px 22px 22px; }
+      .hero-badge { left: 14px; right: 14px; bottom: 14px; width: auto; }
+      .section-heading { grid-template-columns: 1fr; align-items: start; }
+      .services-grid,
+      .process-grid,
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .service-actions { grid-template-columns: 1fr; }
+      .form-actions { align-items: flex-start; flex-direction: column; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .back-to-portfolio { display: none; }
     }
   </style>
 </head>
-
 <body>
-  <div id="progress"></div>
-  <a class="skip-link" href="#contenu">Aller au contenu principal</a>
-  <div id="root"></div>
+  <a class="skip-link" href="#contenu">
+    <span data-lang="fr">Aller au contenu principal</span>
+    <span data-lang="en">Skip to main content</span>
+  </a>
 
-  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a class="brand" href="#accueil" aria-label="NutriVie accueil">
+        <span class="brand-mark" aria-hidden="true">N</span>
+        NutriVie
+      </a>
 
-  <script type="text/babel">
-    const { useEffect, useMemo, useState } = React;
+      <nav class="nav-links" id="navLinks" aria-label="Navigation principale">
+        <a href="#services"><span data-lang="fr">Services</span><span data-lang="en">Services</span></a>
+        <a href="#parcours"><span data-lang="fr">Parcours</span><span data-lang="en">Process</span></a>
+        <a href="#approche"><span data-lang="fr">Approche</span><span data-lang="en">Approach</span></a>
+        <a href="#reservation"><span data-lang="fr">Réservation</span><span data-lang="en">Booking</span></a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact"><span data-lang="fr">Contact</span><span data-lang="en">Contact</span></a>
+      </nav>
 
-    const content = {
-      fr: {
-        nav: {
-          services: "Services",
-          process: "Parcours",
-          approach: "Approche",
-          booking: "Réservation",
-          faq: "FAQ",
-          contact: "Contact",
-          portfolio: "Portfolio",
-          menu: "Menu"
-        },
-        hero: {
-          eyebrow: "Clinique de nutrition à Ottawa",
-          titleA: "Manger mieux,",
-          titleB: "sans compliquer",
-          titleC: "la vie.",
-          lead: "NutriVie aide les adultes et les familles à transformer leurs habitudes alimentaires grâce à des conseils simples, humains et adaptés à leur réalité quotidienne.",
-          book: "Réserver une consultation",
-          compare: "Comparer les services",
-          pills: ["Prix visibles", "Rendez-vous simple", "Confirmation claire"],
-          availability: "Prochaines disponibilités",
-          today: "Aujourd'hui",
-          tomorrow: "Demain",
-          friday: "Vendredi"
-        },
-        services: {
-          eyebrow: "Services",
-          title: "Choisir le bon accompagnement",
-          intro: "Réservez directement si vous savez déjà ce qu'il vous faut, ou consultez les détails pour comparer avant de décider.",
-          details: "Voir les détails",
-          book: "Réserver",
-          selected: "Sélectionné"
-        },
-        process: {
-          eyebrow: "Votre parcours",
-          title: "Un rendez-vous simple, étape par étape",
-          intro: "Le site vous montre clairement ce qui se passe avant, pendant et après votre consultation.",
-          steps: [
-            ["Choisissez votre service", "Comparez l'objectif, la durée et le prix de chaque consultation."],
-            ["Sélectionnez une disponibilité", "Choisissez une date et une heure adaptées à votre horaire."],
-            ["Rencontrez votre nutritionniste", "Discutez de vos habitudes, de vos besoins et de vos objectifs."],
-            ["Repartez avec un plan clair", "Recevez des recommandations réalistes et adaptées à votre quotidien."]
-          ]
-        },
-        approach: {
-          eyebrow: "Approche",
-          title: "Un accompagnement clair et humain",
-          intro: "Chaque élément du site aide l'utilisateur à comprendre, choisir et avancer sans confusion.",
-          items: [
-            ["bi-heart", "Conseils adaptés", "Les recommandations tiennent compte de vos habitudes, de votre rythme et de vos objectifs."],
-            ["bi-cash-coin", "Prix visibles", "Chaque service affiche clairement sa durée et son prix avant la réservation."],
-            ["bi-ui-checks", "Réservation simple", "Le formulaire demande seulement les informations nécessaires pour fixer le rendez-vous."],
-            ["bi-calendar-check", "Résumé avant confirmation", "Vous vérifiez les détails du rendez-vous avant d'envoyer votre demande."]
-          ]
-        },
-        visual: {
-          eyebrow: "Dans la vraie vie",
-          title: "Des habitudes qui s'intègrent à votre quotidien",
-          intro: "L'objectif n'est pas la perfection, mais des changements réalistes que vous pouvez maintenir.",
-          cards: [
-            ["Mieux organiser ses repas", "Des idées simples pour réduire le stress de la semaine."],
-            ["Retrouver son énergie", "Des choix adaptés à votre rythme et à vos besoins."],
-            ["Créer des habitudes durables", "Un accompagnement progressif, sans culpabilité."]
-          ]
-        },
-        booking: {
-          eyebrow: "Réservation",
-          title: "Prendre rendez-vous",
-          intro: "Choisissez un service, une date et une heure. Le résumé se met à jour automatiquement.",
-          labels: { service: "Service", date: "Date", time: "Heure", name: "Nom complet", email: "Courriel", phone: "Téléphone", notes: "Préférence ou question" },
-          placeholders: { name: "Ex. Salma Benali", email: "nom@email.com", phone: "613-555-0000", notes: "Optionnel" },
-          button: "Confirmer le rendez-vous",
-          confirmed: "Rendez-vous confirmé.",
-          thank: "Merci",
-          request: "Votre demande pour",
-          saved: "a été enregistrée dans ce prototype.",
-          summaryTitle: "Votre résumé",
-          summaryIntro: "Vérifiez les détails avant de confirmer.",
-          duration: "Durée",
-          price: "Prix"
-        },
-        faq: {
-          eyebrow: "Questions fréquentes",
-          title: "Vous avez des questions avant de réserver?",
-          intro: "Voici les réponses essentielles pour comprendre le fonctionnement de la clinique."
-        },
-        footer: {
-          description: "Des conseils nutritionnels simples, humains et adaptés à votre quotidien.",
-          explore: "Explorer",
-          contact: "Coordonnées",
-          hours: "Heures",
-          weekdays: "Lundi au vendredi : 9 h à 18 h",
-          saturday: "Samedi : 10 h à 14 h",
-          sunday: "Dimanche : fermé",
-          legal: "© 2026 NutriVie · Prototype fictif",
-          portfolio: "Retour au portfolio"
-        }
+      <div class="nav-actions">
+        <a class="back-to-portfolio" href="index.html#projects" style="color:var(--coral);font-size:.78rem;font-weight:700;">
+          <span data-lang="fr">Portfolio ↗</span><span data-lang="en">Portfolio ↗</span>
+        </a>
+        <div class="lang-switcher" aria-label="Choisir la langue">
+          <button class="lang-btn" type="button" data-set-lang="fr" aria-pressed="true">FR</button>
+          <button class="lang-btn" type="button" data-set-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
+          <i class="bi bi-list" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenu">
+    <section class="hero" id="accueil">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow"><span data-lang="fr">Clinique de nutrition à Ottawa</span><span data-lang="en">Nutrition clinic in Ottawa</span></p>
+          <h1>
+            <span data-lang="fr">Manger mieux,<br><em>sans compliquer</em><br>la vie.</span>
+            <span data-lang="en">Eat better,<br><em>without making</em><br>life harder.</span>
+          </h1>
+          <p class="hero-copy">
+            <span data-lang="fr">NutriVie aide les adultes et les familles à transformer leurs habitudes alimentaires grâce à des conseils simples, humains et adaptés à leur réalité quotidienne.</span>
+            <span data-lang="en">NutriVie helps adults and families improve their eating habits through simple, human and realistic guidance adapted to daily life.</span>
+          </p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="#reservation"><i class="bi bi-calendar2-check"></i><span data-lang="fr">Réserver une consultation</span><span data-lang="en">Book a consultation</span></a>
+            <a class="btn-secondary" href="#services"><i class="bi bi-grid"></i><span data-lang="fr">Comparer les services</span><span data-lang="en">Compare services</span></a>
+          </div>
+          <div class="trust-row" aria-label="Avantages">
+            <span class="trust-pill"><i class="bi bi-tag"></i><span data-lang="fr">Prix visibles</span><span data-lang="en">Visible prices</span></span>
+            <span class="trust-pill"><i class="bi bi-lightning-charge"></i><span data-lang="fr">Rendez-vous simple</span><span data-lang="en">Simple booking</span></span>
+            <span class="trust-pill"><i class="bi bi-check2-circle"></i><span data-lang="fr">Confirmation claire</span><span data-lang="en">Clear confirmation</span></span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img class="hero-image" src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=85" alt="Bol coloré composé de légumes frais" />
+          <div class="hero-badge">
+            <strong><span data-lang="fr">Prochaines disponibilités</span><span data-lang="en">Next availability</span></strong>
+            <div class="availability-list">
+              <span><span data-lang="fr">Aujourd'hui<br>16 h 30</span><span data-lang="en">Today<br>4:30 pm</span></span>
+              <span><span data-lang="fr">Demain<br>10 h 00</span><span data-lang="en">Tomorrow<br>10:00 am</span></span>
+              <span><span data-lang="fr">Vendredi<br>13 h 30</span><span data-lang="en">Friday<br>1:30 pm</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow"><span data-lang="fr">Services</span><span data-lang="en">Services</span></p>
+            <h2><span data-lang="fr">Choisir le bon accompagnement</span><span data-lang="en">Choose the right support</span></h2>
+          </div>
+          <p><span data-lang="fr">Réservez directement si vous savez déjà ce qu’il vous faut, ou consultez les détails pour comparer avant de décider.</span><span data-lang="en">Book directly if you already know what you need, or read the details before deciding.</span></p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <img class="service-image" src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85" alt="Repas équilibré avec légumes" />
+            <div class="service-body">
+              <div class="service-meta"><span><i class="bi bi-clock"></i> 60 min</span><span>125 $</span></div>
+              <h3><span data-lang="fr">Consultation initiale</span><span data-lang="en">Initial consultation</span></h3>
+              <p><span data-lang="fr">Une rencontre complète pour comprendre vos habitudes, vos besoins et définir un plan réaliste.</span><span data-lang="en">A complete meeting to understand your habits, needs and create a realistic plan.</span></p>
+              <div class="service-actions">
+                <a class="btn-secondary" href="service-details.html?service=initial&lang=fr"><span data-lang="fr">Voir les détails</span><span data-lang="en">View details</span></a>
+                <button class="btn-primary book-service" type="button" data-service="initial"><span data-lang="fr">Réserver</span><span data-lang="en">Book</span></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <img class="service-image" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1000&q=85" alt="Préparation d'un repas sain dans une cuisine" />
+            <div class="service-body">
+              <div class="service-meta"><span><i class="bi bi-clock"></i> 30 min</span><span>75 $</span></div>
+              <h3><span data-lang="fr">Consultation de suivi</span><span data-lang="en">Follow-up consultation</span></h3>
+              <p><span data-lang="fr">Un rendez-vous ciblé pour ajuster le plan, résoudre les difficultés et suivre les progrès.</span><span data-lang="en">A focused appointment to adjust the plan, solve difficulties and track progress.</span></p>
+              <div class="service-actions">
+                <a class="btn-secondary" href="service-details.html?service=followup&lang=fr"><span data-lang="fr">Voir les détails</span><span data-lang="en">View details</span></a>
+                <button class="btn-primary book-service" type="button" data-service="followup"><span data-lang="fr">Réserver</span><span data-lang="en">Book</span></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <img class="service-image" src="https://images.unsplash.com/photo-1543362906-acfc16c67564?auto=format&fit=crop&w=1000&q=85" alt="Famille partageant des aliments frais" />
+            <div class="service-body">
+              <div class="service-meta"><span><i class="bi bi-clock"></i> 75 min</span><span>155 $</span></div>
+              <h3><span data-lang="fr">Nutrition familiale</span><span data-lang="en">Family nutrition</span></h3>
+              <p><span data-lang="fr">Des stratégies simples pour organiser les repas, réduire le stress et mieux répondre aux besoins de toute la famille.</span><span data-lang="en">Simple strategies to organize meals, reduce stress and support the whole family.</span></p>
+              <div class="service-actions">
+                <a class="btn-secondary" href="service-details.html?service=family&lang=fr"><span data-lang="fr">Voir les détails</span><span data-lang="en">View details</span></a>
+                <button class="btn-primary book-service" type="button" data-service="family"><span data-lang="fr">Réserver</span><span data-lang="en">Book</span></button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="parcours">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow"><span data-lang="fr">Votre parcours</span><span data-lang="en">Your journey</span></p>
+            <h2><span data-lang="fr">Un rendez-vous simple, étape par étape</span><span data-lang="en">A simple appointment, step by step</span></h2>
+          </div>
+          <p><span data-lang="fr">L’interface montre clairement ce qui se passe avant, pendant et après la consultation.</span><span data-lang="en">The interface clearly shows what happens before, during and after the consultation.</span></p>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-card"><span class="process-number">1</span><h3><span data-lang="fr">Choisissez</span><span data-lang="en">Choose</span></h3><p><span data-lang="fr">Comparez l’objectif, la durée et le prix de chaque service.</span><span data-lang="en">Compare the goal, duration and price of each service.</span></p></article>
+          <article class="process-card"><span class="process-number">2</span><h3><span data-lang="fr">Planifiez</span><span data-lang="en">Schedule</span></h3><p><span data-lang="fr">Sélectionnez une date et une heure adaptées à votre horaire.</span><span data-lang="en">Select a date and time that fit your schedule.</span></p></article>
+          <article class="process-card"><span class="process-number">3</span><h3><span data-lang="fr">Échangez</span><span data-lang="en">Discuss</span></h3><p><span data-lang="fr">Présentez vos besoins, vos habitudes et vos objectifs.</span><span data-lang="en">Discuss your needs, habits and goals.</span></p></article>
+          <article class="process-card"><span class="process-number">4</span><h3><span data-lang="fr">Progressez</span><span data-lang="en">Progress</span></h3><p><span data-lang="fr">Repartez avec un plan clair, réalisable et personnalisé.</span><span data-lang="en">Leave with a clear, realistic and personalized plan.</span></p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="approche">
+      <div class="container approach-grid">
+        <img class="approach-image" src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=85" alt="Personne préparant des légumes dans une cuisine" />
+        <div>
+          <p class="eyebrow"><span data-lang="fr">Approche</span><span data-lang="en">Approach</span></p>
+          <h2><span data-lang="fr">Un accompagnement clair et humain</span><span data-lang="en">Clear and human support</span></h2>
+          <p style="color:var(--muted);"><span data-lang="fr">Pas de plan générique ni de jugement. Chaque recommandation doit être comprise, applicable et compatible avec votre quotidien.</span><span data-lang="en">No generic plan and no judgment. Every recommendation must be understandable, realistic and compatible with daily life.</span></p>
+
+          <div class="value-list">
+            <div class="value-item"><span class="value-icon"><i class="bi bi-person-heart"></i></span><div><strong><span data-lang="fr">Écoute</span><span data-lang="en">Listening</span></strong><p><span data-lang="fr">Vos préférences, votre culture et vos contraintes sont prises en compte.</span><span data-lang="en">Your preferences, culture and constraints are considered.</span></p></div></div>
+            <div class="value-item"><span class="value-icon"><i class="bi bi-lightbulb"></i></span><div><strong><span data-lang="fr">Simplicité</span><span data-lang="en">Simplicity</span></strong><p><span data-lang="fr">Les conseils sont traduits en actions claires et faciles à suivre.</span><span data-lang="en">Advice is translated into clear and manageable actions.</span></p></div></div>
+            <div class="value-item"><span class="value-icon"><i class="bi bi-arrow-repeat"></i></span><div><strong><span data-lang="fr">Progression</span><span data-lang="en">Progress</span></strong><p><span data-lang="fr">Le plan évolue selon vos résultats et votre expérience réelle.</span><span data-lang="en">The plan evolves according to your results and real experience.</span></p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="reservation">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow"><span data-lang="fr">Réservation</span><span data-lang="en">Booking</span></p>
+            <h2><span data-lang="fr">Choisissez votre rendez-vous</span><span data-lang="en">Choose your appointment</span></h2>
+          </div>
+          <p><span data-lang="fr">Les informations essentielles sont regroupées au même endroit pour réduire les erreurs et garder le parcours simple.</span><span data-lang="en">Essential information is grouped in one place to reduce errors and keep the process simple.</span></p>
+        </div>
+
+        <div class="booking-layout">
+          <form class="booking-form" id="bookingForm" novalidate>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="serviceSelect"><span data-lang="fr">Service</span><span data-lang="en">Service</span></label>
+                <select id="serviceSelect" name="service" required>
+                  <option value="initial" data-price="125" data-duration="60"><span data-lang="fr">Consultation initiale — 60 min — 125 $</span></option>
+                  <option value="followup" data-price="75" data-duration="30"><span data-lang="fr">Consultation de suivi — 30 min — 75 $</span></option>
+                  <option value="family" data-price="155" data-duration="75"><span data-lang="fr">Nutrition familiale — 75 min — 155 $</span></option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="dateInput"><span data-lang="fr">Date</span><span data-lang="en">Date</span></label>
+                <input id="dateInput" name="date" type="date" required />
+              </div>
+              <div class="field">
+                <label for="timeSelect"><span data-lang="fr">Heure</span><span data-lang="en">Time</span></label>
+                <select id="timeSelect" name="time" required>
+                  <option value="09:00">09:00</option>
+                  <option value="10:30">10:30</option>
+                  <option value="13:30">13:30</option>
+                  <option value="16:30">16:30</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="nameInput"><span data-lang="fr">Nom complet</span><span data-lang="en">Full name</span></label>
+                <input id="nameInput" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div class="field">
+                <label for="emailInput">Courriel / Email</label>
+                <input id="emailInput" name="email" type="email" autocomplete="email" required />
+              </div>
+              <div class="field full">
+                <label for="noteInput"><span data-lang="fr">Note facultative</span><span data-lang="en">Optional note</span></label>
+                <textarea id="noteInput" name="note" placeholder=""></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn-primary" type="submit"><i class="bi bi-calendar-check"></i><span data-lang="fr">Confirmer la réservation</span><span data-lang="en">Confirm booking</span></button>
+              <p class="privacy-note"><i class="bi bi-shield-check"></i> <span data-lang="fr">Prototype académique : aucune donnée n’est transmise.</span><span data-lang="en">Academic prototype: no data is transmitted.</span></p>
+            </div>
+            <div class="confirmation" id="confirmation" role="status" aria-live="polite"></div>
+          </form>
+
+          <aside class="booking-summary" aria-label="Résumé de la réservation">
+            <p class="eyebrow"><span data-lang="fr">Votre sélection</span><span data-lang="en">Your selection</span></p>
+            <h3 id="summaryService">Consultation initiale</h3>
+            <div class="summary-row"><span><span data-lang="fr">Durée</span><span data-lang="en">Duration</span></span><strong id="summaryDuration">60 min</strong></div>
+            <div class="summary-row"><span><span data-lang="fr">Date</span><span data-lang="en">Date</span></span><strong id="summaryDate">—</strong></div>
+            <div class="summary-row"><span><span data-lang="fr">Heure</span><span data-lang="en">Time</span></span><strong id="summaryTime">09:00</strong></div>
+            <div class="summary-total"><span data-lang="fr">Prix total</span><span data-lang="en">Total price</span> : <span id="summaryPrice">125 $</span></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="faq">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="eyebrow">FAQ</p><h2><span data-lang="fr">Questions fréquentes</span><span data-lang="en">Frequently asked questions</span></h2></div>
+        </div>
+        <div class="faq-grid">
+          <details><summary><span data-lang="fr">Dois-je préparer quelque chose avant le rendez-vous?</span><span data-lang="en">Should I prepare anything before the appointment?</span></summary><p><span data-lang="fr">Vous pouvez noter vos principales questions et, si vous le souhaitez, apporter une courte liste de vos repas habituels.</span><span data-lang="en">You may write down your main questions and optionally bring a short list of your usual meals.</span></p></details>
+          <details><summary><span data-lang="fr">Les consultations sont-elles offertes en ligne?</span><span data-lang="en">Are consultations available online?</span></summary><p><span data-lang="fr">Oui. Vous pouvez choisir une rencontre virtuelle ou en clinique lors de la confirmation.</span><span data-lang="en">Yes. You can choose a virtual or in-clinic appointment during confirmation.</span></p></details>
+          <details><summary><span data-lang="fr">Puis-je modifier ou annuler un rendez-vous?</span><span data-lang="en">Can I modify or cancel an appointment?</span></summary><p><span data-lang="fr">Oui. Un lien de modification serait normalement inclus dans le courriel de confirmation.</span><span data-lang="en">Yes. A modification link would normally be included in the confirmation email.</span></p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-card">
+          <div>
+            <p class="eyebrow"><span data-lang="fr">Contact</span><span data-lang="en">Contact</span></p>
+            <h2><span data-lang="fr">Une question avant de réserver?</span><span data-lang="en">A question before booking?</span></h2>
+            <p><span data-lang="fr">Écrivez-nous pour vérifier quel service correspond le mieux à votre situation.</span><span data-lang="en">Contact us to confirm which service best fits your situation.</span></p>
+          </div>
+          <div class="contact-list">
+            <a href="mailto:bonjour@nutrivie.ca"><i class="bi bi-envelope"></i> bonjour@nutrivie.ca ↗</a>
+            <a href="tel:+16135550128"><i class="bi bi-telephone"></i> 613-555-0128</a>
+            <span><i class="bi bi-geo-alt"></i> Ottawa, Ontario</span>
+            <span><i class="bi bi-clock"></i> Lun–Ven · 8 h 30–18 h</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© 2026 NutriVie · <span data-lang="fr">Projet académique SEG3525</span><span data-lang="en">SEG3525 academic project</span></span>
+      <a href="index.html#projects"><span data-lang="fr">Retour au portfolio</span><span data-lang="en">Back to portfolio</span> ↗</a>
+    </div>
+  </footer>
+
+  <script>
+    const serviceInfo = {
+      initial: {
+        fr: "Consultation initiale",
+        en: "Initial consultation",
+        duration: 60,
+        price: 125
       },
-      en: {
-        nav: {
-          services: "Services",
-          process: "Journey",
-          approach: "Approach",
-          booking: "Booking",
-          faq: "FAQ",
-          contact: "Contact",
-          portfolio: "Portfolio",
-          menu: "Menu"
-        },
-        hero: {
-          eyebrow: "Nutrition clinic in Ottawa",
-          titleA: "Eat better,",
-          titleB: "without complicating",
-          titleC: "your life.",
-          lead: "NutriVie helps adults and families improve their eating habits with simple, human, and realistic nutrition guidance.",
-          book: "Book a consultation",
-          compare: "Compare services",
-          pills: ["Visible prices", "Simple booking", "Clear confirmation"],
-          availability: "Next openings",
-          today: "Today",
-          tomorrow: "Tomorrow",
-          friday: "Friday"
-        },
-        services: {
-          eyebrow: "Services",
-          title: "Choose the right support",
-          intro: "Book directly when you already know what you need, or open the details to compare before deciding.",
-          details: "View details",
-          book: "Book",
-          selected: "Selected"
-        },
-        process: {
-          eyebrow: "Your journey",
-          title: "A simple appointment, step by step",
-          intro: "The site clearly shows what happens before, during, and after your consultation.",
-          steps: [
-            ["Choose your service", "Compare the goal, duration, and price of each consultation."],
-            ["Select an opening", "Choose a date and time that fit your schedule."],
-            ["Meet your nutritionist", "Discuss your habits, needs, and goals."],
-            ["Leave with a clear plan", "Receive realistic recommendations adapted to daily life."]
-          ]
-        },
-        approach: {
-          eyebrow: "Approach",
-          title: "Clear, human support",
-          intro: "Every part of the site helps the user understand, choose, and move forward without confusion.",
-          items: [
-            ["bi-heart", "Personal guidance", "Recommendations are adapted to your habits, pace, and goals."],
-            ["bi-cash-coin", "Visible prices", "Each service clearly shows its duration and price before booking."],
-            ["bi-ui-checks", "Simple booking", "The form asks only for the information needed to schedule the appointment."],
-            ["bi-calendar-check", "Review before confirming", "You can check the appointment details before submitting the request."]
-          ]
-        },
-        visual: {
-          eyebrow: "Real life",
-          title: "Habits that fit your daily routine",
-          intro: "The goal is not perfection, but realistic changes you can maintain.",
-          cards: [
-            ["Organize meals more easily", "Simple ideas to reduce weekday stress."],
-            ["Feel more energized", "Choices adapted to your pace and needs."],
-            ["Build lasting habits", "Progressive support without guilt."]
-          ]
-        },
-        booking: {
-          eyebrow: "Booking",
-          title: "Book an appointment",
-          intro: "Choose a service, date, and time. The summary updates automatically.",
-          labels: { service: "Service", date: "Date", time: "Time", name: "Full name", email: "Email", phone: "Phone", notes: "Preference or question" },
-          placeholders: { name: "Ex. Salma Benali", email: "name@email.com", phone: "613-555-0000", notes: "Optional" },
-          button: "Confirm appointment",
-          confirmed: "Appointment confirmed.",
-          thank: "Thank you",
-          request: "Your request for",
-          saved: "has been saved in this prototype.",
-          summaryTitle: "Your summary",
-          summaryIntro: "Review the details before confirming.",
-          duration: "Duration",
-          price: "Price"
-        },
-        faq: {
-          eyebrow: "Frequently asked questions",
-          title: "Questions before booking?",
-          intro: "Here are the essential answers to understand how the clinic works."
-        },
-        footer: {
-          description: "Simple, human nutrition guidance adapted to your daily life.",
-          explore: "Explore",
-          contact: "Contact",
-          hours: "Hours",
-          weekdays: "Monday to Friday: 9 a.m. to 6 p.m.",
-          saturday: "Saturday: 10 a.m. to 2 p.m.",
-          sunday: "Sunday: closed",
-          legal: "© 2026 NutriVie · Fictitious prototype",
-          portfolio: "Back to portfolio"
-        }
+      followup: {
+        fr: "Consultation de suivi",
+        en: "Follow-up consultation",
+        duration: 30,
+        price: 75
+      },
+      family: {
+        fr: "Nutrition familiale",
+        en: "Family nutrition",
+        duration: 75,
+        price: 155
       }
     };
 
-    const serviceData = {
-      fr: [
-        {
-          id: "initiale",
-          titre: "Consultation initiale",
-          duree: "75 min",
-          prix: "120 $",
-          cible: "Pour commencer",
-          description: "Une première rencontre pour comprendre vos habitudes, vos objectifs et votre contexte de vie.",
-          inclus: ["Bilan alimentaire", "Objectifs réalistes", "Premières recommandations"],
-          image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85",
-          alt: "Repas équilibré avec légumes frais"
-        },
-        {
-          id: "suivi",
-          titre: "Suivi nutritionnel",
-          duree: "45 min",
-          prix: "75 $",
-          cible: "Pour progresser",
-          description: "Un rendez-vous pour ajuster le plan, répondre aux questions et garder la motivation.",
-          inclus: ["Révision du plan", "Ajustements", "Stratégies pratiques"],
-          image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=85",
-          alt: "Bol santé coloré et équilibré"
-        },
-        {
-          id: "famille",
-          titre: "Plan familial",
-          duree: "90 min",
-          prix: "150 $",
-          cible: "Pour la famille",
-          description: "Une consultation axée sur l'organisation des repas, les préférences et les routines familiales.",
-          inclus: ["Organisation des repas", "Idées simples", "Conseils adaptés aux enfants"],
-          image: "https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=900&q=85",
-          alt: "Préparation d'un repas familial"
-        },
-        {
-          id: "digestion",
-          titre: "Énergie et digestion",
-          duree: "60 min",
-          prix: "95 $",
-          cible: "Pour comprendre",
-          description: "Une rencontre pour identifier les habitudes qui influencent votre confort digestif et votre énergie.",
-          inclus: ["Analyse des habitudes", "Pistes d'amélioration", "Plan de suivi"],
-          image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85",
-          alt: "Salade colorée avec légumes variés"
-        }
-      ],
-      en: [
-        {
-          id: "initiale",
-          titre: "Initial consultation",
-          duree: "75 min",
-          prix: "$120",
-          cible: "To begin",
-          description: "A first meeting to understand your habits, goals, and daily context.",
-          inclus: ["Food habits review", "Realistic goals", "First recommendations"],
-          image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85",
-          alt: "Balanced meal with fresh vegetables"
-        },
-        {
-          id: "suivi",
-          titre: "Nutrition follow-up",
-          duree: "45 min",
-          prix: "$75",
-          cible: "To progress",
-          description: "A follow-up appointment to adjust the plan, answer questions, and maintain motivation.",
-          inclus: ["Plan review", "Adjustments", "Practical strategies"],
-          image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=85",
-          alt: "Colourful balanced food bowl"
-        },
-        {
-          id: "famille",
-          titre: "Family plan",
-          duree: "90 min",
-          prix: "$150",
-          cible: "For families",
-          description: "A consultation focused on meal organization, preferences, and family routines.",
-          inclus: ["Meal organization", "Simple ideas", "Child-friendly advice"],
-          image: "https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=900&q=85",
-          alt: "Family meal preparation"
-        },
-        {
-          id: "digestion",
-          titre: "Energy and digestion",
-          duree: "60 min",
-          prix: "$95",
-          cible: "To understand",
-          description: "A meeting to identify habits that influence digestive comfort and energy.",
-          inclus: ["Habit analysis", "Improvement ideas", "Follow-up plan"],
-          image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85",
-          alt: "Colourful salad with varied vegetables"
-        }
-      ]
-    };
+    let currentLang = new URLSearchParams(window.location.search).get("lang") === "en" ? "en" : "fr";
+    const root = document.documentElement;
+    const langButtons = document.querySelectorAll("[data-set-lang]");
+    const detailsLinks = document.querySelectorAll('a[href^="service-details.html"]');
 
-    const visualImages = [
-      "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1100&q=85",
-      "https://images.unsplash.com/photo-1543362906-acfc16c67564?auto=format&fit=crop&w=900&q=85",
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=85"
-    ];
-
-    const faqData = {
-      fr: [
-        { q: "Dois-je avoir une référence médicale?", a: "Non. Vous pouvez prendre rendez-vous directement. Si vous avez un suivi médical particulier, vous pouvez apporter les informations utiles à la consultation." },
-        { q: "Est-ce que les prix sont visibles avant la réservation?", a: "Oui. Chaque carte de service indique clairement la durée et le prix." },
-        { q: "Puis-je changer mon rendez-vous?", a: "Oui. Dans ce prototype, le changement se ferait par téléphone ou par courriel. Une version complète pourrait proposer un lien de modification dans la confirmation." },
-        { q: "Est-ce un vrai site?", a: "Non. Il s'agit d'un prototype haute fidélité réalisé pour le cours SEG3525. Les données de l'entreprise sont fictives." }
-      ],
-      en: [
-        { q: "Do I need a medical referral?", a: "No. You can book directly. If you have a specific medical follow-up, you may bring useful information to the consultation." },
-        { q: "Are prices visible before booking?", a: "Yes. Each service card clearly shows the duration and price." },
-        { q: "Can I change my appointment?", a: "Yes. In this prototype, changes would be made by phone or email. A complete version could include a modification link in the confirmation." },
-        { q: "Is this a real website?", a: "No. This is a high-fidelity prototype created for SEG3525. The business information is fictitious." }
-      ]
-    };
-
-    function formatDateInput(date) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
-    }
-
-    function getInitialService() {
-      const id = new URLSearchParams(window.location.search).get("service");
-      return ["initiale", "suivi", "famille", "digestion"].includes(id) ? id : "initiale";
-    }
-
-    function Header({ lang, setLang }) {
-      const [open, setOpen] = useState(false);
-      const t = content[lang].nav;
-
-      return (
-        <header className="site-nav">
-          <div className="nav-inner">
-            <a className="brand" href="#accueil" aria-label="Accueil NutriVie">
-              <i className="bi bi-flower1"></i> Nutri<span>Vie</span>
-            </a>
-
-            <div className="nav-right">
-              <button className="nav-toggle" type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="navigation">
-                {t.menu}
-              </button>
-
-              <ul className={`nav-links ${open ? "open" : ""}`} id="navigation">
-                <li><a href="#services" onClick={() => setOpen(false)}>{t.services}</a></li>
-                <li><a href="#parcours" onClick={() => setOpen(false)}>{t.process}</a></li>
-                <li><a href="#approche" onClick={() => setOpen(false)}>{t.approach}</a></li>
-                <li><a href="#reservation" onClick={() => setOpen(false)}>{t.booking}</a></li>
-                <li><a href="#faq" onClick={() => setOpen(false)}>{t.faq}</a></li>
-                <li><a href="#contact" onClick={() => setOpen(false)}>{t.contact}</a></li>
-                <li><a href="index.html#projects">{t.portfolio}</a></li>
-              </ul>
-
-              <div className="lang-switcher" aria-label="Changer de langue">
-                <button className={`lang-btn ${lang === "fr" ? "active" : ""}`} type="button" onClick={() => setLang("fr")}>FR</button>
-                <button className={`lang-btn ${lang === "en" ? "active" : ""}`} type="button" onClick={() => setLang("en")}>EN</button>
-              </div>
-            </div>
-          </div>
-        </header>
-      );
-    }
-
-    function Hero({ lang, onBook }) {
-      const h = content[lang].hero;
-
-      return (
-        <section className="hero" id="accueil">
-          <div className="container">
-            <div className="hero-grid">
-              <div>
-                <div className="eyebrow">{h.eyebrow}</div>
-                <h1>{h.titleA}<br /><em>{h.titleB}</em> {h.titleC}</h1>
-                <p className="hero-lead">{h.lead}</p>
-
-                <div className="hero-actions">
-                  <button className="btn-nutri" type="button" onClick={() => onBook("initiale")}>
-                    <i className="bi bi-calendar2-check"></i> {h.book}
-                  </button>
-                  <a className="btn-ghost-nutri" href="#services">{h.compare}</a>
-                </div>
-
-                <div className="trust-row" aria-label="Points de confiance">
-                  <span className="trust-pill"><i className="bi bi-cash-coin"></i> {h.pills[0]}</span>
-                  <span className="trust-pill"><i className="bi bi-calendar2-check"></i> {h.pills[1]}</span>
-                  <span className="trust-pill"><i className="bi bi-check2-circle"></i> {h.pills[2]}</span>
-                </div>
-              </div>
-
-              <div className="hero-visual">
-                <img
-                  className="hero-image"
-                  src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1400&q=85"
-                  alt={lang === "fr" ? "Préparation d'un repas sain avec des aliments frais" : "Preparing a healthy meal with fresh ingredients"}
-                />
-
-                <aside className="availability-card" aria-label={h.availability}>
-                  <h3>{h.availability}</h3>
-                  <div className="preview-line"><span>{h.today}</span><strong>14 h 30</strong></div>
-                  <div className="preview-line"><span>{h.tomorrow}</span><strong>10 h 00</strong></div>
-                  <div className="preview-line"><span>{h.friday}</span><strong>16 h 15</strong></div>
-                </aside>
-              </div>
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    function Services({ lang, selectedService, onBook }) {
-      const t = content[lang].services;
-      const services = serviceData[lang];
-
-      return (
-        <section className="section alt" id="services">
-          <div className="container">
-            <div className="section-title">
-              <div className="eyebrow">{t.eyebrow}</div>
-              <h2>{t.title}</h2>
-              <p>{t.intro}</p>
-            </div>
-
-            <div className="row g-4">
-              {services.map((service) => (
-                <div className="col-md-6 col-xl-3" key={service.id}>
-                  <article className="service-card" aria-label={service.titre}>
-                    <div className="service-image-wrap">
-                      <img className="service-image" src={service.image} alt={service.alt} loading="lazy" />
-                      <span className="service-price-badge">{service.prix}</span>
-                    </div>
-
-                    <div className="service-content">
-                      <h3>{service.titre}</h3>
-                      <div className="service-meta">
-                        <span className="tag"><i className="bi bi-clock"></i> {service.duree}</span>
-                        <span className="tag">{service.cible}</span>
-                      </div>
-                      <p>{service.description}</p>
-
-                      <div className="service-actions">
-                        <a className="btn-ghost-nutri" href={`service-details.html?service=${service.id}&lang=${lang}`}>
-                          {t.details}
-                        </a>
-                        <button className="btn-nutri" type="button" onClick={() => onBook(service.id)}>
-                          {selectedService === service.id ? t.selected : t.book}
-                        </button>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    function Process({ lang }) {
-      const p = content[lang].process;
-
-      return (
-        <section className="section" id="parcours">
-          <div className="container">
-            <div className="section-title">
-              <div className="eyebrow">{p.eyebrow}</div>
-              <h2>{p.title}</h2>
-              <p>{p.intro}</p>
-            </div>
-
-            <div className="process-grid">
-              <div className="process-panel">
-                {p.steps.map(([title, text], index) => (
-                  <div className="process-step" key={title}>
-                    <div className="step-number">{String(index + 1).padStart(2, "0")}</div>
-                    <div>
-                      <h3>{title}</h3>
-                      <p>{text}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <img
-                className="process-image"
-                src="https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=1200&q=85"
-                alt={lang === "fr" ? "Ingrédients frais préparés pour un repas" : "Fresh ingredients prepared for a meal"}
-                loading="lazy"
-              />
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    function Approach({ lang }) {
-      const a = content[lang].approach;
-
-      return (
-        <section className="section alt" id="approche">
-          <div className="container">
-            <div className="section-title">
-              <div className="eyebrow">{a.eyebrow}</div>
-              <h2>{a.title}</h2>
-              <p>{a.intro}</p>
-            </div>
-
-            <div className="row g-4">
-              {a.items.map(([icon, title, text]) => (
-                <div className="col-md-6 col-xl-3" key={title}>
-                  <article className="why-card">
-                    <span className="icon-circle"><i className={`bi ${icon}`}></i></span>
-                    <h3>{title}</h3>
-                    <p>{text}</p>
-                  </article>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    function VisualStories({ lang }) {
-      const v = content[lang].visual;
-
-      return (
-        <section className="section">
-          <div className="container">
-            <div className="section-title">
-              <div className="eyebrow">{v.eyebrow}</div>
-              <h2>{v.title}</h2>
-              <p>{v.intro}</p>
-            </div>
-
-            <div className="visual-grid">
-              {v.cards.map(([title, text], index) => (
-                <article className="visual-tile" key={title}>
-                  <img src={visualImages[index]} alt="" loading="lazy" />
-                  <div className="visual-caption">
-                    <h3>{title}</h3>
-                    <p>{text}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    function Booking({ lang, selectedService, setSelectedService }) {
-      const t = content[lang].booking;
-      const services = serviceData[lang];
-      const today = useMemo(() => formatDateInput(new Date()), []);
-      const suggestedDate = useMemo(() => {
-        const date = new Date();
-        date.setDate(date.getDate() + 7);
-        return formatDateInput(date);
-      }, []);
-
-      const [form, setForm] = useState({
-        service: selectedService || "initiale",
-        date: suggestedDate,
-        time: "10:00",
-        name: "",
-        email: "",
-        phone: "",
-        notes: ""
+    function setLanguage(lang) {
+      currentLang = lang;
+      root.lang = lang;
+      langButtons.forEach(btn => btn.setAttribute("aria-pressed", String(btn.dataset.setLang === lang)));
+      detailsLinks.forEach(link => {
+        const url = new URL(link.href);
+        url.searchParams.set("lang", lang);
+        link.href = `${url.pathname.split('/').pop()}?${url.searchParams.toString()}`;
       });
-      const [submitted, setSubmitted] = useState(false);
+      updateSummary();
+    }
 
-      useEffect(() => {
-        setForm((previous) => ({ ...previous, service: selectedService || previous.service }));
-      }, [selectedService]);
+    langButtons.forEach(btn => btn.addEventListener("click", () => setLanguage(btn.dataset.setLang)));
 
-      const chosen = services.find((service) => service.id === form.service) || services[0];
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+    menuBtn.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(open));
+      menuBtn.innerHTML = open ? '<i class="bi bi-x-lg" aria-hidden="true"></i>' : '<i class="bi bi-list" aria-hidden="true"></i>';
+    });
+    navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.innerHTML = '<i class="bi bi-list" aria-hidden="true"></i>';
+    }));
 
-      function update(event) {
-        const { name, value } = event.target;
-        setForm((previous) => ({ ...previous, [name]: value }));
-        setSubmitted(false);
-        if (name === "service") setSelectedService(value);
+    const bookingForm = document.getElementById("bookingForm");
+    const serviceSelect = document.getElementById("serviceSelect");
+    const dateInput = document.getElementById("dateInput");
+    const timeSelect = document.getElementById("timeSelect");
+    const confirmation = document.getElementById("confirmation");
+
+    const today = new Date();
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    dateInput.min = today.toISOString().split("T")[0];
+
+    function updateSummary() {
+      const key = serviceSelect.value;
+      const info = serviceInfo[key];
+      document.getElementById("summaryService").textContent = info[currentLang];
+      document.getElementById("summaryDuration").textContent = `${info.duration} min`;
+      document.getElementById("summaryPrice").textContent = `${info.price} $`;
+      document.getElementById("summaryDate").textContent = dateInput.value || "—";
+      document.getElementById("summaryTime").textContent = timeSelect.value;
+    }
+
+    [serviceSelect, dateInput, timeSelect].forEach(control => control.addEventListener("change", updateSummary));
+
+    document.querySelectorAll(".book-service").forEach(button => {
+      button.addEventListener("click", () => {
+        serviceSelect.value = button.dataset.service;
+        updateSummary();
+        document.getElementById("reservation").scrollIntoView({ behavior: "smooth" });
+        setTimeout(() => serviceSelect.focus(), 450);
+      });
+    });
+
+    bookingForm.addEventListener("submit", event => {
+      event.preventDefault();
+      if (!bookingForm.checkValidity()) {
+        bookingForm.reportValidity();
+        return;
       }
+      const name = document.getElementById("nameInput").value.trim();
+      const info = serviceInfo[serviceSelect.value];
+      confirmation.classList.add("show");
+      confirmation.innerHTML = currentLang === "fr"
+        ? `<strong><i class="bi bi-check-circle"></i> Réservation confirmée.</strong><br>Merci ${name}. Votre ${info.fr.toLowerCase()} est prévue le ${dateInput.value} à ${timeSelect.value}.`
+        : `<strong><i class="bi bi-check-circle"></i> Booking confirmed.</strong><br>Thank you ${name}. Your ${info.en.toLowerCase()} is scheduled for ${dateInput.value} at ${timeSelect.value}.`;
+      confirmation.focus?.();
+    });
 
-      function submit(event) {
-        event.preventDefault();
-        setSubmitted(true);
-      }
-
-      return (
-        <section className="section alt" id="reservation">
-          <div className="container">
-            <div className="section-title">
-              <div className="eyebrow">{t.eyebrow}</div>
-              <h2>{t.title}</h2>
-              <p>{t.intro}</p>
-            </div>
-
-            <div className="row g-4 align-items-stretch">
-              <div className="col-lg-7">
-                <form className="booking-card" onSubmit={submit}>
-                  <div className="row g-3">
-                    <div className="col-md-6">
-                      <label className="form-label" htmlFor="service">{t.labels.service}</label>
-                      <select className="form-select" id="service" name="service" value={form.service} onChange={update}>
-                        {services.map((service) => (
-                          <option value={service.id} key={service.id}>{service.titre} — {service.prix}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="col-md-3">
-                      <label className="form-label" htmlFor="date">{t.labels.date}</label>
-                      <input className="form-control" type="date" id="date" name="date" min={today} value={form.date} onChange={update} required />
-                    </div>
-
-                    <div className="col-md-3">
-                      <label className="form-label" htmlFor="time">{t.labels.time}</label>
-                      <select className="form-select" id="time" name="time" value={form.time} onChange={update}>
-                        <option value="09:00">09 h 00</option>
-                        <option value="10:00">10 h 00</option>
-                        <option value="14:30">14 h 30</option>
-                        <option value="16:15">16 h 15</option>
-                      </select>
-                    </div>
-
-                    <div className="col-md-6">
-                      <label className="form-label" htmlFor="name">{t.labels.name}</label>
-                      <input className="form-control" id="name" name="name" value={form.name} onChange={update} placeholder={t.placeholders.name} required />
-                    </div>
-
-                    <div className="col-md-6">
-                      <label className="form-label" htmlFor="email">{t.labels.email}</label>
-                      <input className="form-control" type="email" id="email" name="email" value={form.email} onChange={update} placeholder={t.placeholders.email} required />
-                    </div>
-
-                    <div className="col-md-6">
-                      <label className="form-label" htmlFor="phone">{t.labels.phone}</label>
-                      <input className="form-control" type="tel" id="phone" name="phone" value={form.phone} onChange={update} placeholder={t.placeholders.phone} required />
-                    </div>
-
-                    <div className="col-md-6">
-                      <label className="form-label" htmlFor="notes">{t.labels.notes}</label>
-                      <input className="form-control" id="notes" name="notes" value={form.notes} onChange={update} placeholder={t.placeholders.notes} />
-                    </div>
-                  </div>
-
-                  <button className="btn-nutri mt-4" type="submit">
-                    <i className="bi bi-calendar-check"></i> {t.button}
-                  </button>
-
-                  {submitted && (
-                    <div className="confirmation mt-4" role="status" aria-live="polite">
-                      <strong><i className="bi bi-check-circle"></i> {t.confirmed}</strong><br />
-                      {t.thank} {form.name}. {t.request} <strong>{chosen.titre}</strong> {lang === "fr" ? "le" : "on"} <strong>{form.date}</strong> {lang === "fr" ? "à" : "at"} <strong>{form.time}</strong> {t.saved}
-                    </div>
-                  )}
-                </form>
-              </div>
-
-              <div className="col-lg-5">
-                <aside className="summary-panel">
-                  <h3>{t.summaryTitle}</h3>
-                  <p>{t.summaryIntro}</p>
-                  <div className="summary-item"><span>{t.labels.service}</span><strong>{chosen.titre}</strong></div>
-                  <div className="summary-item"><span>{t.duration}</span><strong>{chosen.duree}</strong></div>
-                  <div className="summary-item"><span>{t.price}</span><strong>{chosen.prix}</strong></div>
-                  <div className="summary-item"><span>{t.labels.date}</span><strong>{form.date}</strong></div>
-                  <div className="summary-item"><span>{t.labels.time}</span><strong>{form.time}</strong></div>
-                </aside>
-              </div>
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    function FAQ({ lang }) {
-      const [open, setOpen] = useState(0);
-      const t = content[lang].faq;
-      const faqs = faqData[lang];
-
-      return (
-        <section className="section" id="faq">
-          <div className="container">
-            <div className="section-title">
-              <div className="eyebrow">{t.eyebrow}</div>
-              <h2>{t.title}</h2>
-              <p>{t.intro}</p>
-            </div>
-
-            <div className="row g-3">
-              {faqs.map((item, index) => (
-                <div className="col-lg-6" key={item.q}>
-                  <article className="faq-card">
-                    <button
-                      className="faq-button"
-                      type="button"
-                      onClick={() => setOpen(open === index ? -1 : index)}
-                      aria-expanded={open === index}
-                    >
-                      {item.q}
-                      <i className={`bi ${open === index ? "bi-chevron-up" : "bi-chevron-down"}`}></i>
-                    </button>
-                    {open === index && <div className="faq-answer">{item.a}</div>}
-                  </article>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    function Footer({ lang }) {
-      const t = content[lang].footer;
-      const nav = content[lang].nav;
-
-      return (
-        <footer className="footer" id="contact">
-          <div className="footer-main">
-            <div className="container footer-grid">
-              <div>
-                <div className="footer-brand">Nutri<span>Vie</span></div>
-                <p className="footer-copy">{t.description}</p>
-              </div>
-
-              <div>
-                <h3>{t.explore}</h3>
-                <ul>
-                  <li><a href="#accueil">{lang === "fr" ? "Accueil" : "Home"}</a></li>
-                  <li><a href="#services">{nav.services}</a></li>
-                  <li><a href="#parcours">{nav.process}</a></li>
-                  <li><a href="#reservation">{nav.booking}</a></li>
-                  <li><a href="#faq">{nav.faq}</a></li>
-                </ul>
-              </div>
-
-              <div>
-                <h3>{t.contact}</h3>
-                <div className="footer-contact-line"><i className="bi bi-geo-alt"></i><span>120 rue Santé, Ottawa, ON</span></div>
-                <div className="footer-contact-line"><i className="bi bi-telephone"></i><a href="tel:6135550188">613-555-0188</a></div>
-                <div className="footer-contact-line"><i className="bi bi-envelope"></i><a href="mailto:contact@nutrivie.ca">contact@nutrivie.ca</a></div>
-              </div>
-
-              <div>
-                <h3>{t.hours}</h3>
-                <ul>
-                  <li>{t.weekdays}</li>
-                  <li>{t.saturday}</li>
-                  <li>{t.sunday}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="footer-bottom">
-            <div className="container d-flex flex-column flex-md-row justify-content-between gap-2">
-              <span>{t.legal}</span>
-              <a href="index.html#projects">{t.portfolio}</a>
-            </div>
-          </div>
-        </footer>
-      );
-    }
-
-    function App() {
-      const urlLang = new URLSearchParams(window.location.search).get("lang");
-      const [lang, setLang] = useState(urlLang === "en" ? "en" : "fr");
-      const [selectedService, setSelectedService] = useState(getInitialService());
-
-      useEffect(() => {
-        document.documentElement.lang = lang;
-      }, [lang]);
-
-      useEffect(() => {
-        function updateProgress() {
-          const page = document.documentElement;
-          const scrollTop = page.scrollTop || document.body.scrollTop;
-          const scrollHeight = page.scrollHeight - page.clientHeight;
-          const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-          const bar = document.getElementById("progress");
-          if (bar) bar.style.width = `${progress}%`;
-        }
-
-        window.addEventListener("scroll", updateProgress);
-        updateProgress();
-        return () => window.removeEventListener("scroll", updateProgress);
-      }, []);
-
-      useEffect(() => {
-        if (window.location.hash === "#reservation") {
-          setTimeout(() => document.getElementById("reservation")?.scrollIntoView({ behavior: "smooth" }), 180);
-        }
-      }, []);
-
-      function book(id) {
-        setSelectedService(id);
-        setTimeout(() => document.getElementById("reservation")?.scrollIntoView({ behavior: "smooth" }), 60);
-      }
-
-      return (
-        <>
-          <Header lang={lang} setLang={setLang} />
-          <main id="contenu">
-            <Hero lang={lang} onBook={book} />
-            <Services lang={lang} selectedService={selectedService} onBook={book} />
-            <Process lang={lang} />
-            <Approach lang={lang} />
-            <VisualStories lang={lang} />
-            <Booking lang={lang} selectedService={selectedService} setSelectedService={setSelectedService} />
-            <FAQ lang={lang} />
-          </main>
-          <Footer lang={lang} />
-        </>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    setLanguage(currentLang);
+    updateSummary();
   </script>
 </body>
 </html>

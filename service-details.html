@@ -3,606 +3,413 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Détails et réservation des services de la clinique fictive NutriVie." />
   <title>NutriVie | Détails du service</title>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
 
   <style>
     :root {
-      --cream: #f7f1e8;
-      --cream-2: #fffaf3;
-      --sage: #6f8f72;
-      --sage-dark: #36543a;
-      --coral: #d9826b;
-      --coral-dark: #9e4f3e;
-      --ink: #2f241d;
-      --muted: #6e5a4d;
-      --line: #dfd1c2;
-      --shadow: 0 18px 45px rgba(47, 36, 29, 0.12);
+      --forest: #2f6658;
+      --forest-dark: #204a40;
+      --sage: #9fbfae;
+      --sage-soft: #e6f0eb;
+      --ivory: #faf7f0;
+      --ivory-2: #fffdf8;
+      --coral: #e28b6d;
+      --coral-dark: #b85e43;
+      --ink: #24332d;
+      --muted: #5f7069;
+      --beige: #e8ded0;
+      --white: #ffffff;
+      --shadow: 0 22px 55px rgba(36, 51, 45, 0.12);
+      --shadow-soft: 0 14px 34px rgba(36, 51, 45, 0.08);
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "Outfit", system-ui, sans-serif;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; font-family: "Outfit", sans-serif; color: var(--ink); background: var(--cream); line-height: 1.65; }
-    img { display: block; max-width: 100%; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 12%, rgba(159,191,174,.28), transparent 28%),
+        var(--ivory);
+      font-family: var(--sans);
+      line-height: 1.65;
+    }
     a { color: inherit; text-decoration: none; }
-    h1, h2, h3 { font-family: "Cormorant Garamond", serif; font-weight: 700; }
+    img { display: block; width: 100%; }
+    button, input, select, textarea { font: inherit; }
+    :focus-visible { outline: 3px solid rgba(226,139,109,.55); outline-offset: 3px; }
 
-    .site-nav { position: sticky; top: 0; z-index: 1000; background: rgba(47, 36, 29, 0.96); border-bottom: 1px solid rgba(255,255,255,0.14); }
-    .nav-inner { max-width: 1240px; min-height: 76px; margin: 0 auto; padding: 0 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-    .brand { display: flex; align-items: center; gap: 0.55rem; color: white; font-family: "Cormorant Garamond", serif; font-size: 1.85rem; font-weight: 700; }
-    .brand span { color: var(--coral); }
-    .nav-actions { display: flex; align-items: center; gap: 0.8rem; }
+    .container { width: min(1160px, calc(100% - 2rem)); margin-inline: auto; }
 
-    .btn-main, .btn-ghost {
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      color: var(--white);
+      background: rgba(32,74,64,.96);
+      border-bottom: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(12px);
+    }
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; }
+    .nav-right { display: flex; align-items: center; gap: .8rem; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      color: var(--coral);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .lang-switcher { display: inline-flex; border: 1px solid rgba(255,255,255,.45); border-radius: 999px; overflow: hidden; }
+    .lang-btn { min-width: 42px; border: 0; padding: .45rem .7rem; color: rgba(255,255,255,.78); background: transparent; cursor: pointer; font-size: .72rem; font-weight: 800; }
+    .lang-btn[aria-pressed="true"] { color: var(--ink); background: var(--coral); }
+
+    .hero { padding: clamp(3.6rem, 7vw, 7rem) 0 4rem; }
+    .hero-grid { display: grid; grid-template-columns: 1.04fr .96fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+    .eyebrow { margin: 0 0 .8rem; color: var(--forest); font-size: .74rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    h1, h2, h3 { margin-top: 0; font-family: var(--serif); }
+    h1 { margin-bottom: 1rem; font-size: clamp(3.8rem, 7vw, 6.5rem); line-height: .9; letter-spacing: -.04em; }
+    h2 { margin-bottom: 1rem; font-size: clamp(2.7rem, 5vw, 4.2rem); line-height: .95; }
+    h3 { margin-bottom: .5rem; font-size: 1.65rem; line-height: 1.1; }
+    .lead { max-width: 640px; color: var(--muted); font-size: 1.08rem; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.4rem 0; }
+    .meta-pill { display: inline-flex; align-items: center; gap: .45rem; padding: .55rem .8rem; border-radius: 999px; background: var(--sage-soft); color: var(--forest-dark); font-weight: 700; }
+    .hero-image { height: 520px; object-fit: cover; border-radius: 120px 26px 26px 26px; box-shadow: var(--shadow); }
+
+    .btn-primary, .btn-secondary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.45rem;
+      gap: .55rem;
+      min-height: 48px;
       border-radius: 999px;
-      padding: 0.88rem 1.35rem;
+      padding: .75rem 1.15rem;
       font-weight: 700;
-      transition: transform 0.2s ease, background 0.2s ease;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease;
     }
+    .btn-primary { border: 1px solid var(--coral); background: var(--coral); color: var(--ink); box-shadow: 0 10px 24px rgba(226,139,109,.28); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(226,139,109,.36); }
+    .btn-secondary { border: 1px solid var(--forest); background: transparent; color: var(--forest); }
+    .btn-secondary:hover { transform: translateY(-2px); background: var(--sage-soft); }
 
-    .btn-main { color: white; background: var(--coral); box-shadow: 0 10px 22px rgba(217,130,107,0.24); }
-    .btn-main:hover { color: white; background: var(--coral-dark); transform: translateY(-2px); }
-    .btn-ghost { border: 1px solid rgba(255,255,255,0.45); color: white; }
-    .btn-ghost:hover { color: var(--ink); background: white; }
+    .section { padding: clamp(4.8rem, 8vw, 7rem) 0; }
+    .section-alt { background: var(--ivory-2); }
+    .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+    .info-card { padding: 1.5rem; border: 1px solid var(--beige); border-radius: 22px; background: var(--white); box-shadow: var(--shadow-soft); }
+    .info-card p { margin-bottom: 0; color: var(--muted); }
+    .check-list { display: grid; gap: .8rem; margin: 1.2rem 0 0; padding: 0; list-style: none; }
+    .check-list li { display: grid; grid-template-columns: 28px 1fr; gap: .7rem; align-items: start; }
+    .check-list i { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--sage-soft); color: var(--forest); }
 
-    .lang-switcher { display: inline-flex; overflow: hidden; border: 1px solid rgba(255,255,255,0.45); border-radius: 999px; }
-    .lang-btn { border: 0; padding: 0.42rem 0.66rem; color: #e8d8c8; background: transparent; font-size: 0.72rem; font-weight: 800; cursor: pointer; }
-    .lang-btn.active { color: white; background: var(--coral); }
+    .booking-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 1.5rem; align-items: start; }
+    .booking-form, .summary-card { border: 1px solid var(--beige); border-radius: 26px; background: var(--white); box-shadow: var(--shadow-soft); }
+    .booking-form { padding: clamp(1.4rem, 3vw, 2.2rem); }
+    .summary-card { position: sticky; top: 94px; padding: 1.5rem; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .field { display: grid; gap: .42rem; }
+    .field.full { grid-column: 1 / -1; }
+    label { font-weight: 700; font-size: .9rem; }
+    input, select, textarea { width: 100%; min-height: 48px; border: 1px solid #c9d8d1; border-radius: 12px; padding: .72rem .85rem; color: var(--ink); background: var(--ivory-2); }
+    textarea { min-height: 105px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { border-color: var(--forest); outline: 3px solid rgba(47,102,88,.16); }
+    .form-footer { display: flex; align-items: flex-start; gap: 1rem; margin-top: 1.2rem; }
+    .privacy { margin: .2rem 0 0; color: var(--muted); font-size: .82rem; }
 
-    .detail-hero { padding: 4.8rem 0 3.5rem; background: linear-gradient(135deg, var(--cream-2), var(--cream)); border-bottom: 1px solid var(--line); }
-    .eyebrow { display: inline-flex; align-items: center; gap: 0.65rem; margin-bottom: 1rem; color: var(--sage-dark); font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.16em; }
-    .eyebrow::before { content: ""; width: 42px; height: 2px; background: var(--coral); }
-    .detail-hero h1 { max-width: 900px; margin: 0 0 1rem; font-size: clamp(3.8rem, 7vw, 6.5rem); line-height: 0.9; letter-spacing: -0.04em; }
-    .detail-hero p { max-width: 720px; margin: 0; color: var(--muted); font-size: 1.18rem; }
-
-    .detail-section { padding: 5rem 0; }
-    .detail-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(380px, .95fr); gap: 2.5rem; align-items: start; }
-    .detail-image { width: 100%; height: 500px; object-fit: cover; border: 1px solid var(--line); border-radius: 28px; box-shadow: var(--shadow); }
-    .info-card, .booking-card { border: 1px solid var(--line); border-radius: 26px; background: white; box-shadow: 0 14px 30px rgba(47,36,29,0.08); }
-    .info-card { margin-top: 1.5rem; padding: 2rem; }
-    .info-card h2 { margin-bottom: 1.2rem; font-size: 3rem; line-height: 1; }
-    .info-card h3 { margin-top: 2rem; font-size: 2rem; }
-    .info-card p { color: var(--muted); font-size: 1.05rem; }
-    .info-card ul { padding-left: 1.25rem; color: var(--muted); }
-    .info-card li { margin-bottom: 0.45rem; }
-
-    .booking-card { position: sticky; top: 100px; padding: 1.7rem; }
-    .booking-card h2 { margin-bottom: .45rem; font-size: 2.7rem; line-height: 1; }
-    .booking-intro { margin-bottom: 1.15rem; color: var(--muted); }
-    .badge-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1rem 0 1.2rem; }
-    .tag { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.42rem 0.7rem; border-radius: 999px; color: var(--sage-dark); background: #edf3ec; font-size: 0.82rem; font-weight: 700; }
-    .price { margin: .35rem 0 1rem; color: var(--coral-dark); font-family: "Cormorant Garamond", serif; font-size: 3rem; font-weight: 700; line-height: 1; }
-
-    .form-label { margin-bottom: .38rem; color: var(--ink); font-size: .9rem; font-weight: 800; }
-    .form-control, .form-select { min-height: 48px; border: 1px solid var(--line); border-radius: 14px; padding: .72rem .85rem; background-color: var(--cream-2); }
-    .form-control:focus, .form-select:focus { border-color: var(--sage); box-shadow: 0 0 0 .2rem rgba(111,143,114,.16); background-color: white; }
-    textarea.form-control { min-height: 92px; resize: vertical; }
-    .booking-card .btn-main { width: 100%; border: 0; margin-top: .35rem; cursor: pointer; }
-
-    .booking-summary { margin: 1.15rem 0; padding: 1rem; border-radius: 18px; color: white; background: var(--sage-dark); }
-    .booking-summary h3 { margin: 0 0 .55rem; color: white; font-size: 1.45rem; }
-    .summary-row { display: flex; justify-content: space-between; gap: 1rem; padding: .42rem 0; border-bottom: 1px solid rgba(255,255,255,.14); font-size: .92rem; }
-    .summary-row:last-child { border-bottom: 0; }
-    .summary-row span { color: #dce8dc; }
+    .summary-row { display: flex; justify-content: space-between; gap: 1rem; padding: .85rem 0; border-bottom: 1px solid var(--beige); }
+    .summary-row span { color: var(--muted); }
     .summary-row strong { text-align: right; }
+    .summary-row:last-of-type { border-bottom: 0; }
+    .summary-price { margin: 1rem -1.5rem -1.5rem; padding: 1rem 1.5rem; border-radius: 0 0 26px 26px; background: var(--sage-soft); color: var(--forest-dark); font-weight: 800; }
+    .confirmation { display: none; margin-top: 1rem; padding: 1rem; border: 1px solid var(--sage); border-radius: 12px; background: var(--sage-soft); color: var(--forest-dark); }
+    .confirmation.show { display: block; }
 
-    .confirmation { margin-top: 1rem; padding: 1rem; border: 1px solid rgba(111,143,114,.35); border-radius: 18px; color: var(--sage-dark); background: #eef7ef; }
-    .confirmation strong { display: block; margin-bottom: .25rem; }
-    .privacy-note { margin: .8rem 0 0; color: var(--muted); font-size: .82rem; }
+    footer { padding: 1.5rem 0; color: rgba(255,255,255,.72); background: var(--forest-dark); }
+    .footer-inner { display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+    .footer-inner a { color: var(--coral); font-weight: 700; }
 
-    .footer { padding: 2rem 0; color: #cdbdaf; background: var(--ink); }
-    .footer a { color: white; }
+    [data-lang="en"] { display: none; }
+    html[lang="en"] [data-lang="fr"] { display: none !important; }
+    html[lang="en"] [data-lang="en"] { display: initial; }
 
-    @media (max-width: 992px) {
-      .detail-grid { grid-template-columns: 1fr; }
-      .booking-card { position: static; }
-      .detail-image { height: 420px; }
+    @media (max-width: 900px) {
+      .hero-grid, .details-grid, .booking-grid { grid-template-columns: 1fr; }
+      .hero-image { height: 460px; }
+      .summary-card { position: static; }
     }
-
-    @media (max-width: 576px) {
-      .nav-inner { padding-inline: 0.9rem; }
-      .brand { font-size: 1.5rem; }
-      .btn-ghost { display: none; }
-      .detail-hero h1 { font-size: 3.5rem; }
-      .detail-image { height: 330px; }
-      .info-card { padding: 1.35rem; }
+    @media (max-width: 620px) {
+      .back-link span { display: none; }
+      .hero { padding-top: 3rem; }
+      h1 { font-size: clamp(3.4rem, 16vw, 5rem); }
+      .hero-image { height: 400px; border-radius: 85px 20px 20px 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .form-footer, .footer-inner { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
-  <div id="root"></div>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="service-website.html">NutriVie</a>
+      <div class="nav-right">
+        <a class="back-link" id="backLink" href="service-website.html#services"><i class="bi bi-arrow-left"></i><span data-lang="fr">Retour aux services</span><span data-lang="en">Back to services</span></a>
+        <div class="lang-switcher" aria-label="Choisir la langue">
+          <button class="lang-btn" type="button" data-set-lang="fr" aria-pressed="true">FR</button>
+          <button class="lang-btn" type="button" data-set-lang="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow"><span data-lang="fr">Service NutriVie</span><span data-lang="en">NutriVie service</span></p>
+          <h1 id="serviceTitle">Consultation initiale</h1>
+          <p class="lead" id="serviceLead"></p>
+          <div class="meta-row">
+            <span class="meta-pill"><i class="bi bi-clock"></i><span id="serviceDuration">60 min</span></span>
+            <span class="meta-pill"><i class="bi bi-tag"></i><span id="servicePrice">125 $</span></span>
+            <span class="meta-pill"><i class="bi bi-camera-video"></i><span data-lang="fr">En ligne ou en clinique</span><span data-lang="en">Online or in clinic</span></span>
+          </div>
+          <a class="btn-primary" href="#reservation"><i class="bi bi-calendar-check"></i><span data-lang="fr">Réserver ce service</span><span data-lang="en">Book this service</span></a>
+        </div>
+        <img class="hero-image" id="serviceImage" src="" alt="" />
+      </div>
+    </section>
 
-  <script type="text/babel">
-    const { useEffect, useState } = React;
+    <section class="section section-alt">
+      <div class="container details-grid">
+        <article class="info-card">
+          <p class="eyebrow"><span data-lang="fr">Pour qui?</span><span data-lang="en">Who is it for?</span></p>
+          <h2><span data-lang="fr">Un service adapté à votre situation</span><span data-lang="en">A service adapted to your situation</span></h2>
+          <p id="audienceText"></p>
+        </article>
+        <article class="info-card">
+          <p class="eyebrow"><span data-lang="fr">Ce qui est inclus</span><span data-lang="en">What is included</span></p>
+          <h2><span data-lang="fr">Un plan clair après la rencontre</span><span data-lang="en">A clear plan after the meeting</span></h2>
+          <ul class="check-list" id="includedList"></ul>
+        </article>
+      </div>
+    </section>
 
+    <section class="section" id="reservation">
+      <div class="container">
+        <p class="eyebrow"><span data-lang="fr">Réservation</span><span data-lang="en">Booking</span></p>
+        <h2><span data-lang="fr">Planifier votre consultation</span><span data-lang="en">Schedule your consultation</span></h2>
 
-    function svgToDataUri(svg) {
-      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-    }
-
-    const serviceImages = {
-      initiale: svgToDataUri(`
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
-          <title id="title">Première consultation nutritionnelle</title>
-          <desc id="desc">Une nutritionniste échange avec une cliente autour d'un bureau avec un carnet.</desc>
-          <defs>
-            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#fffaf3"/>
-              <stop offset="1" stop-color="#dfeadb"/>
-            </linearGradient>
-            <linearGradient id="desk" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#b56c58"/>
-              <stop offset="1" stop-color="#d9826b"/>
-            </linearGradient>
-          </defs>
-          <rect width="1200" height="900" fill="url(#bg)"/>
-          <circle cx="1040" cy="130" r="190" fill="#6f8f72" opacity=".13"/>
-          <circle cx="130" cy="760" r="210" fill="#d9826b" opacity=".12"/>
-          <rect x="125" y="115" width="950" height="660" rx="52" fill="#ffffff" opacity=".78"/>
-          <rect x="215" y="600" width="770" height="72" rx="30" fill="url(#desk)"/>
-          <rect x="530" y="425" width="170" height="190" rx="18" fill="#fffaf3" stroke="#36543a" stroke-width="10"/>
-          <rect x="565" y="465" width="100" height="12" rx="6" fill="#6f8f72"/>
-          <rect x="565" y="505" width="78" height="12" rx="6" fill="#d9826b"/>
-          <rect x="565" y="545" width="112" height="12" rx="6" fill="#6e5a4d" opacity=".55"/>
-          <circle cx="350" cy="360" r="78" fill="#c98c70"/>
-          <path d="M260 385c0-115 178-128 184 8-42-29-84-42-142-17-17 7-29 13-42 9Z" fill="#2f241d"/>
-          <path d="M225 595c12-132 67-194 133-194s122 62 135 194Z" fill="#6f8f72"/>
-          <rect x="298" y="566" width="120" height="32" rx="16" fill="#dfeadb"/>
-          <circle cx="846" cy="360" r="78" fill="#e3b49e"/>
-          <path d="M765 360c8-96 156-124 172 15-53-23-100-19-148 5-8-5-16-12-24-20Z" fill="#704c3c"/>
-          <path d="M718 595c17-130 75-194 135-194 64 0 124 66 140 194Z" fill="#d9826b"/>
-          <rect x="780" y="565" width="125" height="32" rx="16" fill="#f4c8ba"/>
-          <path d="M470 282h140c28 0 50 22 50 50v24c0 28-22 50-50 50h-55l-43 44 8-44h-10c-28 0-50-22-50-50v-24c0-28 22-50 50-50Z" fill="#36543a"/>
-          <circle cx="522" cy="344" r="10" fill="#fff"/><circle cx="560" cy="344" r="10" fill="#fff"/><circle cx="598" cy="344" r="10" fill="#fff"/>
-          <path d="M762 210h104c25 0 45 20 45 45v14c0 25-20 45-45 45h-28l-34 34 5-34h-47c-25 0-45-20-45-45v-14c0-25 20-45 45-45Z" fill="#f1e7d9" stroke="#d9826b" stroke-width="8"/>
-          <path d="M775 258h78" stroke="#d9826b" stroke-width="12" stroke-linecap="round"/>
-        </svg>
-      `),
-
-      suivi: svgToDataUri(`
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
-          <title id="title">Suivi nutritionnel</title>
-          <desc id="desc">Un tableau de progression avec une liste d'objectifs et une personne consultant ses résultats.</desc>
-          <defs>
-            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#f7f1e8"/>
-              <stop offset="1" stop-color="#f6ddd5"/>
-            </linearGradient>
-            <linearGradient id="chart" x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0" stop-color="#6f8f72"/>
-              <stop offset="1" stop-color="#36543a"/>
-            </linearGradient>
-          </defs>
-          <rect width="1200" height="900" fill="url(#bg)"/>
-          <circle cx="1030" cy="750" r="240" fill="#d9826b" opacity=".11"/>
-          <circle cx="165" cy="130" r="175" fill="#6f8f72" opacity=".13"/>
-          <rect x="110" y="105" width="980" height="690" rx="54" fill="#fff" opacity=".84"/>
-          <rect x="180" y="190" width="610" height="490" rx="34" fill="#fffaf3" stroke="#dfd1c2" stroke-width="8"/>
-          <path d="M265 560 360 500 455 520 550 405 650 335 720 285" fill="none" stroke="url(#chart)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="265" cy="560" r="18" fill="#d9826b"/><circle cx="360" cy="500" r="18" fill="#d9826b"/><circle cx="455" cy="520" r="18" fill="#d9826b"/><circle cx="550" cy="405" r="18" fill="#d9826b"/><circle cx="650" cy="335" r="18" fill="#d9826b"/><circle cx="720" cy="285" r="18" fill="#d9826b"/>
-          <path d="M250 615h500" stroke="#dfd1c2" stroke-width="10" stroke-linecap="round"/>
-          <path d="M250 250h210" stroke="#2f241d" stroke-width="24" stroke-linecap="round"/>
-          <path d="M250 300h135" stroke="#6e5a4d" stroke-width="12" stroke-linecap="round" opacity=".55"/>
-          <rect x="820" y="190" width="215" height="330" rx="28" fill="#dfeadb"/>
-          <circle cx="865" cy="255" r="22" fill="#6f8f72"/>
-          <path d="m853 255 9 10 17-24" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M905 255h82" stroke="#36543a" stroke-width="13" stroke-linecap="round"/>
-          <circle cx="865" cy="335" r="22" fill="#6f8f72"/>
-          <path d="m853 335 9 10 17-24" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M905 335h82" stroke="#36543a" stroke-width="13" stroke-linecap="round"/>
-          <circle cx="865" cy="415" r="22" fill="#fff" stroke="#6f8f72" stroke-width="8"/>
-          <path d="M905 415h82" stroke="#36543a" stroke-width="13" stroke-linecap="round" opacity=".65"/>
-          <circle cx="922" cy="635" r="64" fill="#e3b49e"/>
-          <path d="M850 635c12-90 136-99 145 8-49-21-93-19-145-8Z" fill="#2f241d"/>
-          <path d="M810 785c18-110 62-166 114-166 55 0 103 58 119 166Z" fill="#36543a"/>
-          <rect x="735" y="660" width="185" height="105" rx="18" fill="#2f241d" transform="rotate(-8 735 660)"/>
-          <rect x="765" y="688" width="120" height="12" rx="6" fill="#f7f1e8" opacity=".65" transform="rotate(-8 765 688)"/>
-        </svg>
-      `),
-
-      famille: svgToDataUri(`
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
-          <title id="title">Plan nutritionnel familial</title>
-          <desc id="desc">Une famille prépare un repas coloré ensemble dans une cuisine chaleureuse.</desc>
-          <defs>
-            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#fffaf3"/>
-              <stop offset="1" stop-color="#e8ead7"/>
-            </linearGradient>
-          </defs>
-          <rect width="1200" height="900" fill="url(#bg)"/>
-          <rect x="85" y="85" width="1030" height="730" rx="58" fill="#ffffff" opacity=".76"/>
-          <rect x="150" y="560" width="900" height="120" rx="34" fill="#b56c58"/>
-          <rect x="190" y="180" width="250" height="220" rx="28" fill="#dfeadb"/>
-          <rect x="750" y="180" width="250" height="220" rx="28" fill="#f5ddd4"/>
-          <path d="M235 235h160M235 285h160M235 335h110" stroke="#6f8f72" stroke-width="16" stroke-linecap="round" opacity=".55"/>
-          <circle cx="345" cy="430" r="70" fill="#c98c70"/>
-          <path d="M278 433c10-92 126-106 141 7-55-24-93-22-141-7Z" fill="#2f241d"/>
-          <path d="M245 590c10-110 53-165 105-165 55 0 99 58 110 165Z" fill="#6f8f72"/>
-          <circle cx="600" cy="395" r="78" fill="#e3b49e"/>
-          <path d="M520 397c5-105 151-125 164 6-60-30-113-27-164-6Z" fill="#704c3c"/>
-          <path d="M495 590c14-125 61-188 110-188 55 0 103 65 117 188Z" fill="#d9826b"/>
-          <circle cx="840" cy="438" r="62" fill="#d8a78e"/>
-          <path d="M782 442c8-78 113-96 124 3-47-19-83-18-124-3Z" fill="#2f241d"/>
-          <path d="M755 590c9-96 47-145 88-145 44 0 84 51 94 145Z" fill="#36543a"/>
-          <ellipse cx="590" cy="590" rx="155" ry="54" fill="#fffaf3"/>
-          <ellipse cx="590" cy="580" rx="125" ry="38" fill="#6f8f72"/>
-          <circle cx="540" cy="566" r="22" fill="#d9826b"/><circle cx="600" cy="575" r="20" fill="#f1c75b"/><circle cx="655" cy="562" r="23" fill="#c85b46"/><circle cx="575" cy="550" r="18" fill="#fffaf3"/>
-          <path d="M210 690h780" stroke="#8b5144" stroke-width="18" stroke-linecap="round"/>
-          <rect x="222" y="680" width="70" height="95" rx="16" fill="#dfeadb"/>
-          <rect x="905" y="680" width="70" height="95" rx="16" fill="#f5ddd4"/>
-          <path d="M107 200c120-95 150-55 190-5" fill="none" stroke="#d9826b" stroke-width="18" stroke-linecap="round" opacity=".35"/>
-        </svg>
-      `),
-
-      digestion: svgToDataUri(`
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
-          <title id="title">Énergie et digestion</title>
-          <desc id="desc">Une illustration de bien-être digestif avec une forme d'estomac, des feuilles, une tasse et des symboles d'énergie.</desc>
-          <defs>
-            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#f7f1e8"/>
-              <stop offset="1" stop-color="#dfeadb"/>
-            </linearGradient>
-            <linearGradient id="stomach" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#d9826b"/>
-              <stop offset="1" stop-color="#b45f4b"/>
-            </linearGradient>
-          </defs>
-          <rect width="1200" height="900" fill="url(#bg)"/>
-          <circle cx="600" cy="430" r="300" fill="#fff" opacity=".82"/>
-          <circle cx="600" cy="430" r="250" fill="#f7f1e8"/>
-          <path d="M565 250c-22 90-6 156 61 197 55 34 66 101 39 157-25 51-76 77-136 64-61-13-101-66-105-126-3-55 21-105 68-134 45-28 63-73 73-158Z" fill="url(#stomach)"/>
-          <path d="M550 308c-15 48-4 84 36 108" fill="none" stroke="#f8cfc4" stroke-width="24" stroke-linecap="round"/>
-          <path d="M674 290c95-85 181-50 166 54-67 8-120-7-166-54Z" fill="#6f8f72"/>
-          <path d="M677 290c54 13 99 30 145 53" fill="none" stroke="#36543a" stroke-width="12" stroke-linecap="round"/>
-          <path d="M385 300c-65-78-146-61-153 30 60 22 111 13 153-30Z" fill="#91aa92"/>
-          <path d="M382 302c-52 2-97 10-137 28" fill="none" stroke="#36543a" stroke-width="11" stroke-linecap="round"/>
-          <path d="M705 640h190a32 32 0 0 1 32 32v60a32 32 0 0 1-32 32H705Z" fill="#fffaf3" stroke="#36543a" stroke-width="10"/>
-          <path d="M927 678h36c49 0 49 70 0 70h-36" fill="none" stroke="#36543a" stroke-width="10"/>
-          <path d="M755 630c-22-40 18-49 0-89M805 630c-22-40 18-49 0-89" fill="none" stroke="#d9826b" stroke-width="11" stroke-linecap="round" opacity=".75"/>
-          <circle cx="255" cy="640" r="92" fill="#fffaf3" stroke="#dfd1c2" stroke-width="10"/>
-          <path d="m255 585 17 39 43 5-32 29 9 43-37-22-37 22 9-43-32-29 43-5Z" fill="#f1c75b"/>
-          <path d="M930 220v80M890 260h80" stroke="#d9826b" stroke-width="18" stroke-linecap="round"/>
-          <path d="M263 180v65M231 212h65" stroke="#6f8f72" stroke-width="16" stroke-linecap="round"/>
-          <circle cx="930" cy="260" r="65" fill="none" stroke="#d9826b" stroke-width="8" opacity=".25"/>
-        </svg>
-      `)
-    };
-
-    const details = {
-      fr: {
-        initiale: {
-          title: "Consultation initiale",
-          eyebrow: "Première rencontre",
-          lead: "Une rencontre complète pour comprendre votre situation et définir des objectifs réalistes.",
-          description: "Cette consultation permet de faire le point sur vos habitudes alimentaires, votre rythme de vie, vos préférences et les difficultés que vous rencontrez. Ensemble, nous choisissons des priorités simples et adaptées à votre quotidien.",
-          duration: "75 min",
-          price: "120 $",
-          target: "Idéal pour commencer",
-          included: ["Bilan des habitudes alimentaires", "Discussion des besoins et priorités", "Objectifs réalistes", "Premières recommandations personnalisées"],
-          expect: ["Un échange sans jugement", "Des conseils concrets", "Un plan de départ facile à suivre"],
-          image: serviceImages.initiale
-        },
-        suivi: {
-          title: "Suivi nutritionnel",
-          eyebrow: "Ajuster et progresser",
-          lead: "Un rendez-vous ciblé pour évaluer les progrès et adapter le plan.",
-          description: "Le suivi vous permet de poser vos questions, d'identifier ce qui fonctionne et d'ajuster les stratégies qui sont plus difficiles à appliquer.",
-          duration: "45 min",
-          price: "75 $",
-          target: "Pour maintenir les progrès",
-          included: ["Révision des objectifs", "Analyse des difficultés", "Ajustements du plan", "Nouvelles stratégies pratiques"],
-          expect: ["Un bilan rapide", "Des ajustements réalistes", "Un prochain objectif clair"],
-          image: serviceImages.suivi
-        },
-        famille: {
-          title: "Plan familial",
-          eyebrow: "Pour toute la famille",
-          lead: "Une consultation pour simplifier les repas et créer des routines qui conviennent à chacun.",
-          description: "Nous explorons l'organisation des repas, les préférences, les horaires et les besoins de la famille afin de proposer des solutions simples et réalistes.",
-          duration: "90 min",
-          price: "150 $",
-          target: "Pour les familles",
-          included: ["Organisation des repas", "Idées de menus simples", "Conseils adaptés aux enfants", "Routine familiale personnalisée"],
-          expect: ["Des solutions collaboratives", "Moins de stress autour des repas", "Des idées faciles à réutiliser"],
-          image: serviceImages.famille
-        },
-        digestion: {
-          title: "Énergie et digestion",
-          eyebrow: "Comprendre vos habitudes",
-          lead: "Une rencontre pour explorer les habitudes qui influencent votre confort et votre énergie.",
-          description: "Nous observons vos habitudes alimentaires et votre routine afin d'identifier des pistes simples pouvant soutenir votre confort digestif et votre niveau d'énergie.",
-          duration: "60 min",
-          price: "95 $",
-          target: "Pour mieux comprendre",
-          included: ["Analyse des habitudes", "Repérage des déclencheurs possibles", "Pistes d'amélioration", "Plan de suivi"],
-          expect: ["Une écoute attentive", "Des changements progressifs", "Des recommandations adaptées"],
-          image: serviceImages.digestion
-        }
-      },
-      en: {
-        initiale: {
-          title: "Initial consultation",
-          eyebrow: "First meeting",
-          lead: "A complete consultation to understand your situation and define realistic goals.",
-          description: "This consultation reviews your food habits, lifestyle, preferences, and current challenges. Together, we choose simple priorities adapted to daily life.",
-          duration: "75 min",
-          price: "$120",
-          target: "Ideal for getting started",
-          included: ["Food habits review", "Discussion of needs and priorities", "Realistic goals", "First personalized recommendations"],
-          expect: ["A judgment-free conversation", "Concrete advice", "A simple starting plan"],
-          image: serviceImages.initiale
-        },
-        suivi: {
-          title: "Nutrition follow-up",
-          eyebrow: "Adjust and progress",
-          lead: "A focused appointment to review progress and adapt the plan.",
-          description: "The follow-up gives you time to ask questions, identify what works, and adjust strategies that are harder to apply.",
-          duration: "45 min",
-          price: "$75",
-          target: "To maintain progress",
-          included: ["Goal review", "Challenge analysis", "Plan adjustments", "New practical strategies"],
-          expect: ["A quick review", "Realistic adjustments", "A clear next goal"],
-          image: serviceImages.suivi
-        },
-        famille: {
-          title: "Family plan",
-          eyebrow: "For the whole family",
-          lead: "A consultation to simplify meals and create routines that work for everyone.",
-          description: "We explore meal organization, preferences, schedules, and family needs to propose simple and realistic solutions.",
-          duration: "90 min",
-          price: "$150",
-          target: "For families",
-          included: ["Meal organization", "Simple menu ideas", "Child-friendly advice", "Personalized family routine"],
-          expect: ["Collaborative solutions", "Less stress around meals", "Reusable ideas"],
-          image: serviceImages.famille
-        },
-        digestion: {
-          title: "Energy and digestion",
-          eyebrow: "Understand your habits",
-          lead: "A consultation to explore habits that influence comfort and energy.",
-          description: "We review your food habits and routine to identify simple ideas that may support digestive comfort and energy levels.",
-          duration: "60 min",
-          price: "$95",
-          target: "To understand more",
-          included: ["Habit analysis", "Possible trigger review", "Improvement ideas", "Follow-up plan"],
-          expect: ["Attentive listening", "Progressive changes", "Adapted recommendations"],
-          image: serviceImages.digestion
-        }
-      }
-    };
-
-    const ui = {
-      fr: {
-        back: "Retour aux services",
-        included: "Ce qui est inclus",
-        expect: "À quoi vous attendre",
-        bookingTitle: "Réserver ce service",
-        bookingIntro: "Choisissez une date et une heure, puis vérifiez le résumé avant de confirmer.",
-        labels: { date: "Date", time: "Heure", name: "Nom complet", email: "Courriel", phone: "Téléphone", notes: "Préférence ou question" },
-        placeholders: { name: "Ex. Salma Benali", email: "nom@email.com", phone: "613-555-0000", notes: "Optionnel" },
-        summary: "Résumé du rendez-vous",
-        duration: "Durée",
-        price: "Prix",
-        service: "Service",
-        confirm: "Confirmer le rendez-vous",
-        confirmed: "Rendez-vous confirmé",
-        thank: "Merci",
-        confirmationText: "Votre demande a été enregistrée dans ce prototype.",
-        privacy: "Prototype étudiant : aucune donnée n'est réellement envoyée.",
-        footer: "© 2026 NutriVie · Prototype fictif"
-      },
-      en: {
-        back: "Back to services",
-        included: "What is included",
-        expect: "What to expect",
-        bookingTitle: "Book this service",
-        bookingIntro: "Choose a date and time, then review the summary before confirming.",
-        labels: { date: "Date", time: "Time", name: "Full name", email: "Email", phone: "Phone", notes: "Preference or question" },
-        placeholders: { name: "Ex. Salma Benali", email: "name@email.com", phone: "613-555-0000", notes: "Optional" },
-        summary: "Appointment summary",
-        duration: "Duration",
-        price: "Price",
-        service: "Service",
-        confirm: "Confirm appointment",
-        confirmed: "Appointment confirmed",
-        thank: "Thank you",
-        confirmationText: "Your request has been saved in this prototype.",
-        privacy: "Student prototype: no information is actually sent.",
-        footer: "© 2026 NutriVie · Fictitious prototype"
-      }
-    };
-
-    function App() {
-      const params = new URLSearchParams(window.location.search);
-      const serviceId = ["initiale", "suivi", "famille", "digestion"].includes(params.get("service")) ? params.get("service") : "initiale";
-      const [lang, setLang] = useState(params.get("lang") === "en" ? "en" : "fr");
-      const service = details[lang][serviceId];
-      const t = ui[lang];
-
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const defaultDate = tomorrow.toISOString().split("T")[0];
-
-      const [form, setForm] = useState({
-        date: defaultDate,
-        time: "10:00",
-        name: "",
-        email: "",
-        phone: "",
-        notes: ""
-      });
-      const [submitted, setSubmitted] = useState(false);
-
-      useEffect(() => {
-        document.documentElement.lang = lang;
-        document.title = `NutriVie | ${service.title}`;
-      }, [lang, service.title]);
-
-      function updateForm(event) {
-        const { name, value } = event.target;
-        setForm((previous) => ({ ...previous, [name]: value }));
-        setSubmitted(false);
-      }
-
-      function submitBooking(event) {
-        event.preventDefault();
-        setSubmitted(true);
-      }
-
-      function displayTime(value) {
-        const labels = {
-          "09:00": lang === "fr" ? "9 h 00" : "9:00 a.m.",
-          "10:00": lang === "fr" ? "10 h 00" : "10:00 a.m.",
-          "14:30": lang === "fr" ? "14 h 30" : "2:30 p.m.",
-          "16:15": lang === "fr" ? "16 h 15" : "4:15 p.m."
-        };
-        return labels[value] || value;
-      }
-
-      return (
-        <>
-          <header className="site-nav">
-            <div className="nav-inner">
-              <a className="brand" href={`service-website.html?lang=${lang}#accueil`}>
-                <i className="bi bi-flower1"></i> Nutri<span>Vie</span>
-              </a>
-
-              <div className="nav-actions">
-                <a className="btn-ghost" href={`service-website.html?lang=${lang}#services`}>
-                  <i className="bi bi-arrow-left"></i> {t.back}
-                </a>
-                <div className="lang-switcher" aria-label={lang === "fr" ? "Changer de langue" : "Change language"}>
-                  <button className={`lang-btn ${lang === "fr" ? "active" : ""}`} type="button" onClick={() => setLang("fr")}>FR</button>
-                  <button className={`lang-btn ${lang === "en" ? "active" : ""}`} type="button" onClick={() => setLang("en")}>EN</button>
-                </div>
+        <div class="booking-grid">
+          <form class="booking-form" id="bookingForm" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label for="dateInput"><span data-lang="fr">Date</span><span data-lang="en">Date</span></label>
+                <input id="dateInput" name="date" type="date" required />
+              </div>
+              <div class="field">
+                <label for="timeSelect"><span data-lang="fr">Heure</span><span data-lang="en">Time</span></label>
+                <select id="timeSelect" name="time" required>
+                  <option value="09:00">09:00</option>
+                  <option value="10:30">10:30</option>
+                  <option value="13:30">13:30</option>
+                  <option value="16:30">16:30</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="nameInput"><span data-lang="fr">Nom complet</span><span data-lang="en">Full name</span></label>
+                <input id="nameInput" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div class="field">
+                <label for="emailInput">Courriel / Email</label>
+                <input id="emailInput" name="email" type="email" autocomplete="email" required />
+              </div>
+              <div class="field full">
+                <label for="formatSelect"><span data-lang="fr">Format de la rencontre</span><span data-lang="en">Appointment format</span></label>
+                <select id="formatSelect" name="format" required>
+                  <option value="clinic"><span data-lang="fr">En clinique</span></option>
+                  <option value="online"><span data-lang="fr">En ligne</span></option>
+                </select>
+              </div>
+              <div class="field full">
+                <label for="noteInput"><span data-lang="fr">Vos besoins principaux (facultatif)</span><span data-lang="en">Your main needs (optional)</span></label>
+                <textarea id="noteInput" name="note"></textarea>
               </div>
             </div>
-          </header>
 
-          <main>
-            <section className="detail-hero">
-              <div className="container">
-                <div className="eyebrow">{service.eyebrow}</div>
-                <h1>{service.title}</h1>
-                <p>{service.lead}</p>
-              </div>
-            </section>
-
-            <section className="detail-section">
-              <div className="container detail-grid">
-                <div>
-                  <img className="detail-image" src={service.image} alt={service.title} />
-
-                  <article className="info-card">
-                    <h2>{service.title}</h2>
-                    <p>{service.description}</p>
-
-                    <h3>{t.included}</h3>
-                    <ul>{service.included.map((item) => <li key={item}>{item}</li>)}</ul>
-
-                    <h3>{t.expect}</h3>
-                    <ul>{service.expect.map((item) => <li key={item}>{item}</li>)}</ul>
-                  </article>
-                </div>
-
-                <aside className="booking-card" id="reservation">
-                  <h2>{t.bookingTitle}</h2>
-                  <p className="booking-intro">{t.bookingIntro}</p>
-
-                  <div className="badge-row">
-                    <span className="tag"><i className="bi bi-clock"></i> {service.duration}</span>
-                    <span className="tag"><i className="bi bi-person-check"></i> {service.target}</span>
-                  </div>
-                  <div className="price">{service.price}</div>
-
-                  <form onSubmit={submitBooking}>
-                    <div className="row g-3">
-                      <div className="col-sm-6">
-                        <label className="form-label" htmlFor="detail-date">{t.labels.date}</label>
-                        <input className="form-control" type="date" id="detail-date" name="date" min={defaultDate} value={form.date} onChange={updateForm} required />
-                      </div>
-
-                      <div className="col-sm-6">
-                        <label className="form-label" htmlFor="detail-time">{t.labels.time}</label>
-                        <select className="form-select" id="detail-time" name="time" value={form.time} onChange={updateForm} required>
-                          <option value="09:00">{displayTime("09:00")}</option>
-                          <option value="10:00">{displayTime("10:00")}</option>
-                          <option value="14:30">{displayTime("14:30")}</option>
-                          <option value="16:15">{displayTime("16:15")}</option>
-                        </select>
-                      </div>
-
-                      <div className="col-12">
-                        <label className="form-label" htmlFor="detail-name">{t.labels.name}</label>
-                        <input className="form-control" id="detail-name" name="name" value={form.name} onChange={updateForm} placeholder={t.placeholders.name} required />
-                      </div>
-
-                      <div className="col-12">
-                        <label className="form-label" htmlFor="detail-email">{t.labels.email}</label>
-                        <input className="form-control" type="email" id="detail-email" name="email" value={form.email} onChange={updateForm} placeholder={t.placeholders.email} required />
-                      </div>
-
-                      <div className="col-12">
-                        <label className="form-label" htmlFor="detail-phone">{t.labels.phone}</label>
-                        <input className="form-control" type="tel" id="detail-phone" name="phone" value={form.phone} onChange={updateForm} placeholder={t.placeholders.phone} required />
-                      </div>
-
-                      <div className="col-12">
-                        <label className="form-label" htmlFor="detail-notes">{t.labels.notes}</label>
-                        <textarea className="form-control" id="detail-notes" name="notes" value={form.notes} onChange={updateForm} placeholder={t.placeholders.notes}></textarea>
-                      </div>
-                    </div>
-
-                    <div className="booking-summary" aria-live="polite">
-                      <h3>{t.summary}</h3>
-                      <div className="summary-row"><span>{t.service}</span><strong>{service.title}</strong></div>
-                      <div className="summary-row"><span>{t.duration}</span><strong>{service.duration}</strong></div>
-                      <div className="summary-row"><span>{t.price}</span><strong>{service.price}</strong></div>
-                      <div className="summary-row"><span>{t.labels.date}</span><strong>{form.date}</strong></div>
-                      <div className="summary-row"><span>{t.labels.time}</span><strong>{displayTime(form.time)}</strong></div>
-                    </div>
-
-                    <button className="btn-main" type="submit">
-                      <i className="bi bi-calendar-check"></i> {t.confirm}
-                    </button>
-                    <p className="privacy-note"><i className="bi bi-shield-check"></i> {t.privacy}</p>
-                  </form>
-
-                  {submitted && (
-                    <div className="confirmation" role="status" aria-live="polite">
-                      <strong><i className="bi bi-check-circle"></i> {t.confirmed}</strong>
-                      {t.thank} {form.name}. {t.confirmationText}
-                    </div>
-                  )}
-                </aside>
-              </div>
-            </section>
-          </main>
-
-          <footer className="footer">
-            <div className="container d-flex flex-column flex-md-row justify-content-between gap-2">
-              <span>{t.footer}</span>
-              <a href={`service-website.html?lang=${lang}#services`}>{t.back}</a>
+            <div class="form-footer">
+              <button class="btn-primary" type="submit"><i class="bi bi-calendar-check"></i><span data-lang="fr">Confirmer la réservation</span><span data-lang="en">Confirm booking</span></button>
+              <p class="privacy"><i class="bi bi-shield-check"></i> <span data-lang="fr">Prototype académique : aucune donnée n’est transmise.</span><span data-lang="en">Academic prototype: no data is transmitted.</span></p>
             </div>
-          </footer>
-        </>
-      );
+            <div class="confirmation" id="confirmation" role="status" aria-live="polite"></div>
+          </form>
+
+          <aside class="summary-card" aria-label="Résumé">
+            <p class="eyebrow"><span data-lang="fr">Résumé</span><span data-lang="en">Summary</span></p>
+            <h3 id="summaryTitle">Consultation initiale</h3>
+            <div class="summary-row"><span><span data-lang="fr">Durée</span><span data-lang="en">Duration</span></span><strong id="summaryDuration">60 min</strong></div>
+            <div class="summary-row"><span><span data-lang="fr">Date</span><span data-lang="en">Date</span></span><strong id="summaryDate">—</strong></div>
+            <div class="summary-row"><span><span data-lang="fr">Heure</span><span data-lang="en">Time</span></span><strong id="summaryTime">09:00</strong></div>
+            <div class="summary-price"><span data-lang="fr">Prix total</span><span data-lang="en">Total price</span> : <span id="summaryPrice">125 $</span></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© 2026 NutriVie · <span data-lang="fr">Projet académique SEG3525</span><span data-lang="en">SEG3525 academic project</span></span>
+      <a id="footerBack" href="service-website.html#services"><span data-lang="fr">Retour aux services</span><span data-lang="en">Back to services</span> ↗</a>
+    </div>
+  </footer>
+
+  <script>
+    const services = {
+      initial: {
+        title: { fr: "Consultation initiale", en: "Initial consultation" },
+        lead: {
+          fr: "Une première rencontre complète pour comprendre votre situation, clarifier vos priorités et construire un plan réaliste.",
+          en: "A complete first meeting to understand your situation, clarify priorities and create a realistic plan."
+        },
+        audience: {
+          fr: "Pour les personnes qui commencent un accompagnement, qui souhaitent faire le point sur leurs habitudes ou qui ont plusieurs objectifs à organiser.",
+          en: "For people beginning nutrition support, reviewing their habits or organizing several goals."
+        },
+        included: {
+          fr: ["Analyse des habitudes actuelles", "Définition de priorités réalistes", "Plan d’action personnalisé", "Résumé envoyé après la rencontre"],
+          en: ["Review of current habits", "Realistic priorities", "Personalized action plan", "Summary sent after the meeting"]
+        },
+        duration: 60,
+        price: 125,
+        image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85",
+        alt: { fr: "Repas équilibré avec légumes", en: "Balanced meal with vegetables" }
+      },
+      followup: {
+        title: { fr: "Consultation de suivi", en: "Follow-up consultation" },
+        lead: {
+          fr: "Une rencontre courte et ciblée pour ajuster le plan, résoudre une difficulté précise et maintenir les progrès.",
+          en: "A focused meeting to adjust the plan, solve a specific difficulty and maintain progress."
+        },
+        audience: {
+          fr: "Pour les clients ayant déjà un plan NutriVie et souhaitant vérifier leurs progrès, adapter une stratégie ou discuter d’un nouvel obstacle.",
+          en: "For clients who already have a NutriVie plan and want to review progress, adjust a strategy or discuss a new obstacle."
+        },
+        included: {
+          fr: ["Révision des progrès", "Analyse des obstacles", "Ajustement du plan", "Nouvelle priorité pour les prochaines semaines"],
+          en: ["Progress review", "Obstacle analysis", "Plan adjustment", "New priority for the coming weeks"]
+        },
+        duration: 30,
+        price: 75,
+        image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1200&q=85",
+        alt: { fr: "Préparation d'un repas sain", en: "Preparing a healthy meal" }
+      },
+      family: {
+        title: { fr: "Nutrition familiale", en: "Family nutrition" },
+        lead: {
+          fr: "Une rencontre pour simplifier les repas de la famille et créer des stratégies adaptées aux besoins de chacun.",
+          en: "A meeting to simplify family meals and create strategies adapted to everyone’s needs."
+        },
+        audience: {
+          fr: "Pour les parents ou responsables de famille qui veulent mieux planifier les repas, réduire le stress et encourager des habitudes durables.",
+          en: "For parents or caregivers who want to plan meals, reduce stress and encourage sustainable habits."
+        },
+        included: {
+          fr: ["Analyse de la routine familiale", "Idées de repas flexibles", "Stratégies pour les préférences différentes", "Planification simple pour la semaine"],
+          en: ["Family routine analysis", "Flexible meal ideas", "Strategies for different preferences", "Simple weekly planning"]
+        },
+        duration: 75,
+        price: 155,
+        image: "https://images.unsplash.com/photo-1543362906-acfc16c67564?auto=format&fit=crop&w=1200&q=85",
+        alt: { fr: "Famille partageant des aliments frais", en: "Family sharing fresh food" }
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const serviceKey = services[params.get("service")] ? params.get("service") : "initial";
+    let currentLang = params.get("lang") === "en" ? "en" : "fr";
+    const service = services[serviceKey];
+
+    const langButtons = document.querySelectorAll("[data-set-lang]");
+    const dateInput = document.getElementById("dateInput");
+    const timeSelect = document.getElementById("timeSelect");
+    const bookingForm = document.getElementById("bookingForm");
+    const confirmation = document.getElementById("confirmation");
+
+    const today = new Date();
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    dateInput.min = today.toISOString().split("T")[0];
+
+    function renderService() {
+      document.documentElement.lang = currentLang;
+      document.title = `NutriVie | ${service.title[currentLang]}`;
+      document.getElementById("serviceTitle").textContent = service.title[currentLang];
+      document.getElementById("serviceLead").textContent = service.lead[currentLang];
+      document.getElementById("serviceDuration").textContent = `${service.duration} min`;
+      document.getElementById("servicePrice").textContent = `${service.price} $`;
+      document.getElementById("audienceText").textContent = service.audience[currentLang];
+      document.getElementById("serviceImage").src = service.image;
+      document.getElementById("serviceImage").alt = service.alt[currentLang];
+      document.getElementById("summaryTitle").textContent = service.title[currentLang];
+      document.getElementById("summaryDuration").textContent = `${service.duration} min`;
+      document.getElementById("summaryPrice").textContent = `${service.price} $`;
+
+      const includedList = document.getElementById("includedList");
+      includedList.innerHTML = service.included[currentLang].map(item => `<li><i class="bi bi-check2"></i><span>${item}</span></li>`).join("");
+
+      langButtons.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.setLang === currentLang)));
+      const backUrl = `service-website.html?lang=${currentLang}#services`;
+      document.getElementById("backLink").href = backUrl;
+      document.getElementById("footerBack").href = backUrl;
     }
 
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    langButtons.forEach(button => button.addEventListener("click", () => {
+      currentLang = button.dataset.setLang;
+      params.set("service", serviceKey);
+      params.set("lang", currentLang);
+      history.replaceState(null, "", `${location.pathname}?${params.toString()}`);
+      renderService();
+    }));
+
+    function updateSummary() {
+      document.getElementById("summaryDate").textContent = dateInput.value || "—";
+      document.getElementById("summaryTime").textContent = timeSelect.value;
+    }
+    dateInput.addEventListener("change", updateSummary);
+    timeSelect.addEventListener("change", updateSummary);
+
+    bookingForm.addEventListener("submit", event => {
+      event.preventDefault();
+      if (!bookingForm.checkValidity()) {
+        bookingForm.reportValidity();
+        return;
+      }
+      const name = document.getElementById("nameInput").value.trim();
+      confirmation.classList.add("show");
+      confirmation.innerHTML = currentLang === "fr"
+        ? `<strong><i class="bi bi-check-circle"></i> Réservation confirmée.</strong><br>Merci ${name}. Votre ${service.title.fr.toLowerCase()} est prévue le ${dateInput.value} à ${timeSelect.value}.`
+        : `<strong><i class="bi bi-check-circle"></i> Booking confirmed.</strong><br>Thank you ${name}. Your ${service.title.en.toLowerCase()} is scheduled for ${dateInput.value} at ${timeSelect.value}.`;
+    });
+
+    renderService();
+    updateSummary();
   </script>
 </body>
 </html>

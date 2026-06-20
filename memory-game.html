@@ -1,390 +1,1801 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Memory Game | Aicha Lfakir</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mémoria, un jeu de mémoire interactif conçu pour le Devoir 3 du cours SEG3525.">
+  <title>Mémoria | Aicha Lfakir</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg:#f7f2eb;
-      --bg-alt:#ede5d8;
-      --bg-card:#faf7f2;
-      --accent:#b89674;
-      --accent-dk:#8a6a50;
-      --olive:#5f6f52;
-      --ink:#211610;
-      --ink-soft:#6b4c38;
-      --line:rgba(184,150,116,.55);
-    }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    html { scroll-behavior:smooth; }
-    body {
-      font-family:'Outfit', sans-serif;
-      background:
-        radial-gradient(circle at 12% 18%, rgba(184,150,116,.13), transparent 28%),
-        linear-gradient(180deg, var(--bg-card), var(--bg));
-      color:var(--ink);
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      line-height:1.75;
-    }
-    a { color:inherit; text-decoration:none; }
-    nav {
-      height:58px;
-      background:var(--ink);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 2.5rem;
-      position:sticky;
-      top:0;
-      z-index:20;
-      border-bottom:1px solid rgba(184,150,116,.3);
-    }
-    .brand {
-      font-family:'Cormorant Garamond', serif;
-      color:var(--bg-card);
-      font-size:1.25rem;
-      font-style:italic;
-      letter-spacing:.02em;
-    }
-    .right-nav { display:flex; gap:1.2rem; align-items:center; }
-    .back {
-      color:var(--accent);
-      font-size:.72rem;
-      font-weight:600;
-      letter-spacing:.13em;
-      text-transform:uppercase;
-      display:flex;
-      align-items:center;
-      gap:.45rem;
-      transition:color .2s ease;
-    }
-    .back:hover { color:var(--bg-card); }
-    .lang-switcher {
-      display:inline-flex;
-      border:1px solid var(--accent);
-      border-radius:3px;
-      overflow:hidden;
-      height:34px;
-    }
-    .lang-btn {
-      border:0;
-      background:transparent;
-      color:var(--accent);
-      padding:0 .85rem;
-      font-size:.68rem;
-      letter-spacing:.12em;
-      font-weight:700;
-      cursor:pointer;
-    }
-    .lang-btn.active { background:var(--accent); color:var(--ink); }
-    main {
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:5rem 1.5rem;
-    }
-    .card-wrap {
-      width:min(980px, 100%);
-      display:grid;
-      grid-template-columns:.9fr 1.1fr;
-      background:rgba(250,247,242,.82);
-      border:1px solid var(--line);
-      box-shadow:0 22px 60px rgba(33,22,16,.08);
-      position:relative;
-      overflow:hidden;
-    }
-    .card-wrap::before {
-      content:"";
-      position:absolute;
-      right:-120px;
-      top:-130px;
-      width:310px;
-      height:310px;
-      border:1px solid var(--line);
-      border-radius:50%;
-      opacity:.6;
-    }
-    .panel-left {
-      background:var(--ink);
-      color:var(--bg-card);
-      padding:3.2rem 2.7rem;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      min-height:520px;
-    }
-    .num {
-      font-family:'Cormorant Garamond', serif;
-      font-size:7rem;
-      line-height:.85;
-      font-style:italic;
-      color:var(--accent);
-      font-weight:300;
-      margin-bottom:2rem;
-      display:block;
-    }
-    .tag {
-      color:var(--accent);
-      font-size:.72rem;
-      letter-spacing:.2em;
-      text-transform:uppercase;
-      font-weight:600;
-      margin-bottom:.8rem;
-    }
-    .left-title {
-      font-family:'Cormorant Garamond', serif;
-      font-weight:300;
-      font-size:2.9rem;
-      line-height:1.02;
-      margin-bottom:1.2rem;
-    }
-    .left-desc {
-      color:#d9c9b8;
-      font-size:.92rem;
-      max-width:310px;
-    }
-    .status {
-      display:inline-flex;
-      align-items:center;
-      gap:.55rem;
-      color:var(--accent);
-      font-size:.7rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      border-top:1px solid rgba(184,150,116,.5);
-      padding-top:1.3rem;
-      margin-top:2.5rem;
-    }
-    .dot {
-      width:7px; height:7px; border-radius:50%;
-      background:var(--accent);
-      animation:pulse 1.5s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100% {opacity:1} 50% {opacity:.32} }
-    .panel-right {
-      padding:3.2rem 3rem;
-      position:relative;
-      z-index:1;
-    }
-    .eyebrow {
-      display:flex;
-      align-items:center;
-      gap:.8rem;
-      color:var(--accent-dk);
-      font-size:.72rem;
-      font-weight:700;
-      letter-spacing:.17em;
-      text-transform:uppercase;
-      margin-bottom:1rem;
-    }
-    .eyebrow::before {
-      content:"";
-      width:35px;
-      height:1px;
-      background:var(--accent-dk);
-    }
-    h1 {
-      font-family:'Cormorant Garamond', serif;
-      font-size:3rem;
-      font-weight:400;
-      line-height:1.08;
-      margin-bottom:1.3rem;
-      color:var(--ink);
-    }
-    .desc {
-      color:var(--ink-soft);
-      font-size:.98rem;
-      max-width:560px;
-      margin-bottom:2rem;
-    }
-    .meta {
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:1rem;
-      margin:2.2rem 0;
-      padding-top:2rem;
-      border-top:1px solid var(--line);
-    }
-    .meta-item {
-      background:rgba(237,229,216,.52);
-      border:1px solid rgba(184,150,116,.45);
-      padding:1rem;
-    }
-    .meta-label {
-      display:block;
-      color:var(--accent-dk);
-      font-size:.64rem;
-      letter-spacing:.14em;
-      font-weight:700;
-      text-transform:uppercase;
-      margin-bottom:.35rem;
-    }
-    .meta-val {
-      color:var(--ink-soft);
-      font-size:.88rem;
-    }
-    .actions {
-      display:flex;
-      flex-wrap:wrap;
-      gap:.9rem;
-      margin-top:2.3rem;
-    }
-    .btn-main, .btn-ghost {
-      display:inline-flex;
-      align-items:center;
-      gap:.65rem;
-      min-height:46px;
-      padding:.8rem 1.45rem;
-      font-size:.72rem;
-      font-weight:700;
-      letter-spacing:.13em;
-      text-transform:uppercase;
-      border:1.5px solid var(--ink);
-      transition:all .2s ease;
-    }
-    .btn-main {
-      background:var(--ink);
-      color:var(--bg-card);
-    }
-    .btn-main:hover {
-      background:transparent;
-      color:var(--ink);
-    }
-    .btn-ghost {
-      border-color:var(--accent);
-      color:var(--ink);
-      background:transparent;
-    }
-    .btn-ghost:hover {
-      background:var(--accent);
-      color:var(--ink);
-    }
-    footer {
-      background:var(--ink);
-      color:var(--accent-dk);
-      text-align:center;
-      padding:1.4rem;
-      font-size:.75rem;
-    }
-    [data-lang="en"] { display:none; }
-    body.lang-en [data-lang="fr"] { display:none; }
-    body.lang-en [data-lang="en"] { display:initial; }
-    div[data-lang], p[data-lang], span[data-lang] { }
-    body.lang-en div[data-lang="en"], body.lang-en p[data-lang="en"] { display:block; }
-    body.lang-en span[data-lang="en"] { display:inline; }
-    @media(max-width:850px) {
-      nav { padding:0 1rem; }
-      .brand { font-size:1.05rem; }
-      .back span { display:none; }
-      .card-wrap { grid-template-columns:1fr; }
-      .panel-left { min-height:auto; padding:2.5rem 2rem; }
-      .num { font-size:5rem; }
-      .left-title { font-size:2.25rem; }
-      .panel-right { padding:2.5rem 2rem; }
-      h1 { font-size:2.3rem; }
-      .meta { grid-template-columns:1fr; }
-    }
+:root {
+  --bg: #f3f6fc;
+  --bg-alt: #e6eaf8;
+  --surface: #f8faff;
+  --surface-strong: #ffffff;
+  --accent: #6c7bd9;
+  --accent-dark: #4254b5;
+  --olive: #4cb7a5;
+  --olive-soft: #dff4ef;
+  --ink: #1d2433;
+  --ink-soft: #3f4a63;
+  --muted: #6b7280;
+  --line: rgba(108, 123, 217, 0.5);
+  --line-soft: rgba(29, 36, 51, 0.12);
+  --danger: #c65c5c;
+  --shadow: 0 24px 70px rgba(29, 36, 51, 0.1);
+  --shadow-soft: 0 14px 36px rgba(29, 36, 51, 0.08);
+  --radius: 18px;
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "Outfit", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 12% 12%, rgba(108, 123, 217, 0.14), transparent 28%),
+    radial-gradient(circle at 88% 72%, rgba(76, 183, 165, 0.08), transparent 24%),
+    linear-gradient(180deg, var(--surface), var(--bg));
+  font-family: var(--sans);
+  line-height: 1.55;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  color: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline: 3px solid rgba(76, 183, 165, 0.45);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -5rem;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  background: var(--surface-strong);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem clamp(1rem, 4vw, 3rem);
+  color: var(--surface);
+  background: rgba(29, 36, 51, 0.97);
+  border-bottom: 1px solid rgba(108, 123, 217, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  color: var(--surface);
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-style: italic;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 180ms ease;
+}
+
+.back-link:hover {
+  color: var(--surface);
+}
+
+.lang-switcher {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+}
+
+.lang-button {
+  min-width: 44px;
+  min-height: 34px;
+  padding: 0.4rem 0.75rem;
+  border: 0;
+  color: var(--accent);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.lang-button[aria-pressed="true"] {
+  color: var(--ink);
+  background: var(--accent);
+}
+
+#root {
+  min-height: calc(100vh - 116px);
+}
+
+.page-main {
+  width: min(1220px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 5rem) 0;
+}
+
+.setup-shell,
+.game-shell,
+.result-shell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(248, 250, 255, 0.9);
+  box-shadow: var(--shadow);
+}
+
+.setup-shell::after,
+.game-shell::after,
+.result-shell::after {
+  content: "";
+  position: absolute;
+  right: -140px;
+  top: -150px;
+  width: 340px;
+  height: 340px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+.setup-shell {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.84fr) minmax(0, 1.35fr);
+}
+
+.intro-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 680px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(2.2rem, 5vw, 4rem);
+  color: var(--surface);
+  background:
+    linear-gradient(160deg, rgba(76, 183, 165, 0.12), transparent 45%),
+    var(--ink);
+}
+
+.project-number {
+  display: block;
+  margin-bottom: 1.2rem;
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: clamp(5rem, 10vw, 7.5rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.8;
+}
+
+.kicker,
+.eyebrow {
+  margin: 0 0 0.8rem;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.intro-title,
+.page-title,
+.result-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.intro-title {
+  max-width: 440px;
+  font-size: clamp(3.1rem, 7vw, 5.5rem);
+}
+
+.intro-copy {
+  max-width: 420px;
+  margin: 1.4rem 0 0;
+  color: #dce3f7;
+  font-size: 1rem;
+}
+
+.principle-list {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 2.5rem;
+}
+
+.principle-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #e1e6f5;
+  font-size: 0.84rem;
+}
+
+.principle-icon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(108, 123, 217, 0.6);
+  border-radius: 50%;
+  color: var(--accent);
+}
+
+.intro-note {
+  margin: 2.5rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(108, 123, 217, 0.45);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.config-panel {
+  position: relative;
+  z-index: 1;
+  padding: clamp(2rem, 5vw, 4rem);
+}
+
+.section-heading {
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--accent-dark);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: currentColor;
+}
+
+.page-title {
+  font-size: clamp(2.55rem, 5vw, 4rem);
+}
+
+.section-description {
+  max-width: 670px;
+  margin: 0.85rem 0 0;
+  color: var(--ink-soft);
+}
+
+.option-group {
+  margin-top: 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.option-group:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.option-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.option-title {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.option-help {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.choice-card {
+  position: relative;
+  min-height: 126px;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(230, 234, 248, 0.42);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.choice-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-dark);
+}
+
+.choice-card[aria-pressed="true"] {
+  border: 2px solid var(--ink);
+  background: var(--surface-strong);
+  box-shadow: 0 0 0 4px rgba(108, 123, 217, 0.16);
+}
+
+.choice-card[aria-pressed="true"]::after {
+  content: "✓";
+  position: absolute;
+  right: 0.75rem;
+  top: 0.65rem;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--surface-strong);
+  background: var(--olive);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.choice-icon {
+  display: block;
+  margin-bottom: 0.55rem;
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.choice-name {
+  display: block;
+  font-weight: 700;
+}
+
+.choice-detail {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.preview-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(230, 234, 248, 0.42);
+}
+
+.preview-copy strong,
+.preview-copy span {
+  display: block;
+}
+
+.preview-copy strong {
+  font-size: 0.92rem;
+}
+
+.preview-copy span {
+  margin-top: 0.18rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.switch {
+  position: relative;
+  width: 54px;
+  height: 30px;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  background: #c5cee7;
+  cursor: pointer;
+  transition: background 180ms ease;
+}
+
+.switch::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 8px rgba(29, 36, 51, 0.2);
+  transition: transform 180ms ease;
+}
+
+.switch[aria-pressed="true"] {
+  background: var(--olive);
+}
+
+.switch[aria-pressed="true"]::after {
+  transform: translateX(24px);
+}
+
+.config-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+.summary-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.55);
+  font-size: 0.76rem;
+}
+
+.primary-button,
+.secondary-button,
+.text-button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.primary-button {
+  padding: 0.85rem 1.35rem;
+  border: 1.5px solid var(--ink);
+  color: var(--surface);
+  background: var(--ink);
+}
+
+.primary-button:hover {
+  color: var(--ink);
+  background: transparent;
+}
+
+.secondary-button {
+  padding: 0.8rem 1.2rem;
+  border: 1.5px solid var(--accent-dark);
+  color: var(--ink);
+  background: transparent;
+}
+
+.secondary-button:hover {
+  background: var(--accent);
+}
+
+.text-button {
+  min-height: 40px;
+  padding: 0.45rem 0.7rem;
+  border: 0;
+  color: var(--accent-dark);
+  background: transparent;
+}
+
+.text-button:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.config-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.instructions {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.instructions summary {
+  padding: 1.1rem 0 0;
+  color: var(--accent-dark);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.instructions ol {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  color: var(--ink-soft);
+}
+
+.instructions li + li {
+  margin-top: 0.55rem;
+}
+
+.game-shell {
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.game-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.game-heading-wrap {
+  min-width: 0;
+}
+
+.game-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(2.25rem, 4vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.game-subtitle {
+  margin: 0.65rem 0 0;
+  color: var(--ink-soft);
+}
+
+.game-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  margin-top: 1.75rem;
+}
+
+.stats-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stats-card,
+.feedback-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(230, 234, 248, 0.42);
+}
+
+.stats-card {
+  padding: 1rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.stat-box {
+  min-height: 88px;
+  padding: 0.85rem;
+  border: 1px solid rgba(108, 123, 217, 0.38);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.stat-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.progress-block {
+  margin-top: 1rem;
+}
+
+.progress-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+}
+
+.progress-track {
+  height: 8px;
+  margin-top: 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #d4daee;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--olive);
+  transition: width 240ms ease;
+}
+
+.feedback-card {
+  min-height: 96px;
+  padding: 1rem;
+}
+
+.feedback-label {
+  color: var(--accent-dark);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.feedback-message {
+  margin: 0.45rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
+.side-actions {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.side-actions .secondary-button,
+.side-actions .text-button {
+  width: 100%;
+}
+
+.board-panel {
+  min-width: 0;
+}
+
+.preview-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--accent-dark);
+  border-radius: 10px;
+  color: var(--ink);
+  background: rgba(108, 123, 217, 0.18);
+  font-weight: 700;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 4), minmax(0, 1fr));
+  gap: clamp(0.55rem, 1.5vw, 1rem);
+  width: 100%;
+}
+
+.memory-card {
+  position: relative;
+  aspect-ratio: 0.82;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.memory-card:disabled {
+  cursor: default;
+}
+
+.card-inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.memory-card.is-flipped .card-inner,
+.memory-card.is-matched .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 14px;
+  backface-visibility: hidden;
+}
+
+.card-back {
+  border: 1px solid rgba(108, 123, 217, 0.6);
+  background:
+    radial-gradient(circle at center, rgba(108, 123, 217, 0.22) 0 10%, transparent 11%),
+    linear-gradient(45deg, transparent 47%, rgba(108, 123, 217, 0.17) 48% 52%, transparent 53%),
+    linear-gradient(-45deg, transparent 47%, rgba(108, 123, 217, 0.17) 48% 52%, transparent 53%),
+    var(--ink);
+  background-size: 54px 54px, 30px 30px, 30px 30px;
+  box-shadow: var(--shadow-soft);
+}
+
+.card-back-mark {
+  display: grid;
+  width: 54%;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(108, 123, 217, 0.66);
+  border-radius: 50%;
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  font-style: italic;
+}
+
+.card-front {
+  transform: rotateY(180deg);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--surface-strong);
+  box-shadow: var(--shadow-soft);
+}
+
+.card-content {
+  display: grid;
+  place-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem;
+  text-align: center;
+}
+
+.card-symbol {
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  line-height: 1;
+}
+
+.card-name {
+  color: var(--ink-soft);
+  font-size: clamp(0.62rem, 1.2vw, 0.82rem);
+  font-weight: 700;
+}
+
+.matched-badge {
+  position: absolute;
+  right: 0.55rem;
+  top: 0.55rem;
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  border-radius: 50%;
+  color: white;
+  background: var(--olive);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.memory-card.is-matched .card-front {
+  border: 2px solid var(--olive);
+  background: var(--olive-soft);
+}
+
+.result-shell {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
+}
+
+.result-visual {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: 610px;
+  place-items: center;
+  padding: 3rem;
+  color: var(--surface);
+  background: var(--ink);
+  text-align: center;
+}
+
+.result-medallion {
+  display: grid;
+  width: min(260px, 70vw);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(108, 123, 217, 0.65);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(108, 123, 217, 0.17), transparent 67%);
+}
+
+.result-check {
+  display: grid;
+  width: 108px;
+  height: 108px;
+  place-items: center;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+  font-size: 3rem;
+}
+
+.result-stars {
+  margin-top: 1rem;
+  color: var(--accent);
+  font-size: 1.45rem;
+  letter-spacing: 0.18em;
+}
+
+.result-content {
+  position: relative;
+  z-index: 1;
+  padding: clamp(2rem, 5vw, 4rem);
+}
+
+.result-title {
+  font-size: clamp(3rem, 6vw, 4.8rem);
+}
+
+.result-copy {
+  max-width: 620px;
+  margin: 1rem 0 0;
+  color: var(--ink-soft);
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 2rem;
+}
+
+.result-metric {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(230, 234, 248, 0.45);
+}
+
+.result-metric-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.result-metric-value {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.best-box {
+  margin-top: 1rem;
+  padding: 1rem 1.15rem;
+  border-left: 4px solid var(--olive);
+  color: var(--ink-soft);
+  background: var(--olive-soft);
+}
+
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 54px;
+  padding: 1rem;
+  color: var(--accent);
+  background: var(--ink);
+  font-size: 0.76rem;
+}
+
+@media (max-width: 980px) {
+  .setup-shell,
+  .result-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .intro-panel,
+  .result-visual {
+    min-height: auto;
+  }
+
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  }
+
+  .side-actions {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .topbar {
+    align-items: flex-start;
+    padding: 0.75rem 1rem;
+  }
+
+  .topbar-actions {
+    gap: 0.65rem;
+  }
+
+  .back-link span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .page-main {
+    width: min(100% - 1rem, 1220px);
+    padding: 1rem 0;
+  }
+
+  .intro-panel,
+  .config-panel,
+  .result-content {
+    padding: 2rem 1.25rem;
+  }
+
+  .game-shell {
+    padding: 1rem;
+  }
+
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .choice-card {
+    min-height: 104px;
+  }
+
+  .config-actions,
+  .game-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .config-actions .primary-button,
+  .game-header .secondary-button {
+    width: 100%;
+  }
+
+  .stats-panel {
+    display: flex;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .stat-box {
+    min-height: 76px;
+    padding: 0.65rem;
+  }
+
+  .stat-value {
+    font-size: 1.35rem;
+  }
+
+  .board {
+    gap: 0.5rem;
+  }
+
+  .card-name {
+    display: none;
+  }
+
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .result-actions {
+    display: grid;
+  }
+
+  .result-actions .primary-button,
+  .result-actions .secondary-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 470px) {
+  .brand {
+    font-size: 1.05rem;
+  }
+
+  .lang-button {
+    min-width: 38px;
+    padding-inline: 0.55rem;
+  }
+
+  .intro-title {
+    font-size: 3.2rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .board {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .card-symbol {
+    font-size: clamp(1.45rem, 9vw, 2.3rem);
+  }
+
+  footer {
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
   </style>
 </head>
 <body>
-  <nav>
+  <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
+  <nav class="topbar" aria-label="Navigation principale">
     <a class="brand" href="index.html">Aicha Lfakir</a>
-    <div class="right-nav">
-      <a class="back" href="index.html">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        <span data-lang="fr">Retour au portfolio</span><span data-lang="en">Back to portfolio</span>
+
+    <div class="topbar-actions">
+      <a class="back-link" href="index.html#projects">
+        <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span id="back-label">Retour au portfolio</span>
       </a>
-      <div class="lang-switcher" aria-label="Language selector">
-        <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
-        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
-      </div>
+      <div id="language-root"></div>
     </div>
   </nav>
 
-  <main>
-    <article class="card-wrap">
-      <aside class="panel-left">
-        <div>
-          <span class="num">02</span>
-          <p class="tag">Design 02</p>
-          <div class="left-title">
-            <span data-lang="fr">Jeu de mémoire</span>
-            <span data-lang="en">Memory game</span>
-          </div>
-          <p class="left-desc">
-            <span data-lang="fr">Une interface ludique centrée sur les états visuels et le retour utilisateur.</span>
-            <span data-lang="en">A playful interface focused on visual states and user feedback.</span>
-          </p>
-        </div>
-        <div class="status">
-          <span class="dot"></span>
-          <span data-lang="fr">À venir</span>
-          <span data-lang="en">Coming soon</span>
-        </div>
-      </aside>
+  <div id="root"></div>
 
-      <section class="panel-right">
-        <p class="eyebrow">Interaction · Feedback · Jeu</p>
-        <h1>
-          <span data-lang="fr">Jeu de mémoire</span>
-          <span data-lang="en">Memory game</span>
-        </h1>
-        <p class="desc">
-          <span data-lang="fr">Ce projet portera sur un jeu de cartes à retourner. L’interface devra rendre les actions faciles à comprendre grâce à des états visuels cohérents : carte cachée, carte retournée, paire trouvée et progression du joueur.</span>
-          <span data-lang="en">This project will focus on a card-flipping memory game. The interface will make actions easy to understand through consistent visual states: hidden card, flipped card, matched pair, and player progress.</span>
-        </p>
+  <footer>
+    <span>© 2026 Aicha Lfakir · Ottawa, Canada</span>
+    <span class="footer-dot" aria-hidden="true">·</span>
+    <span>SEG3525</span>
+  </footer>
 
-        <div class="meta">
-          <div class="meta-item">
-            <span class="meta-label"><span data-lang="fr">Type</span><span data-lang="en">Type</span></span>
-            <span class="meta-val"><span data-lang="fr">Jeu interactif</span><span data-lang="en">Interactive game</span></span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label"><span data-lang="fr">Priorité design</span><span data-lang="en">Design focus</span></span>
-            <span class="meta-val"><span data-lang="fr">Feedback visuel, règles simples, engagement</span><span data-lang="en">Visual feedback, simple rules, engagement</span></span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label"><span data-lang="fr">Technologies prévues</span><span data-lang="en">Planned tools</span></span>
-            <span class="meta-val">HTML · CSS · JavaScript</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label"><span data-lang="fr">Statut</span><span data-lang="en">Status</span></span>
-            <span class="meta-val"><span data-lang="fr">Page de présentation temporaire</span><span data-lang="en">Temporary presentation page</span></span>
-          </div>
-        </div>
-
-        <div class="actions">
-          <a class="btn-main" href="index.html#projects">
-            <span data-lang="fr">Voir les autres projets</span>
-            <span data-lang="en">See other projects</span>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <a class="btn-ghost" href="index.html">
-            <span data-lang="fr">Accueil</span>
-            <span data-lang="en">Home</span>
-          </a>
-        </div>
-      </section>
-    </article>
-  </main>
-
-  <footer>© 2026 Aicha Lfakir · Ottawa, Canada</footer>
-
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
   <script>
-    function setLang(lang) {
-      document.body.classList.toggle('lang-en', lang === 'en');
-      document.documentElement.setAttribute('lang', lang);
-      document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
-      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-      localStorage.setItem('portfolio-lang', lang);
+const { useEffect, useMemo, useRef, useState } = React;
+const COPY = {
+    fr: {
+        back: "Retour au portfolio",
+        skip: "Aller au contenu principal",
+        project: "Design 02 · Jeu de mémoire",
+        introTitle: "Mémoria",
+        introCopy: "Un jeu de paires qui entraîne la mémoire visuelle sans surcharger l’attention. Choisis un niveau, un univers et commence à jouer.",
+        principle1: "Reconnaissance plutôt que rappel",
+        principle2: "Rétroaction claire à chaque action",
+        principle3: "Interface calme et cohérente",
+        introNote: "Conçu avec React · SEG3525",
+        configureEyebrow: "Configurer la partie",
+        configureTitle: "Prépare ton défi",
+        configureDescription: "Les choix sont regroupés par proximité afin de rendre la configuration rapide et facile à comprendre.",
+        levelTitle: "1 · Niveau",
+        levelHelp: "Choisis le nombre de paires.",
+        themeTitle: "2 · Univers visuel",
+        themeHelp: "Choisis les images à mémoriser.",
+        previewTitle: "Aperçu de 3 secondes",
+        previewHelp: "Toutes les cartes seront brièvement visibles avant le début.",
+        start: "Commencer la partie",
+        instructions: "Comment jouer",
+        instruction1: "Retourne deux cartes.",
+        instruction2: "Si elles sont identiques, la paire reste visible.",
+        instruction3: "Trouve toutes les paires avec le moins de coups possible.",
+        selected: "Sélectionné",
+        pairs: "paires",
+        cards: "cartes",
+        previewOn: "Aperçu activé",
+        previewOff: "Sans aperçu",
+        gameEyebrow: "Mémoire visuelle · Jeu de paires",
+        gameSubtitle: "Trouve toutes les paires. Les cartes appariées restent visibles.",
+        changeConfig: "Changer les options",
+        level: "Niveau",
+        theme: "Univers",
+        moves: "Coups",
+        time: "Temps",
+        found: "Trouvées",
+        score: "Score",
+        progress: "Progression",
+        feedback: "Rétroaction",
+        ready: "Choisis une première carte.",
+        oneCard: "Bien. Cherche maintenant la carte correspondante.",
+        match: "Paire trouvée. Continue !",
+        miss: "Ces cartes sont différentes. Observe-les avant qu’elles se retournent.",
+        previewing: "Mémorise les cartes : la partie commence dans quelques secondes.",
+        restart: "Recommencer",
+        setup: "Nouvelle configuration",
+        hiddenCard: "Carte cachée",
+        matchedCard: "Paire trouvée",
+        flipCard: "Retourner la carte",
+        previewBanner: "Aperçu en cours · mémorise les positions",
+        resultEyebrow: "Partie terminée",
+        resultTitle: "Défi réussi",
+        resultCopy: "Toutes les paires ont été retrouvées. Compare ton nombre de coups et ton temps, puis essaie d’améliorer ton résultat.",
+        accuracy: "Efficacité",
+        bestNew: "Nouveau meilleur résultat pour cette configuration.",
+        bestExisting: "Meilleur score enregistré",
+        replay: "Rejouer",
+        returnSetup: "Changer de niveau",
+        starLabel: "étoiles sur trois",
+        footerCourse: "SEG3525",
+        easy: "Débutant",
+        easyDetail: "4 paires · grille 4 × 2",
+        medium: "Intermédiaire",
+        mediumDetail: "6 paires · grille 4 × 3",
+        hard: "Avancé",
+        hardDetail: "8 paires · grille 4 × 4",
+        nature: "Nature",
+        natureDetail: "Formes organiques familières",
+        space: "Espace",
+        spaceDetail: "Symboles célestes contrastés",
+        science: "Science",
+        scienceDetail: "Objets et concepts scientifiques",
+        secondsShort: "s",
+        scoreShort: "pts"
+    },
+    en: {
+        back: "Back to portfolio",
+        skip: "Skip to main content",
+        project: "Design 02 · Memory game",
+        introTitle: "Mémoria",
+        introCopy: "A matching game that trains visual memory without overloading attention. Choose a level, a visual theme, and start playing.",
+        principle1: "Recognition rather than recall",
+        principle2: "Clear feedback after every action",
+        principle3: "Calm and consistent interface",
+        introNote: "Built with React · SEG3525",
+        configureEyebrow: "Configure the game",
+        configureTitle: "Prepare your challenge",
+        configureDescription: "Choices are grouped by proximity so the setup remains quick and easy to understand.",
+        levelTitle: "1 · Level",
+        levelHelp: "Choose the number of pairs.",
+        themeTitle: "2 · Visual theme",
+        themeHelp: "Choose the images to remember.",
+        previewTitle: "3-second preview",
+        previewHelp: "All cards will be briefly visible before the game starts.",
+        start: "Start the game",
+        instructions: "How to play",
+        instruction1: "Flip two cards.",
+        instruction2: "If they match, the pair remains visible.",
+        instruction3: "Find every pair in as few moves as possible.",
+        selected: "Selected",
+        pairs: "pairs",
+        cards: "cards",
+        previewOn: "Preview enabled",
+        previewOff: "No preview",
+        gameEyebrow: "Visual memory · Matching game",
+        gameSubtitle: "Find every pair. Matched cards remain visible.",
+        changeConfig: "Change options",
+        level: "Level",
+        theme: "Theme",
+        moves: "Moves",
+        time: "Time",
+        found: "Found",
+        score: "Score",
+        progress: "Progress",
+        feedback: "Feedback",
+        ready: "Choose your first card.",
+        oneCard: "Good. Now look for the matching card.",
+        match: "Pair found. Keep going!",
+        miss: "These cards are different. Observe them before they turn back.",
+        previewing: "Memorize the cards: the game will begin in a few seconds.",
+        restart: "Restart",
+        setup: "New configuration",
+        hiddenCard: "Hidden card",
+        matchedCard: "Matched pair",
+        flipCard: "Flip card",
+        previewBanner: "Preview in progress · remember the positions",
+        resultEyebrow: "Game complete",
+        resultTitle: "Challenge completed",
+        resultCopy: "You found every pair. Compare your moves and time, then try to improve your result.",
+        accuracy: "Efficiency",
+        bestNew: "New best result for this configuration.",
+        bestExisting: "Saved best score",
+        replay: "Play again",
+        returnSetup: "Change level",
+        starLabel: "stars out of three",
+        footerCourse: "SEG3525",
+        easy: "Beginner",
+        easyDetail: "4 pairs · 4 × 2 grid",
+        medium: "Intermediate",
+        mediumDetail: "6 pairs · 4 × 3 grid",
+        hard: "Advanced",
+        hardDetail: "8 pairs · 4 × 4 grid",
+        nature: "Nature",
+        natureDetail: "Familiar organic shapes",
+        space: "Space",
+        spaceDetail: "High-contrast celestial symbols",
+        science: "Science",
+        scienceDetail: "Scientific objects and concepts",
+        secondsShort: "s",
+        scoreShort: "pts"
     }
-    setLang(localStorage.getItem('portfolio-lang') || 'fr');
+};
+const LEVELS = {
+    easy: { pairs: 4, columns: 4, icon: "01" },
+    medium: { pairs: 6, columns: 4, icon: "02" },
+    hard: { pairs: 8, columns: 4, icon: "03" }
+};
+const THEMES = {
+    nature: {
+        icon: "🌿",
+        items: [
+            { id: "leaf", symbol: "🌿", fr: "Feuille", en: "Leaf" },
+            { id: "flower", symbol: "🌸", fr: "Fleur", en: "Flower" },
+            { id: "mushroom", symbol: "🍄", fr: "Champignon", en: "Mushroom" },
+            { id: "butterfly", symbol: "🦋", fr: "Papillon", en: "Butterfly" },
+            { id: "shell", symbol: "🐚", fr: "Coquillage", en: "Shell" },
+            { id: "feather", symbol: "🪶", fr: "Plume", en: "Feather" },
+            { id: "sun", symbol: "☀️", fr: "Soleil", en: "Sun" },
+            { id: "moon", symbol: "🌙", fr: "Lune", en: "Moon" }
+        ]
+    },
+    space: {
+        icon: "🪐",
+        items: [
+            { id: "planet", symbol: "🪐", fr: "Planète", en: "Planet" },
+            { id: "rocket", symbol: "🚀", fr: "Fusée", en: "Rocket" },
+            { id: "star", symbol: "⭐", fr: "Étoile", en: "Star" },
+            { id: "comet", symbol: "☄️", fr: "Comète", en: "Comet" },
+            { id: "earth", symbol: "🌍", fr: "Terre", en: "Earth" },
+            { id: "satellite", symbol: "🛰️", fr: "Satellite", en: "Satellite" },
+            { id: "telescope", symbol: "🔭", fr: "Télescope", en: "Telescope" },
+            { id: "astronaut", symbol: "🧑‍🚀", fr: "Astronaute", en: "Astronaut" }
+        ]
+    },
+    science: {
+        icon: "🔬",
+        items: [
+            { id: "dna", symbol: "🧬", fr: "ADN", en: "DNA" },
+            { id: "microscope", symbol: "🔬", fr: "Microscope", en: "Microscope" },
+            { id: "flask", symbol: "⚗️", fr: "Fiole", en: "Flask" },
+            { id: "brain", symbol: "🧠", fr: "Cerveau", en: "Brain" },
+            { id: "atom", symbol: "⚛️", fr: "Atome", en: "Atom" },
+            { id: "magnet", symbol: "🧲", fr: "Aimant", en: "Magnet" },
+            { id: "light", symbol: "💡", fr: "Lumière", en: "Light" },
+            { id: "computer", symbol: "💻", fr: "Ordinateur", en: "Computer" }
+        ]
+    }
+};
+function shuffle(items) {
+    const array = [...items];
+    for (let index = array.length - 1; index > 0; index -= 1) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        [array[index], array[randomIndex]] = [array[randomIndex], array[index]];
+    }
+    return array;
+}
+function buildDeck(levelKey, themeKey) {
+    const pairCount = LEVELS[levelKey].pairs;
+    const selectedItems = THEMES[themeKey].items.slice(0, pairCount);
+    const doubled = selectedItems.flatMap((item, index) => [
+        { ...item, uid: `${item.id}-a-${index}` },
+        { ...item, uid: `${item.id}-b-${index}` }
+    ]);
+    return shuffle(doubled);
+}
+function formatTime(totalSeconds) {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = String(totalSeconds % 60).padStart(2, "0");
+    return `${minutes}:${seconds}`;
+}
+function calculateScore(levelKey, moves, seconds) {
+    const base = { easy: 650, medium: 950, hard: 1300 }[levelKey];
+    return Math.max(100, Math.round(base - moves * 12 - seconds * 2));
+}
+function calculateStars(levelKey, moves) {
+    const pairs = LEVELS[levelKey].pairs;
+    if (moves <= pairs + 2)
+        return 3;
+    if (moves <= pairs * 2)
+        return 2;
+    return 1;
+}
+function LanguageSwitcher({ lang, onChange }) {
+    return (React.createElement("div", { className: "lang-switcher", "aria-label": "Language selector" },
+        React.createElement("button", { className: "lang-button", type: "button", "aria-pressed": lang === "fr", onClick: () => onChange("fr") }, "FR"),
+        React.createElement("button", { className: "lang-button", type: "button", "aria-pressed": lang === "en", onClick: () => onChange("en") }, "EN")));
+}
+function ChoiceCard({ active, icon, name, detail, onClick, label }) {
+    return (React.createElement("button", { className: "choice-card", type: "button", "aria-pressed": active, "aria-label": `${label}: ${name}`, onClick: onClick },
+        React.createElement("span", { className: "choice-icon", "aria-hidden": "true" }, icon),
+        React.createElement("span", { className: "choice-name" }, name),
+        React.createElement("span", { className: "choice-detail" }, detail)));
+}
+function SetupScreen({ lang, level, theme, previewEnabled, setLevel, setTheme, setPreviewEnabled, startGame }) {
+    const t = COPY[lang];
+    const levelInfo = LEVELS[level];
+    return (React.createElement("main", { className: "page-main", id: "main-content" },
+        React.createElement("section", { className: "setup-shell", "aria-labelledby": "setup-title" },
+            React.createElement("aside", { className: "intro-panel" },
+                React.createElement("div", null,
+                    React.createElement("span", { className: "project-number" }, "02"),
+                    React.createElement("p", { className: "kicker" }, t.project),
+                    React.createElement("h1", { className: "intro-title" }, t.introTitle),
+                    React.createElement("p", { className: "intro-copy" }, t.introCopy),
+                    React.createElement("div", { className: "principle-list", "aria-label": "Principes de conception" }, [t.principle1, t.principle2, t.principle3].map((principle, index) => (React.createElement("div", { className: "principle-item", key: principle },
+                        React.createElement("span", { className: "principle-icon", "aria-hidden": "true" }, index + 1),
+                        React.createElement("span", null, principle)))))),
+                React.createElement("p", { className: "intro-note" }, t.introNote)),
+            React.createElement("section", { className: "config-panel" },
+                React.createElement("header", { className: "section-heading" },
+                    React.createElement("p", { className: "eyebrow" }, t.configureEyebrow),
+                    React.createElement("h2", { className: "page-title", id: "setup-title" }, t.configureTitle),
+                    React.createElement("p", { className: "section-description" }, t.configureDescription)),
+                React.createElement("div", { className: "option-group" },
+                    React.createElement("div", { className: "option-header" },
+                        React.createElement("h3", { className: "option-title" }, t.levelTitle),
+                        React.createElement("p", { className: "option-help" }, t.levelHelp)),
+                    React.createElement("div", { className: "choice-grid" }, Object.keys(LEVELS).map((key) => (React.createElement(ChoiceCard, { key: key, active: level === key, icon: LEVELS[key].icon, name: t[key], detail: t[`${key}Detail`], label: t.level, onClick: () => setLevel(key) }))))),
+                React.createElement("div", { className: "option-group" },
+                    React.createElement("div", { className: "option-header" },
+                        React.createElement("h3", { className: "option-title" }, t.themeTitle),
+                        React.createElement("p", { className: "option-help" }, t.themeHelp)),
+                    React.createElement("div", { className: "choice-grid" }, Object.keys(THEMES).map((key) => (React.createElement(ChoiceCard, { key: key, active: theme === key, icon: THEMES[key].icon, name: t[key], detail: t[`${key}Detail`], label: t.theme, onClick: () => setTheme(key) }))))),
+                React.createElement("div", { className: "option-group" },
+                    React.createElement("div", { className: "preview-row" },
+                        React.createElement("div", { className: "preview-copy" },
+                            React.createElement("strong", null, t.previewTitle),
+                            React.createElement("span", null, t.previewHelp)),
+                        React.createElement("button", { className: "switch", type: "button", role: "switch", "aria-checked": previewEnabled, "aria-label": t.previewTitle, "aria-pressed": previewEnabled, onClick: () => setPreviewEnabled((current) => !current) },
+                            React.createElement("span", { className: "sr-only" }, previewEnabled ? t.previewOn : t.previewOff)))),
+                React.createElement("div", { className: "config-summary", "aria-label": "R\u00E9sum\u00E9 de la configuration" },
+                    React.createElement("span", { className: "summary-chip" }, t[level]),
+                    React.createElement("span", { className: "summary-chip" }, t[theme]),
+                    React.createElement("span", { className: "summary-chip" },
+                        levelInfo.pairs,
+                        " ",
+                        t.pairs),
+                    React.createElement("span", { className: "summary-chip" }, previewEnabled ? t.previewOn : t.previewOff)),
+                React.createElement("div", { className: "config-actions" },
+                    React.createElement("details", { className: "instructions" },
+                        React.createElement("summary", null, t.instructions),
+                        React.createElement("ol", null,
+                            React.createElement("li", null, t.instruction1),
+                            React.createElement("li", null, t.instruction2),
+                            React.createElement("li", null, t.instruction3))),
+                    React.createElement("button", { className: "primary-button", type: "button", onClick: startGame },
+                        t.start,
+                        React.createElement("svg", { "aria-hidden": "true", width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2" },
+                            React.createElement("line", { x1: "5", y1: "12", x2: "19", y2: "12" }),
+                            React.createElement("polyline", { points: "12 5 19 12 12 19" }))))))));
+}
+function MemoryCard({ card, lang, isFlipped, isMatched, isDisabled, onClick }) {
+    const t = COPY[lang];
+    const name = card[lang];
+    const label = isMatched ? `${t.matchedCard}: ${name}` : isFlipped ? name : `${t.flipCard}: ${t.hiddenCard}`;
+    return (React.createElement("button", { className: `memory-card${isFlipped ? " is-flipped" : ""}${isMatched ? " is-matched" : ""}`, type: "button", "aria-label": label, "aria-pressed": isFlipped || isMatched, disabled: isDisabled || isMatched, onClick: onClick },
+        React.createElement("span", { className: "card-inner" },
+            React.createElement("span", { className: "card-face card-back", "aria-hidden": "true" },
+                React.createElement("span", { className: "card-back-mark" }, "M")),
+            React.createElement("span", { className: "card-face card-front" },
+                React.createElement("span", { className: "card-content" },
+                    React.createElement("span", { className: "card-symbol", "aria-hidden": "true" }, card.symbol),
+                    React.createElement("span", { className: "card-name" }, name)),
+                isMatched && React.createElement("span", { className: "matched-badge", "aria-hidden": "true" }, "\u2713")))));
+}
+function GameScreen({ lang, level, theme, cards, flipped, matched, moves, seconds, previewing, feedbackKey, busy, onCardClick, onRestart, onSetup }) {
+    const t = COPY[lang];
+    const totalPairs = LEVELS[level].pairs;
+    const foundPairs = matched.length / 2;
+    const progress = Math.round((foundPairs / totalPairs) * 100);
+    const visibleCards = new Set([...flipped, ...matched]);
+    return (React.createElement("main", { className: "page-main", id: "main-content" },
+        React.createElement("section", { className: "game-shell", "aria-labelledby": "game-title" },
+            React.createElement("header", { className: "game-header" },
+                React.createElement("div", { className: "game-heading-wrap" },
+                    React.createElement("p", { className: "eyebrow" }, t.gameEyebrow),
+                    React.createElement("h1", { className: "game-title", id: "game-title" }, "M\u00E9moria"),
+                    React.createElement("p", { className: "game-subtitle" }, t.gameSubtitle)),
+                React.createElement("button", { className: "secondary-button", type: "button", onClick: onSetup }, t.changeConfig)),
+            React.createElement("div", { className: "game-layout" },
+                React.createElement("aside", { className: "stats-panel", "aria-label": "Informations de la partie" },
+                    React.createElement("div", { className: "stats-card" },
+                        React.createElement("div", { className: "stats-grid" },
+                            React.createElement("div", { className: "stat-box" },
+                                React.createElement("span", { className: "stat-label" }, t.moves),
+                                React.createElement("span", { className: "stat-value" }, moves)),
+                            React.createElement("div", { className: "stat-box" },
+                                React.createElement("span", { className: "stat-label" }, t.time),
+                                React.createElement("span", { className: "stat-value" }, formatTime(seconds))),
+                            React.createElement("div", { className: "stat-box" },
+                                React.createElement("span", { className: "stat-label" }, t.found),
+                                React.createElement("span", { className: "stat-value" },
+                                    foundPairs,
+                                    "/",
+                                    totalPairs)),
+                            React.createElement("div", { className: "stat-box" },
+                                React.createElement("span", { className: "stat-label" }, t.level),
+                                React.createElement("span", { className: "stat-value", style: { fontSize: "1.1rem" } }, t[level]))),
+                        React.createElement("div", { className: "progress-block" },
+                            React.createElement("div", { className: "progress-heading" },
+                                React.createElement("span", null, t.progress),
+                                React.createElement("strong", null,
+                                    progress,
+                                    "%")),
+                            React.createElement("div", { className: "progress-track", "aria-label": `${t.progress}: ${progress}%` },
+                                React.createElement("div", { className: "progress-bar", style: { width: `${progress}%` } })))),
+                    React.createElement("div", { className: "feedback-card", "aria-live": "polite", "aria-atomic": "true" },
+                        React.createElement("span", { className: "feedback-label" }, t.feedback),
+                        React.createElement("p", { className: "feedback-message" }, t[feedbackKey])),
+                    React.createElement("div", { className: "side-actions" },
+                        React.createElement("button", { className: "secondary-button", type: "button", onClick: onRestart }, t.restart),
+                        React.createElement("button", { className: "text-button", type: "button", onClick: onSetup }, t.setup))),
+                React.createElement("section", { className: "board-panel", "aria-label": `${t.theme}: ${t[theme]}` },
+                    previewing && (React.createElement("div", { className: "preview-banner", role: "status" },
+                        React.createElement("span", { "aria-hidden": "true" }, "\u25C9"),
+                        React.createElement("span", null, t.previewBanner))),
+                    React.createElement("div", { className: "board", style: { "--columns": LEVELS[level].columns }, "aria-busy": busy || previewing }, cards.map((card) => (React.createElement(MemoryCard, { key: card.uid, card: card, lang: lang, isFlipped: previewing || visibleCards.has(card.uid), isMatched: matched.includes(card.uid), isDisabled: busy || previewing, onClick: () => onCardClick(card) })))))))));
+}
+function ResultScreen({ lang, level, theme, result, bestResult, isNewBest, onReplay, onSetup }) {
+    const t = COPY[lang];
+    const stars = calculateStars(level, result.moves);
+    const efficiency = Math.max(1, Math.round((LEVELS[level].pairs / result.moves) * 100));
+    return (React.createElement("main", { className: "page-main", id: "main-content" },
+        React.createElement("section", { className: "result-shell", "aria-labelledby": "result-title" },
+            React.createElement("div", { className: "result-visual" },
+                React.createElement("div", null,
+                    React.createElement("div", { className: "result-medallion", "aria-hidden": "true" },
+                        React.createElement("span", { className: "result-check" }, "\u2713")),
+                    React.createElement("div", { className: "result-stars", "aria-label": `${stars} ${t.starLabel}` },
+                        "★".repeat(stars),
+                        "☆".repeat(3 - stars)))),
+            React.createElement("section", { className: "result-content" },
+                React.createElement("p", { className: "eyebrow" }, t.resultEyebrow),
+                React.createElement("h1", { className: "result-title", id: "result-title" }, t.resultTitle),
+                React.createElement("p", { className: "result-copy" }, t.resultCopy),
+                React.createElement("div", { className: "config-summary" },
+                    React.createElement("span", { className: "summary-chip" }, t[level]),
+                    React.createElement("span", { className: "summary-chip" }, t[theme])),
+                React.createElement("div", { className: "result-grid" },
+                    React.createElement("div", { className: "result-metric" },
+                        React.createElement("span", { className: "result-metric-label" }, t.moves),
+                        React.createElement("span", { className: "result-metric-value" }, result.moves)),
+                    React.createElement("div", { className: "result-metric" },
+                        React.createElement("span", { className: "result-metric-label" }, t.time),
+                        React.createElement("span", { className: "result-metric-value" }, formatTime(result.seconds))),
+                    React.createElement("div", { className: "result-metric" },
+                        React.createElement("span", { className: "result-metric-label" }, t.score),
+                        React.createElement("span", { className: "result-metric-value" }, result.score))),
+                React.createElement("div", { className: "best-box" },
+                    React.createElement("strong", null, isNewBest ? t.bestNew : t.bestExisting),
+                    !isNewBest && bestResult && (React.createElement("span", null,
+                        " \u00B7 ",
+                        bestResult.score,
+                        " ",
+                        t.scoreShort,
+                        " \u00B7 ",
+                        bestResult.moves,
+                        " ",
+                        t.moves.toLowerCase(),
+                        " \u00B7 ",
+                        formatTime(bestResult.seconds))),
+                    React.createElement("span", null,
+                        " \u00B7 ",
+                        t.accuracy,
+                        ": ",
+                        efficiency,
+                        "%")),
+                React.createElement("div", { className: "result-actions" },
+                    React.createElement("button", { className: "primary-button", type: "button", onClick: onReplay }, t.replay),
+                    React.createElement("button", { className: "secondary-button", type: "button", onClick: onSetup }, t.returnSetup))))));
+}
+function App() {
+    const [lang, setLang] = useState("fr");
+    const [screen, setScreen] = useState("setup");
+    const [level, setLevel] = useState("easy");
+    const [theme, setTheme] = useState("nature");
+    const [previewEnabled, setPreviewEnabled] = useState(true);
+    const [cards, setCards] = useState([]);
+    const [flipped, setFlipped] = useState([]);
+    const [matched, setMatched] = useState([]);
+    const [moves, setMoves] = useState(0);
+    const [seconds, setSeconds] = useState(0);
+    const [previewing, setPreviewing] = useState(false);
+    const [feedbackKey, setFeedbackKey] = useState("ready");
+    const [busy, setBusy] = useState(false);
+    const [result, setResult] = useState(null);
+    const [bestResult, setBestResult] = useState(null);
+    const [isNewBest, setIsNewBest] = useState(false);
+    const previewTimerRef = useRef(null);
+    const pairTimerRef = useRef(null);
+    const finishingRef = useRef(false);
+    const storageKey = useMemo(() => `memoria-best-${level}-${theme}`, [level, theme]);
+    useEffect(() => {
+        document.documentElement.lang = lang;
+        const backLabel = document.getElementById("back-label");
+        const skipLink = document.querySelector(".skip-link");
+        if (backLabel)
+            backLabel.textContent = COPY[lang].back;
+        if (skipLink)
+            skipLink.textContent = COPY[lang].skip;
+    }, [lang]);
+    useEffect(() => {
+        const languageRoot = document.getElementById("language-root");
+        if (!languageRoot)
+            return undefined;
+        ReactDOM.render(React.createElement(LanguageSwitcher, { lang: lang, onChange: setLang }), languageRoot);
+        return () => ReactDOM.unmountComponentAtNode(languageRoot);
+    }, [lang]);
+    useEffect(() => {
+        if (screen !== "play" || previewing || finishingRef.current)
+            return undefined;
+        const timer = window.setInterval(() => {
+            setSeconds((current) => current + 1);
+        }, 1000);
+        return () => window.clearInterval(timer);
+    }, [screen, previewing]);
+    useEffect(() => {
+        return () => {
+            window.clearTimeout(previewTimerRef.current);
+            window.clearTimeout(pairTimerRef.current);
+        };
+    }, []);
+    useEffect(() => {
+        if (screen === "play" &&
+            cards.length > 0 &&
+            matched.length === cards.length &&
+            !finishingRef.current) {
+            finishingRef.current = true;
+            const finalResult = {
+                moves,
+                seconds,
+                score: calculateScore(level, moves, seconds)
+            };
+            const finishTimer = window.setTimeout(() => {
+                let storedBest = null;
+                try {
+                    const saved = window.localStorage.getItem(storageKey);
+                    storedBest = saved ? JSON.parse(saved) : null;
+                }
+                catch (error) {
+                    storedBest = null;
+                }
+                const newBest = !storedBest || finalResult.score > storedBest.score;
+                if (newBest) {
+                    try {
+                        window.localStorage.setItem(storageKey, JSON.stringify(finalResult));
+                    }
+                    catch (error) {
+                        // The game remains functional even if storage is unavailable.
+                    }
+                    setBestResult(finalResult);
+                }
+                else {
+                    setBestResult(storedBest);
+                }
+                setIsNewBest(newBest);
+                setResult(finalResult);
+                setScreen("result");
+            }, 700);
+            return () => window.clearTimeout(finishTimer);
+        }
+        return undefined;
+    }, [screen, cards, matched, moves, seconds, level, storageKey]);
+    function resetTimers() {
+        window.clearTimeout(previewTimerRef.current);
+        window.clearTimeout(pairTimerRef.current);
+    }
+    function startGame() {
+        resetTimers();
+        finishingRef.current = false;
+        setCards(buildDeck(level, theme));
+        setFlipped([]);
+        setMatched([]);
+        setMoves(0);
+        setSeconds(0);
+        setBusy(false);
+        setResult(null);
+        setBestResult(null);
+        setIsNewBest(false);
+        setScreen("play");
+        if (previewEnabled) {
+            setPreviewing(true);
+            setFeedbackKey("previewing");
+            previewTimerRef.current = window.setTimeout(() => {
+                setPreviewing(false);
+                setFeedbackKey("ready");
+            }, 3000);
+        }
+        else {
+            setPreviewing(false);
+            setFeedbackKey("ready");
+        }
+    }
+    function handleCardClick(card) {
+        if (busy || previewing || matched.includes(card.uid) || flipped.includes(card.uid))
+            return;
+        const nextFlipped = [...flipped, card.uid];
+        setFlipped(nextFlipped);
+        if (nextFlipped.length === 1) {
+            setFeedbackKey("oneCard");
+            return;
+        }
+        setBusy(true);
+        setMoves((current) => current + 1);
+        const firstCard = cards.find((item) => item.uid === nextFlipped[0]);
+        const secondCard = cards.find((item) => item.uid === nextFlipped[1]);
+        const isMatch = firstCard && secondCard && firstCard.id === secondCard.id;
+        if (isMatch) {
+            setFeedbackKey("match");
+            pairTimerRef.current = window.setTimeout(() => {
+                setMatched((current) => [...current, ...nextFlipped]);
+                setFlipped([]);
+                setBusy(false);
+            }, 420);
+        }
+        else {
+            setFeedbackKey("miss");
+            pairTimerRef.current = window.setTimeout(() => {
+                setFlipped([]);
+                setBusy(false);
+                setFeedbackKey("ready");
+            }, 950);
+        }
+    }
+    function returnToSetup() {
+        resetTimers();
+        finishingRef.current = false;
+        setPreviewing(false);
+        setBusy(false);
+        setScreen("setup");
+    }
+    let content;
+    if (screen === "play") {
+        content = (React.createElement(GameScreen, { lang: lang, level: level, theme: theme, cards: cards, flipped: flipped, matched: matched, moves: moves, seconds: seconds, previewing: previewing, feedbackKey: feedbackKey, busy: busy, onCardClick: handleCardClick, onRestart: startGame, onSetup: returnToSetup }));
+    }
+    else if (screen === "result" && result) {
+        content = (React.createElement(ResultScreen, { lang: lang, level: level, theme: theme, result: result, bestResult: bestResult, isNewBest: isNewBest, onReplay: startGame, onSetup: returnToSetup }));
+    }
+    else {
+        content = (React.createElement(SetupScreen, { lang: lang, level: level, theme: theme, previewEnabled: previewEnabled, setLevel: setLevel, setTheme: setTheme, setPreviewEnabled: setPreviewEnabled, startGame: startGame }));
+    }
+    return content;
+}
+const rootElement = document.getElementById("root");
+ReactDOM.render(React.createElement(App, null), rootElement);
+
   </script>
 </body>
 </html>
