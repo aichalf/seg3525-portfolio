@@ -562,42 +562,158 @@
 
     footer {
       margin-top: 0;
-      background: var(--forest);
+      background: var(--forest-dark);
       color: var(--white);
     }
-    .footer-contact {
+
+    .footer-main {
       display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: clamp(2rem, 6vw, 5rem);
-      align-items: center;
-      padding: clamp(3rem, 7vw, 5.5rem) 0;
+      grid-template-columns: 1.25fr .72fr 1fr 1.15fr;
+      gap: clamp(1.75rem, 4vw, 4rem);
+      align-items: start;
+      padding: clamp(3rem, 6vw, 4.5rem) 0 3rem;
     }
-    .footer-contact h2 {
-      max-width: 720px;
+
+    .footer-branding { max-width: 320px; }
+
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: .7rem;
+      margin-bottom: 1rem;
       color: var(--white);
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 700;
+      line-height: 1;
     }
-    .footer-contact p { color: rgba(255,255,255,.78); }
-    .contact-list { display: grid; gap: .9rem; }
-    .contact-list a, .contact-list span {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
+
+    .footer-logo .brand-mark {
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+    }
+
+    .footer-description {
+      margin: 0;
+      color: rgba(255,255,255,.7);
+      font-size: .95rem;
+      line-height: 1.65;
+    }
+
+    .footer-heading {
+      margin: .2rem 0 1.05rem;
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .15em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .footer-links,
+    .footer-contact-list {
+      display: grid;
+      gap: .72rem;
+    }
+
+    .footer-links a {
       width: fit-content;
-      font-weight: 600;
+      color: rgba(255,255,255,.74);
+      font-size: .94rem;
+      transition: color .18s ease, transform .18s ease;
     }
-    .contact-list a:hover { color: var(--coral); }
-    .contact-list i { color: var(--coral); }
-    .footer-bottom-wrap { background: var(--forest-dark); }
+
+    .footer-links a:hover {
+      color: var(--coral);
+      transform: translateX(3px);
+    }
+
+    .footer-contact-item {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      gap: .7rem;
+      align-items: start;
+      color: rgba(255,255,255,.76);
+      font-size: .94rem;
+    }
+
+    .footer-contact-item i {
+      margin-top: .18rem;
+      color: var(--coral);
+      font-size: 1rem;
+    }
+
+    .footer-contact-item a {
+      overflow-wrap: anywhere;
+      transition: color .18s ease;
+    }
+
+    .footer-contact-item a:hover { color: var(--coral); }
+
+    .footer-cta {
+      padding: 1.4rem;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 20px;
+      background: rgba(255,255,255,.07);
+    }
+
+    .footer-cta .footer-heading {
+      margin-top: 0;
+      margin-bottom: .65rem;
+      color: var(--sage);
+    }
+
+    .footer-cta h2 {
+      margin-bottom: .65rem;
+      color: var(--white);
+      font-size: 1.8rem;
+      line-height: 1.05;
+    }
+
+    .footer-cta p {
+      margin: 0 0 1.1rem;
+      color: rgba(255,255,255,.7);
+      font-size: .92rem;
+      line-height: 1.55;
+    }
+
+    .footer-cta .btn-primary {
+      min-height: 44px;
+      padding: .65rem 1rem;
+      font-size: .9rem;
+      box-shadow: none;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.08);
+    }
+
     .footer-inner {
       display: flex;
       justify-content: space-between;
-      gap: 1rem;
+      gap: 1rem 2rem;
       align-items: center;
-      padding: 1.5rem 0;
-      color: rgba(255,255,255,.72);
-      font-size: .9rem;
+      padding: 1.15rem 0;
+      color: rgba(255,255,255,.58);
+      font-size: .86rem;
     }
-    .footer-inner a { color: var(--coral); font-weight: 700; }
+
+    .footer-meta-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem 1.35rem;
+    }
+
+    .footer-meta-links a {
+      color: rgba(255,255,255,.78);
+      font-weight: 600;
+      transition: color .18s ease;
+    }
+
+    .footer-meta-links a:hover { color: var(--coral); }
 
     [data-lang="en"] { display: none; }
     html[lang="en"] [data-lang="fr"] { display: none !important; }
@@ -620,8 +736,8 @@
       .menu-btn { display: inline-grid; place-items: center; }
       .hero-grid,
       .approach-grid,
-      .booking-layout,
-      .footer-contact { grid-template-columns: 1fr; }
+      .booking-layout { grid-template-columns: 1fr; }
+      .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .hero-visual { min-height: auto; }
       .hero-image { height: 520px; }
       .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -643,6 +759,8 @@
       .field.full { grid-column: auto; }
       .service-actions { grid-template-columns: 1fr; }
       .form-actions { align-items: flex-start; flex-direction: column; }
+      .footer-main { grid-template-columns: 1fr; }
+      .footer-branding { max-width: none; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
       .back-to-portfolio { display: none; }
     }
@@ -894,24 +1012,69 @@
 
   </main>
 
-  <footer id="contact">
-    <div class="container footer-contact">
-      <div>
-        <p class="eyebrow"><span data-lang="fr">Contact</span><span data-lang="en">Contact</span></p>
-        <h2><span data-lang="fr">Une question avant de réserver?</span><span data-lang="en">A question before booking?</span></h2>
-        <p><span data-lang="fr">Écrivez-nous pour vérifier quel service correspond le mieux à votre situation.</span><span data-lang="en">Contact us to confirm which service best fits your situation.</span></p>
-      </div>
-      <div class="contact-list">
-        <a href="mailto:bonjour@nutrivie.ca"><i class="bi bi-envelope"></i> bonjour@nutrivie.ca ↗</a>
-        <a href="tel:+16135550128"><i class="bi bi-telephone"></i> 613-555-0128</a>
-        <span><i class="bi bi-geo-alt"></i> Ottawa, Ontario</span>
-        <span><i class="bi bi-clock"></i> Lun–Ven · 8 h 30–18 h</span>
-      </div>
+  <footer id="contact" class="site-footer">
+    <div class="container footer-main">
+      <section class="footer-branding" aria-label="À propos de NutriVie">
+        <a class="footer-logo" href="#accueil" aria-label="NutriVie — retour à l’accueil">
+          <span class="brand-mark" aria-hidden="true">N</span>
+          <span>NutriVie</span>
+        </a>
+        <p class="footer-description">
+          <span data-lang="fr">Des consultations nutritionnelles personnalisées, offertes en ligne ou à Ottawa, pour avancer à votre rythme.</span>
+          <span data-lang="en">Personalized nutrition consultations, available online or in Ottawa, so you can move forward at your own pace.</span>
+        </p>
+      </section>
+
+      <nav aria-label="Navigation du pied de page">
+        <h2 class="footer-heading"><span data-lang="fr">Explorer</span><span data-lang="en">Explore</span></h2>
+        <div class="footer-links">
+          <a href="#services"><span data-lang="fr">Nos services</span><span data-lang="en">Our services</span></a>
+          <a href="#approche"><span data-lang="fr">Notre approche</span><span data-lang="en">Our approach</span></a>
+          <a href="#reservation"><span data-lang="fr">Réservation</span><span data-lang="en">Booking</span></a>
+          <a href="#faq">FAQ</a>
+        </div>
+      </nav>
+
+      <section aria-labelledby="footer-contact-title">
+        <h2 class="footer-heading" id="footer-contact-title"><span data-lang="fr">Nous joindre</span><span data-lang="en">Contact us</span></h2>
+        <div class="footer-contact-list">
+          <div class="footer-contact-item">
+            <i class="bi bi-envelope" aria-hidden="true"></i>
+            <a href="mailto:bonjour@nutrivie.ca">bonjour@nutrivie.ca</a>
+          </div>
+          <div class="footer-contact-item">
+            <i class="bi bi-telephone" aria-hidden="true"></i>
+            <a href="tel:+16135550128">613-555-0128</a>
+          </div>
+          <div class="footer-contact-item">
+            <i class="bi bi-geo-alt" aria-hidden="true"></i>
+            <span>Ottawa, Ontario</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="bi bi-clock" aria-hidden="true"></i>
+            <span><span data-lang="fr">Lun–Ven · 8 h 30–18 h</span><span data-lang="en">Mon–Fri · 8:30 a.m.–6 p.m.</span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="footer-cta" aria-labelledby="footer-cta-title">
+        <p class="footer-heading"><span data-lang="fr">Prêt à commencer?</span><span data-lang="en">Ready to begin?</span></p>
+        <h2 id="footer-cta-title"><span data-lang="fr">Choisissez le service qui vous convient.</span><span data-lang="en">Choose the service that suits you.</span></h2>
+        <p><span data-lang="fr">Consultez les disponibilités et réservez en quelques étapes simples.</span><span data-lang="en">View availability and book in a few simple steps.</span></p>
+        <a class="btn-primary" href="#reservation">
+          <span data-lang="fr">Réserver</span><span data-lang="en">Book now</span>
+          <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        </a>
+      </section>
     </div>
-    <div class="footer-bottom-wrap">
+
+    <div class="footer-bottom">
       <div class="container footer-inner">
-        <span>© 2026 NutriVie · <span data-lang="fr">Projet académique SEG3525</span><span data-lang="en">SEG3525 academic project</span></span>
-        <a href="index.html#projects"><span data-lang="fr">Retour au portfolio</span><span data-lang="en">Back to portfolio</span> ↗</a>
+        <span>© 2026 NutriVie</span>
+        <div class="footer-meta-links">
+          <a href="index.html#projects"><span data-lang="fr">Retour au portfolio</span><span data-lang="en">Back to portfolio</span> <span aria-hidden="true">↗</span></a>
+          <a href="#accueil"><span data-lang="fr">Retour en haut</span><span data-lang="en">Back to top</span> <span aria-hidden="true">↑</span></a>
+        </div>
       </div>
     </div>
   </footer>
