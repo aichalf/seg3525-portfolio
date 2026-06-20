@@ -7,9 +7,9 @@
   <meta name="theme-color" content="#202a44">
   <title>Mémoria | Jeu de mémoire</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  
+  
+  
 
   <style>
     :root {
@@ -1162,6 +1162,497 @@
       }
     }
 
+
+    /* Enhanced first-screen experience */
+    #setup-screen {
+      position: relative;
+      isolation: isolate;
+    }
+
+    #setup-screen::before,
+    #setup-screen::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      border: 1px solid rgba(108, 114, 217, 0.13);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.24);
+      transform: rotate(10deg);
+      pointer-events: none;
+    }
+
+    #setup-screen::before {
+      width: 130px;
+      height: 172px;
+      top: 4%;
+      left: -7%;
+    }
+
+    #setup-screen::after {
+      width: 96px;
+      height: 128px;
+      right: -4%;
+      bottom: 4%;
+      transform: rotate(-12deg);
+    }
+
+    .setup-layout {
+      grid-template-columns: minmax(0, 0.94fr) minmax(540px, 1.06fr);
+      gap: clamp(2.2rem, 5vw, 5rem);
+      align-items: center;
+    }
+
+    .intro-block {
+      position: sticky;
+      top: 104px;
+      padding: 0;
+    }
+
+    .intro-title {
+      margin-bottom: 0.35rem;
+      font-size: clamp(3.7rem, 7.2vw, 6.5rem);
+    }
+
+    .hero-heading {
+      max-width: 600px;
+      margin-bottom: 0.85rem;
+      color: var(--night);
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 3vw, 2.55rem);
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+    }
+
+    .intro-tagline {
+      max-width: 560px;
+      margin-bottom: 1.55rem;
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+    }
+
+    .game-preview {
+      position: relative;
+      max-width: 510px;
+      min-height: 290px;
+      margin: 0 0 1.35rem;
+      padding: 1.2rem;
+      overflow: hidden;
+      border: 1px solid rgba(108, 114, 217, 0.2);
+      border-radius: 30px;
+      background: linear-gradient(145deg, rgba(233, 234, 251, 0.96), rgba(221, 243, 237, 0.74));
+      box-shadow: 0 22px 55px rgba(32, 42, 68, 0.12);
+    }
+
+    .preview-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(2px);
+      opacity: 0.75;
+    }
+
+    .preview-glow-one {
+      width: 170px;
+      height: 170px;
+      top: -65px;
+      right: -45px;
+      background: rgba(108, 114, 217, 0.2);
+    }
+
+    .preview-glow-two {
+      width: 120px;
+      height: 120px;
+      bottom: -44px;
+      left: -38px;
+      background: rgba(47, 143, 126, 0.18);
+    }
+
+    .preview-board {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.7rem;
+      max-width: 375px;
+      margin: 0 auto 1rem;
+      transform: rotate(-1.5deg);
+    }
+
+    .preview-card {
+      position: relative;
+      aspect-ratio: 0.82;
+      display: grid;
+      place-items: center;
+      border-radius: 17px;
+      box-shadow: 0 10px 23px rgba(32, 42, 68, 0.13);
+      font-size: clamp(1.55rem, 3.5vw, 2.1rem);
+      font-weight: 900;
+    }
+
+    .preview-card.is-open {
+      color: var(--night);
+      border: 2px solid rgba(47, 143, 126, 0.36);
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .preview-card.is-hidden {
+      color: rgba(255, 255, 255, 0.92);
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      background:
+        radial-gradient(circle at 28% 25%, rgba(255, 255, 255, 0.16) 0 3px, transparent 4px),
+        linear-gradient(145deg, var(--night), var(--night-2));
+      background-size: 22px 22px, auto;
+      font-family: var(--font-display);
+    }
+
+    .preview-card i {
+      position: absolute;
+      top: 0.45rem;
+      right: 0.45rem;
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      border-radius: 50%;
+      background: var(--success);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-style: normal;
+    }
+
+    .preview-progress {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      max-width: 375px;
+      margin: 0 auto;
+      padding: 0.75rem 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.62);
+      color: var(--muted);
+      font-size: 0.82rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .preview-progress strong {
+      color: var(--night);
+    }
+
+    .how-to-play {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.65rem;
+      max-width: 510px;
+    }
+
+    .how-step {
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 0.55rem;
+      padding: 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .how-step:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      font-size: 0.78rem;
+    }
+
+    .how-step strong {
+      margin: 0;
+      font-size: 0.84rem;
+    }
+
+    .how-step span:last-child {
+      font-size: 0.72rem;
+      line-height: 1.25;
+    }
+
+    .setup-card {
+      padding: clamp(1.4rem, 3vw, 2.35rem);
+      border-color: rgba(220, 225, 236, 0.94);
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .setup-card-heading {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .setup-kicker {
+      display: inline-flex;
+      margin-bottom: 0.55rem;
+      padding: 0.35rem 0.65rem;
+      color: var(--lavender-dark);
+      border-radius: 999px;
+      background: var(--lavender-soft);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .setup-heading {
+      margin-bottom: 0.2rem;
+    }
+
+    .setup-subtitle {
+      margin-bottom: 0;
+    }
+
+    .option-group {
+      margin-bottom: 1.55rem;
+    }
+
+    .option-group legend {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .option-group legend small {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .choice-card {
+      min-height: 145px;
+      padding: 1rem 0.9rem 0.9rem;
+      overflow: hidden;
+    }
+
+    .choice-card[aria-pressed="true"] {
+      border-color: var(--lavender-dark);
+      background: linear-gradient(180deg, #f7f7ff, var(--lavender-soft));
+      box-shadow: inset 0 0 0 1px var(--lavender-dark), 0 12px 25px rgba(79, 86, 183, 0.12);
+    }
+
+    .selected-label {
+      position: absolute;
+      top: 0.66rem;
+      left: 0.66rem;
+      padding: 0.25rem 0.45rem;
+      color: var(--lavender-dark);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 0.57rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      opacity: 0;
+      transform: translateY(-3px);
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .choice-card[aria-pressed="true"] .selected-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .choice-check {
+      top: 0.65rem;
+      right: 0.65rem;
+    }
+
+    .mini-grid {
+      width: 58px;
+      min-height: 43px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+      margin-top: 1.4rem;
+      padding: 6px;
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .mini-grid i {
+      aspect-ratio: 0.82;
+      border: 1px solid rgba(108, 114, 217, 0.25);
+      border-radius: 2px;
+      background: rgba(108, 114, 217, 0.14);
+    }
+
+    .choice-card[aria-pressed="true"] .mini-grid i {
+      border-color: rgba(79, 86, 183, 0.45);
+      background: rgba(79, 86, 183, 0.24);
+    }
+
+    .theme-art {
+      display: flex;
+      gap: 0.35rem;
+      margin-top: 1.35rem;
+    }
+
+    .theme-icon {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .theme-icon svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nature-art { color: var(--success); }
+    .space-art { color: var(--lavender-dark); }
+    .science-art { color: var(--gold); }
+
+    .choice-title {
+      margin-top: 0.65rem;
+    }
+
+    .choice-meta {
+      font-size: 0.72rem;
+    }
+
+    .game-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1.15rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(108, 114, 217, 0.22);
+      border-radius: 14px;
+      background: linear-gradient(90deg, rgba(233, 234, 251, 0.76), rgba(221, 243, 237, 0.56));
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .game-summary strong {
+      color: var(--night);
+      font-size: 0.82rem;
+      text-align: right;
+    }
+
+    .start-button {
+      min-height: 58px;
+      margin-top: 0.9rem;
+      background: linear-gradient(135deg, var(--night), var(--lavender-dark));
+    }
+
+    @media (max-width: 1060px) {
+      .setup-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .intro-block {
+        position: static;
+        max-width: 780px;
+        margin: 0 auto;
+      }
+
+      .game-preview,
+      .how-to-play {
+        max-width: 100%;
+      }
+
+      .preview-board,
+      .preview-progress {
+        max-width: 430px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .hero-heading {
+        font-size: 1.8rem;
+      }
+
+      .game-preview {
+        min-height: auto;
+        padding: 0.9rem;
+        border-radius: 22px;
+      }
+
+      .preview-board {
+        gap: 0.45rem;
+      }
+
+      .preview-card {
+        border-radius: 13px;
+      }
+
+      .how-to-play {
+        grid-template-columns: 1fr;
+      }
+
+      .how-step {
+        grid-template-columns: 32px minmax(0, 1fr);
+      }
+
+      .how-step span:last-child {
+        font-size: 0.78rem;
+      }
+
+      .option-group legend {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+
+      .choice-card {
+        min-height: 124px;
+      }
+
+      .level-grid,
+      .theme-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .game-summary {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+
+      .game-summary strong {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .setup-card {
+        padding: 1rem;
+      }
+
+      .intro-title {
+        font-size: 3.55rem;
+      }
+
+      .preview-progress {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *,
       *::before,
@@ -1204,85 +1695,136 @@
         <div class="intro-block">
           <p class="eyebrow" data-i18n="eyebrow">Jeu de mémoire visuelle</p>
           <h1 id="setup-title" class="intro-title">Mémoria</h1>
-          <p class="intro-tagline" data-i18n="tagline">Observe. Mémorise. Retrouve les paires.</p>
+          <h2 class="hero-heading" data-i18n="heroHeading">Teste ta mémoire visuelle</h2>
+          <p class="intro-tagline" data-i18n="heroDescription">Observe les cartes, retrouve les paires et améliore ton meilleur score.</p>
+
+          <div class="game-preview" aria-hidden="true">
+            <div class="preview-glow preview-glow-one"></div>
+            <div class="preview-glow preview-glow-two"></div>
+            <div class="preview-board">
+              <div class="preview-card is-open is-matched"><span>🌿</span><i>✓</i></div>
+              <div class="preview-card is-hidden"><span>M</span></div>
+              <div class="preview-card is-open is-matched"><span>🦋</span><i>✓</i></div>
+              <div class="preview-card is-open is-matched"><span>🌿</span><i>✓</i></div>
+              <div class="preview-card is-hidden"><span>M</span></div>
+              <div class="preview-card is-open is-matched"><span>🦋</span><i>✓</i></div>
+            </div>
+            <div class="preview-progress">
+              <span data-i18n="previewExample">Aperçu d’une partie</span>
+              <strong>2 / 6 <span data-i18n="previewPairs">paires</span></strong>
+            </div>
+          </div>
 
           <div class="how-to-play" aria-label="Comment jouer">
             <div class="how-step">
               <span class="step-number">1</span>
               <span>
-                <strong data-i18n="how1Title">Choisis tes options</strong>
-                <span data-i18n="how1Text">Adapte le niveau et l’univers à ton envie.</span>
+                <strong data-i18n="how1Title">Choisis</strong>
+                <span data-i18n="how1Text">Ton niveau et ton univers</span>
               </span>
             </div>
             <div class="how-step">
               <span class="step-number">2</span>
               <span>
-                <strong data-i18n="how2Title">Observe les cartes</strong>
-                <span data-i18n="how2Text">Retourne deux cartes pour comparer leurs symboles.</span>
+                <strong data-i18n="how2Title">Observe</strong>
+                <span data-i18n="how2Text">Les cartes révélées</span>
               </span>
             </div>
             <div class="how-step">
               <span class="step-number">3</span>
               <span>
-                <strong data-i18n="how3Title">Trouve toutes les paires</strong>
-                <span data-i18n="how3Text">Termine la grille avec le moins de coups possible.</span>
+                <strong data-i18n="how3Title">Retrouve</strong>
+                <span data-i18n="how3Text">Toutes les paires</span>
               </span>
             </div>
           </div>
         </div>
 
         <form id="setup-form" class="setup-card">
-          <h2 class="setup-heading" data-i18n="setupHeading">Prépare ta partie</h2>
-          <p class="setup-subtitle" data-i18n="setupSubtitle">Trois choix rapides, puis le jeu commence.</p>
+          <div class="setup-card-heading">
+            <span class="setup-kicker" data-i18n="setupKicker">Nouvelle partie</span>
+            <h2 class="setup-heading" data-i18n="setupHeading">Prépare ta partie</h2>
+            <p class="setup-subtitle" data-i18n="setupSubtitle">Choisis une difficulté et un univers, puis lance le défi.</p>
+          </div>
 
           <fieldset class="option-group">
-            <legend data-i18n="levelLegend">Niveau</legend>
-            <div class="choice-grid" id="level-options">
+            <legend>
+              <span data-i18n="levelLegend">Niveau</span>
+              <small data-i18n="levelHint">Choisis la taille de la grille</small>
+            </legend>
+            <div class="choice-grid level-grid" id="level-options">
               <button class="choice-card level-choice" type="button" data-level="relax" aria-pressed="false">
+                <span class="selected-label" data-i18n="selected">Sélectionné</span>
                 <span class="choice-check" aria-hidden="true">✓</span>
-                <span class="level-icon" aria-hidden="true">4</span>
+                <span class="mini-grid mini-grid-8" aria-hidden="true">
+                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </span>
                 <span class="choice-title" data-i18n="levelRelax">Détente</span>
-                <span class="choice-meta" data-i18n="levelRelaxMeta">4 paires · 8 cartes</span>
+                <span class="choice-meta" data-i18n="levelRelaxMeta">Grille 2 × 4 · 4 paires</span>
               </button>
 
               <button class="choice-card level-choice" type="button" data-level="challenge" aria-pressed="true">
+                <span class="selected-label" data-i18n="selected">Sélectionné</span>
                 <span class="choice-check" aria-hidden="true">✓</span>
-                <span class="level-icon" aria-hidden="true">6</span>
+                <span class="mini-grid mini-grid-12" aria-hidden="true">
+                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </span>
                 <span class="choice-title" data-i18n="levelChallenge">Défi</span>
-                <span class="choice-meta" data-i18n="levelChallengeMeta">6 paires · 12 cartes</span>
+                <span class="choice-meta" data-i18n="levelChallengeMeta">Grille 3 × 4 · 6 paires</span>
               </button>
 
               <button class="choice-card level-choice" type="button" data-level="expert" aria-pressed="false">
+                <span class="selected-label" data-i18n="selected">Sélectionné</span>
                 <span class="choice-check" aria-hidden="true">✓</span>
-                <span class="level-icon" aria-hidden="true">8</span>
+                <span class="mini-grid mini-grid-16" aria-hidden="true">
+                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </span>
                 <span class="choice-title" data-i18n="levelExpert">Expert</span>
-                <span class="choice-meta" data-i18n="levelExpertMeta">8 paires · 16 cartes</span>
+                <span class="choice-meta" data-i18n="levelExpertMeta">Grille 4 × 4 · 8 paires</span>
               </button>
             </div>
           </fieldset>
 
           <fieldset class="option-group">
-            <legend data-i18n="themeLegend">Univers</legend>
-            <div class="choice-grid" id="theme-options">
+            <legend>
+              <span data-i18n="themeLegend">Univers</span>
+              <small data-i18n="themeHint">Choisis l’ambiance des cartes</small>
+            </legend>
+            <div class="choice-grid theme-grid" id="theme-options">
               <button class="choice-card theme-choice" type="button" data-theme="nature" aria-pressed="true">
+                <span class="selected-label" data-i18n="selected">Sélectionné</span>
                 <span class="choice-check" aria-hidden="true">✓</span>
-                <span class="theme-preview" aria-hidden="true">🌿 🌻 🦋</span>
+                <span class="theme-art nature-art" aria-hidden="true">
+                  <span class="theme-icon"><svg viewBox="0 0 24 24"><path d="M20 4c-7.5.2-12 3.6-12 9.5 0 2.6 1.6 4.5 4 4.5 5.5 0 8-6.2 8-14Z"/><path d="M5 20c2.6-5.1 6.7-8.9 12-11.5"/></svg></span>
+                  <span class="theme-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></span>
+                  <span class="theme-icon"><svg viewBox="0 0 24 24"><path d="M12 12c-1.5-4.5-6-7.5-9-5 0 4.5 3 7.5 9 5Z"/><path d="M12 12c1.5-4.5 6-7.5 9-5 0 4.5-3 7.5-9 5Z"/><path d="M12 12v8"/></svg></span>
+                </span>
                 <span class="choice-title" data-i18n="themeNature">Nature</span>
-                <span class="choice-meta" data-i18n="themeNatureMeta">Plantes, animaux et couleurs douces</span>
+                <span class="choice-meta" data-i18n="themeNatureMeta">Feuilles, fleurs et animaux</span>
               </button>
 
               <button class="choice-card theme-choice" type="button" data-theme="space" aria-pressed="false">
+                <span class="selected-label" data-i18n="selected">Sélectionné</span>
                 <span class="choice-check" aria-hidden="true">✓</span>
-                <span class="theme-preview" aria-hidden="true">🚀 🪐 ⭐</span>
+                <span class="theme-art space-art" aria-hidden="true">
+                  <span class="theme-icon"><svg viewBox="0 0 24 24"><path d="M14 4c3-1.5 5-1 6-1-0 3-1.2 6.2-4.5 8.5L12 15l-3-3 3.5-3.5C13 6.8 13.4 5.3 14 4Z"/><path d="M9 12 5 13l-2 4 5-1M12 15l-1 4 4 2 1-5"/><circle cx="16" cy="7" r="1"/></svg></span>
+                  <span class="theme-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M3 14c2-4 16-7 18-4 2 3-8 8-14 8"/></svg></span>
+                  <span class="theme-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.4 5.1L20 9l-4 3.9.9 5.6L12 16l-4.9 2.5.9-5.6L4 9l5.6-.9L12 3Z"/></svg></span>
+                </span>
                 <span class="choice-title" data-i18n="themeSpace">Espace</span>
-                <span class="choice-meta" data-i18n="themeSpaceMeta">Planètes, étoiles et exploration</span>
+                <span class="choice-meta" data-i18n="themeSpaceMeta">Planètes, fusées et étoiles</span>
               </button>
 
               <button class="choice-card theme-choice" type="button" data-theme="science" aria-pressed="false">
+                <span class="selected-label" data-i18n="selected">Sélectionné</span>
                 <span class="choice-check" aria-hidden="true">✓</span>
-                <span class="theme-preview" aria-hidden="true">🔬 🧬 ⚗️</span>
+                <span class="theme-art science-art" aria-hidden="true">
+                  <span class="theme-icon"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9c-.6 1.1.2 2.5 1.5 2.5h11c1.3 0 2.1-1.4 1.5-2.5l-5-9V3"/><path d="M8 15h8"/></svg></span>
+                  <span class="theme-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><ellipse cx="12" cy="12" rx="3.5" ry="9" transform="rotate(35 12 12)"/><ellipse cx="12" cy="12" rx="3.5" ry="9" transform="rotate(-35 12 12)"/></svg></span>
+                  <span class="theme-icon"><svg viewBox="0 0 24 24"><path d="M9 4h6M10 4v4l-4 8a3 3 0 0 0 2.7 4.3h6.6A3 3 0 0 0 18 16l-4-8V4"/><path d="M8 15h8"/></svg></span>
+                </span>
                 <span class="choice-title" data-i18n="themeScience">Science</span>
-                <span class="choice-meta" data-i18n="themeScienceMeta">Découvertes, expériences et idées</span>
+                <span class="choice-meta" data-i18n="themeScienceMeta">Atomes, expériences et découvertes</span>
               </button>
             </div>
           </fieldset>
@@ -1299,8 +1841,13 @@
             </label>
           </div>
 
+          <div class="game-summary" aria-live="polite">
+            <span class="summary-label" data-i18n="summaryTitle">Ta partie</span>
+            <strong id="game-summary-text">Défi · Nature · 6 paires · Aperçu activé</strong>
+          </div>
+
           <button class="start-button" type="submit">
-            <span data-i18n="start">Commencer la partie</span>
+            <span data-i18n="start">Jouer maintenant</span>
             <span aria-hidden="true">→</span>
           </button>
         </form>
@@ -1421,31 +1968,43 @@
         portfolio: "Retour au portfolio",
         eyebrow: "Jeu de mémoire visuelle",
         tagline: "Observe. Mémorise. Retrouve les paires.",
-        how1Title: "Choisis tes options",
-        how1Text: "Adapte le niveau et l’univers à ton envie.",
-        how2Title: "Observe les cartes",
-        how2Text: "Retourne deux cartes pour comparer leurs symboles.",
-        how3Title: "Trouve toutes les paires",
-        how3Text: "Termine la grille avec le moins de coups possible.",
+        heroHeading: "Teste ta mémoire visuelle",
+        heroDescription: "Observe les cartes, retrouve les paires et améliore ton meilleur score.",
+        previewExample: "Aperçu d’une partie",
+        previewPairs: "paires",
+        how1Title: "Choisis",
+        how1Text: "Ton niveau et ton univers",
+        how2Title: "Observe",
+        how2Text: "Les cartes révélées",
+        how3Title: "Retrouve",
+        how3Text: "Toutes les paires",
+        setupKicker: "Nouvelle partie",
         setupHeading: "Prépare ta partie",
-        setupSubtitle: "Trois choix rapides, puis le jeu commence.",
+        setupSubtitle: "Choisis une difficulté et un univers, puis lance le défi.",
         levelLegend: "Niveau",
+        levelHint: "Choisis la taille de la grille",
+        selected: "Sélectionné",
         levelRelax: "Détente",
-        levelRelaxMeta: "4 paires · 8 cartes",
+        levelRelaxMeta: "Grille 2 × 4 · 4 paires",
         levelChallenge: "Défi",
-        levelChallengeMeta: "6 paires · 12 cartes",
+        levelChallengeMeta: "Grille 3 × 4 · 6 paires",
         levelExpert: "Expert",
-        levelExpertMeta: "8 paires · 16 cartes",
+        levelExpertMeta: "Grille 4 × 4 · 8 paires",
         themeLegend: "Univers",
+        themeHint: "Choisis l’ambiance des cartes",
         themeNature: "Nature",
-        themeNatureMeta: "Plantes, animaux et couleurs douces",
+        themeNatureMeta: "Feuilles, fleurs et animaux",
         themeSpace: "Espace",
-        themeSpaceMeta: "Planètes, étoiles et exploration",
+        themeSpaceMeta: "Planètes, fusées et étoiles",
         themeScience: "Science",
-        themeScienceMeta: "Découvertes, expériences et idées",
+        themeScienceMeta: "Atomes, expériences et découvertes",
         previewTitle: "Aperçu de 3 secondes",
         previewText: "Les cartes sont révélées brièvement au début.",
-        start: "Commencer la partie",
+        summaryTitle: "Ta partie",
+        summaryPairs: "paires",
+        summaryPreviewOn: "Aperçu activé",
+        summaryPreviewOff: "Sans aperçu",
+        start: "Jouer maintenant",
         changeOptions: "Changer les options",
         moves: "Coups",
         time: "Temps",
@@ -1491,31 +2050,43 @@
         portfolio: "Back to portfolio",
         eyebrow: "Visual memory game",
         tagline: "Observe. Remember. Match the pairs.",
-        how1Title: "Choose your options",
-        how1Text: "Adjust the level and theme to suit you.",
-        how2Title: "Observe the cards",
-        how2Text: "Turn over two cards to compare their symbols.",
-        how3Title: "Find every pair",
-        how3Text: "Complete the grid in as few moves as possible.",
+        heroHeading: "Test your visual memory",
+        heroDescription: "Observe the cards, match the pairs and improve your best score.",
+        previewExample: "Game preview",
+        previewPairs: "pairs",
+        how1Title: "Choose",
+        how1Text: "Your level and theme",
+        how2Title: "Observe",
+        how2Text: "The revealed cards",
+        how3Title: "Match",
+        how3Text: "Every pair",
+        setupKicker: "New game",
         setupHeading: "Set up your game",
-        setupSubtitle: "Three quick choices, then the game begins.",
+        setupSubtitle: "Choose a difficulty and a theme, then start the challenge.",
         levelLegend: "Level",
+        levelHint: "Choose the grid size",
+        selected: "Selected",
         levelRelax: "Relax",
-        levelRelaxMeta: "4 pairs · 8 cards",
+        levelRelaxMeta: "2 × 4 grid · 4 pairs",
         levelChallenge: "Challenge",
-        levelChallengeMeta: "6 pairs · 12 cards",
+        levelChallengeMeta: "3 × 4 grid · 6 pairs",
         levelExpert: "Expert",
-        levelExpertMeta: "8 pairs · 16 cards",
+        levelExpertMeta: "4 × 4 grid · 8 pairs",
         themeLegend: "Theme",
+        themeHint: "Choose the card atmosphere",
         themeNature: "Nature",
-        themeNatureMeta: "Plants, animals and soft colours",
+        themeNatureMeta: "Leaves, flowers and animals",
         themeSpace: "Space",
-        themeSpaceMeta: "Planets, stars and exploration",
+        themeSpaceMeta: "Planets, rockets and stars",
         themeScience: "Science",
-        themeScienceMeta: "Discoveries, experiments and ideas",
+        themeScienceMeta: "Atoms, experiments and discoveries",
         previewTitle: "3-second preview",
         previewText: "The cards are briefly revealed at the start.",
-        start: "Start the game",
+        summaryTitle: "Your game",
+        summaryPairs: "pairs",
+        summaryPreviewOn: "Preview on",
+        summaryPreviewOff: "No preview",
+        start: "Play now",
         changeOptions: "Change options",
         moves: "Moves",
         time: "Time",
@@ -1621,6 +2192,7 @@
     const resultScreen = document.getElementById("result-screen");
     const setupForm = document.getElementById("setup-form");
     const previewToggle = document.getElementById("preview-toggle");
+    const gameSummaryText = document.getElementById("game-summary-text");
     const memoryGrid = document.getElementById("memory-grid");
     const movesValue = document.getElementById("moves-value");
     const timeValue = document.getElementById("time-value");
@@ -1644,6 +2216,12 @@
         value = value.replace(`{${name}}`, String(replacement));
       });
       return value;
+    }
+
+    function updateSetupSummary() {
+      const pairCount = levelPairs[state.level];
+      const previewStatus = previewToggle.checked ? t("summaryPreviewOn") : t("summaryPreviewOff");
+      gameSummaryText.textContent = `${t(state.level)} · ${t(state.theme)} · ${pairCount} ${t("summaryPairs")} · ${previewStatus}`;
     }
 
     function applyTranslations() {
@@ -1674,6 +2252,7 @@
         state.lang === "fr" ? "Comment jouer" : "How to play"
       );
       memoryGrid.setAttribute("aria-label", t("cardGrid"));
+      updateSetupSummary();
 
       if (!gameScreen.hidden) {
         gameSubtitle.textContent = `${t(state.theme)} · ${t(state.level)}`;
@@ -2050,6 +2629,7 @@
         document.querySelectorAll(".level-choice").forEach((option) => {
           option.setAttribute("aria-pressed", String(option === button));
         });
+        updateSetupSummary();
         showToast(t("saved"));
       });
     });
@@ -2060,6 +2640,7 @@
         document.querySelectorAll(".theme-choice").forEach((option) => {
           option.setAttribute("aria-pressed", String(option === button));
         });
+        updateSetupSummary();
         showToast(t("saved"));
       });
     });
@@ -2069,6 +2650,10 @@
         state.lang = button.dataset.lang;
         applyTranslations();
       });
+    });
+
+    previewToggle.addEventListener("change", () => {
+      updateSetupSummary();
     });
 
     setupForm.addEventListener("submit", (event) => {
