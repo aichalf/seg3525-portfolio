@@ -3,1799 +3,2101 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Mémoria, un jeu de mémoire interactif conçu pour le Devoir 3 du cours SEG3525.">
-  <title>Mémoria | Aicha Lfakir</title>
+  <meta name="description" content="Mémoria, un jeu de mémoire visuelle simple, accessible et personnalisable.">
+  <meta name="theme-color" content="#202a44">
+  <title>Mémoria | Jeu de mémoire</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+
   <style>
-:root {
-  --bg: #f3f6fc;
-  --bg-alt: #e6eaf8;
-  --surface: #f8faff;
-  --surface-strong: #ffffff;
-  --accent: #6c7bd9;
-  --accent-dark: #4254b5;
-  --olive: #4cb7a5;
-  --olive-soft: #dff4ef;
-  --ink: #1d2433;
-  --ink-soft: #3f4a63;
-  --muted: #6b7280;
-  --line: rgba(108, 123, 217, 0.5);
-  --line-soft: rgba(29, 36, 51, 0.12);
-  --danger: #c65c5c;
-  --shadow: 0 24px 70px rgba(29, 36, 51, 0.1);
-  --shadow-soft: 0 14px 36px rgba(29, 36, 51, 0.08);
-  --radius: 18px;
-  --serif: "Cormorant Garamond", Georgia, serif;
-  --sans: "Outfit", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--ink);
-  background:
-    radial-gradient(circle at 12% 12%, rgba(108, 123, 217, 0.14), transparent 28%),
-    radial-gradient(circle at 88% 72%, rgba(76, 183, 165, 0.08), transparent 24%),
-    linear-gradient(180deg, var(--surface), var(--bg));
-  font-family: var(--sans);
-  line-height: 1.55;
-}
-
-button,
-input,
-select {
-  font: inherit;
-}
-
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-}
-
-button {
-  color: inherit;
-}
-
-button:focus-visible,
-a:focus-visible,
-summary:focus-visible {
-  outline: 3px solid rgba(76, 183, 165, 0.45);
-  outline-offset: 3px;
-}
-
-.skip-link {
-  position: fixed;
-  left: 1rem;
-  top: -5rem;
-  z-index: 1000;
-  padding: 0.75rem 1rem;
-  background: var(--surface-strong);
-  color: var(--ink);
-  border: 2px solid var(--ink);
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.skip-link:focus {
-  top: 1rem;
-}
-
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  min-height: 62px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.75rem clamp(1rem, 4vw, 3rem);
-  color: var(--surface);
-  background: rgba(29, 36, 51, 0.97);
-  border-bottom: 1px solid rgba(108, 123, 217, 0.3);
-  backdrop-filter: blur(10px);
-}
-
-.brand {
-  color: var(--surface);
-  font-family: var(--serif);
-  font-size: 1.35rem;
-  font-style: italic;
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  color: var(--accent);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.11em;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: color 180ms ease;
-}
-
-.back-link:hover {
-  color: var(--surface);
-}
-
-.lang-switcher {
-  display: inline-flex;
-  overflow: hidden;
-  border: 1px solid var(--accent);
-  border-radius: 4px;
-}
-
-.lang-button {
-  min-width: 44px;
-  min-height: 34px;
-  padding: 0.4rem 0.75rem;
-  border: 0;
-  color: var(--accent);
-  background: transparent;
-  cursor: pointer;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-}
-
-.lang-button[aria-pressed="true"] {
-  color: var(--ink);
-  background: var(--accent);
-}
-
-#root {
-  min-height: calc(100vh - 116px);
-}
-
-.page-main {
-  width: min(1220px, calc(100% - 2rem));
-  margin: 0 auto;
-  padding: clamp(2rem, 5vw, 5rem) 0;
-}
-
-.setup-shell,
-.game-shell,
-.result-shell {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  background: rgba(248, 250, 255, 0.9);
-  box-shadow: var(--shadow);
-}
-
-.setup-shell::after,
-.game-shell::after,
-.result-shell::after {
-  content: "";
-  position: absolute;
-  right: -140px;
-  top: -150px;
-  width: 340px;
-  height: 340px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0.65;
-}
-
-.setup-shell {
-  display: grid;
-  grid-template-columns: minmax(300px, 0.84fr) minmax(0, 1.35fr);
-}
-
-.intro-panel {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  min-height: 680px;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(2.2rem, 5vw, 4rem);
-  color: var(--surface);
-  background:
-    linear-gradient(160deg, rgba(76, 183, 165, 0.12), transparent 45%),
-    var(--ink);
-}
-
-.project-number {
-  display: block;
-  margin-bottom: 1.2rem;
-  color: var(--accent);
-  font-family: var(--serif);
-  font-size: clamp(5rem, 10vw, 7.5rem);
-  font-style: italic;
-  font-weight: 400;
-  line-height: 0.8;
-}
-
-.kicker,
-.eyebrow {
-  margin: 0 0 0.8rem;
-  color: var(--accent);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.intro-title,
-.page-title,
-.result-title {
-  margin: 0;
-  font-family: var(--serif);
-  font-weight: 500;
-  line-height: 1;
-}
-
-.intro-title {
-  max-width: 440px;
-  font-size: clamp(3.1rem, 7vw, 5.5rem);
-}
-
-.intro-copy {
-  max-width: 420px;
-  margin: 1.4rem 0 0;
-  color: #dce3f7;
-  font-size: 1rem;
-}
-
-.principle-list {
-  display: grid;
-  gap: 0.8rem;
-  margin-top: 2.5rem;
-}
-
-.principle-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  color: #e1e6f5;
-  font-size: 0.84rem;
-}
-
-.principle-icon {
-  display: grid;
-  width: 30px;
-  height: 30px;
-  flex: 0 0 auto;
-  place-items: center;
-  border: 1px solid rgba(108, 123, 217, 0.6);
-  border-radius: 50%;
-  color: var(--accent);
-}
-
-.intro-note {
-  margin: 2.5rem 0 0;
-  padding-top: 1.25rem;
-  border-top: 1px solid rgba(108, 123, 217, 0.45);
-  color: var(--accent);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
-
-.config-panel {
-  position: relative;
-  z-index: 1;
-  padding: clamp(2rem, 5vw, 4rem);
-}
-
-.section-heading {
-  margin-bottom: 2rem;
-}
-
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  color: var(--accent-dark);
-}
-
-.eyebrow::before {
-  content: "";
-  width: 34px;
-  height: 1px;
-  background: currentColor;
-}
-
-.page-title {
-  font-size: clamp(2.55rem, 5vw, 4rem);
-}
-
-.section-description {
-  max-width: 670px;
-  margin: 0.85rem 0 0;
-  color: var(--ink-soft);
-}
-
-.option-group {
-  margin-top: 2rem;
-  padding-top: 1.75rem;
-  border-top: 1px solid var(--line);
-}
-
-.option-group:first-of-type {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: 0;
-}
-
-.option-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.option-title {
-  margin: 0;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.option-help {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.78rem;
-}
-
-.choice-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.85rem;
-}
-
-.choice-card {
-  position: relative;
-  min-height: 126px;
-  padding: 1rem;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: rgba(230, 234, 248, 0.42);
-  cursor: pointer;
-  text-align: left;
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
-}
-
-.choice-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent-dark);
-}
-
-.choice-card[aria-pressed="true"] {
-  border: 2px solid var(--ink);
-  background: var(--surface-strong);
-  box-shadow: 0 0 0 4px rgba(108, 123, 217, 0.16);
-}
-
-.choice-card[aria-pressed="true"]::after {
-  content: "✓";
-  position: absolute;
-  right: 0.75rem;
-  top: 0.65rem;
-  display: grid;
-  width: 24px;
-  height: 24px;
-  place-items: center;
-  border-radius: 50%;
-  color: var(--surface-strong);
-  background: var(--olive);
-  font-size: 0.72rem;
-  font-weight: 800;
-}
-
-.choice-icon {
-  display: block;
-  margin-bottom: 0.55rem;
-  font-size: 1.7rem;
-  line-height: 1;
-}
-
-.choice-name {
-  display: block;
-  font-weight: 700;
-}
-
-.choice-detail {
-  display: block;
-  margin-top: 0.3rem;
-  color: var(--muted);
-  font-size: 0.78rem;
-}
-
-.preview-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem;
-  padding: 1rem 1.1rem;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: rgba(230, 234, 248, 0.42);
-}
-
-.preview-copy strong,
-.preview-copy span {
-  display: block;
-}
-
-.preview-copy strong {
-  font-size: 0.92rem;
-}
-
-.preview-copy span {
-  margin-top: 0.18rem;
-  color: var(--muted);
-  font-size: 0.78rem;
-}
-
-.switch {
-  position: relative;
-  width: 54px;
-  height: 30px;
-  flex: 0 0 auto;
-  border: 0;
-  border-radius: 999px;
-  background: #c5cee7;
-  cursor: pointer;
-  transition: background 180ms ease;
-}
-
-.switch::after {
-  content: "";
-  position: absolute;
-  left: 4px;
-  top: 4px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: white;
-  box-shadow: 0 2px 8px rgba(29, 36, 51, 0.2);
-  transition: transform 180ms ease;
-}
-
-.switch[aria-pressed="true"] {
-  background: var(--olive);
-}
-
-.switch[aria-pressed="true"]::after {
-  transform: translateX(24px);
-}
-
-.config-summary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 1.5rem;
-}
-
-.summary-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem 0.7rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--ink-soft);
-  background: rgba(255, 255, 255, 0.55);
-  font-size: 0.76rem;
-}
-
-.primary-button,
-.secondary-button,
-.text-button {
-  display: inline-flex;
-  min-height: 48px;
-  align-items: center;
-  justify-content: center;
-  gap: 0.65rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
-}
-
-.primary-button {
-  padding: 0.85rem 1.35rem;
-  border: 1.5px solid var(--ink);
-  color: var(--surface);
-  background: var(--ink);
-}
-
-.primary-button:hover {
-  color: var(--ink);
-  background: transparent;
-}
-
-.secondary-button {
-  padding: 0.8rem 1.2rem;
-  border: 1.5px solid var(--accent-dark);
-  color: var(--ink);
-  background: transparent;
-}
-
-.secondary-button:hover {
-  background: var(--accent);
-}
-
-.text-button {
-  min-height: 40px;
-  padding: 0.45rem 0.7rem;
-  border: 0;
-  color: var(--accent-dark);
-  background: transparent;
-}
-
-.text-button:hover {
-  color: var(--ink);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.config-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.instructions {
-  margin-top: 1.5rem;
-  border-top: 1px solid var(--line);
-}
-
-.instructions summary {
-  padding: 1.1rem 0 0;
-  color: var(--accent-dark);
-  cursor: pointer;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.instructions ol {
-  margin: 1rem 0 0;
-  padding-left: 1.2rem;
-  color: var(--ink-soft);
-}
-
-.instructions li + li {
-  margin-top: 0.55rem;
-}
-
-.game-shell {
-  padding: clamp(1.25rem, 3vw, 2.25rem);
-}
-
-.game-header {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding-bottom: 1.4rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.game-heading-wrap {
-  min-width: 0;
-}
-
-.game-title {
-  margin: 0;
-  font-family: var(--serif);
-  font-size: clamp(2.25rem, 4vw, 3.4rem);
-  font-weight: 500;
-  line-height: 1;
-}
-
-.game-subtitle {
-  margin: 0.65rem 0 0;
-  color: var(--ink-soft);
-}
-
-.game-layout {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-  margin-top: 1.75rem;
-}
-
-.stats-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.stats-card,
-.feedback-card {
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: rgba(230, 234, 248, 0.42);
-}
-
-.stats-card {
-  padding: 1rem;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
-}
-
-.stat-box {
-  min-height: 88px;
-  padding: 0.85rem;
-  border: 1px solid rgba(108, 123, 217, 0.38);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.62);
-}
-
-.stat-label {
-  display: block;
-  color: var(--muted);
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.stat-value {
-  display: block;
-  margin-top: 0.35rem;
-  font-family: var(--serif);
-  font-size: 1.8rem;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.progress-block {
-  margin-top: 1rem;
-}
-
-.progress-heading {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  color: var(--ink-soft);
-  font-size: 0.76rem;
-}
-
-.progress-track {
-  height: 8px;
-  margin-top: 0.55rem;
-  overflow: hidden;
-  border-radius: 999px;
-  background: #d4daee;
-}
-
-.progress-bar {
-  height: 100%;
-  border-radius: inherit;
-  background: var(--olive);
-  transition: width 240ms ease;
-}
-
-.feedback-card {
-  min-height: 96px;
-  padding: 1rem;
-}
-
-.feedback-label {
-  color: var(--accent-dark);
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.feedback-message {
-  margin: 0.45rem 0 0;
-  color: var(--ink-soft);
-  font-size: 0.88rem;
-}
-
-.side-actions {
-  display: grid;
-  gap: 0.7rem;
-}
-
-.side-actions .secondary-button,
-.side-actions .text-button {
-  width: 100%;
-}
-
-.board-panel {
-  min-width: 0;
-}
-
-.preview-banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  margin-bottom: 1rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--accent-dark);
-  border-radius: 10px;
-  color: var(--ink);
-  background: rgba(108, 123, 217, 0.18);
-  font-weight: 700;
-}
-
-.board {
-  display: grid;
-  grid-template-columns: repeat(var(--columns, 4), minmax(0, 1fr));
-  gap: clamp(0.55rem, 1.5vw, 1rem);
-  width: 100%;
-}
-
-.memory-card {
-  position: relative;
-  aspect-ratio: 0.82;
-  min-width: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 14px;
-  background: transparent;
-  cursor: pointer;
-  perspective: 1000px;
-}
-
-.memory-card:disabled {
-  cursor: default;
-}
-
-.card-inner {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.memory-card.is-flipped .card-inner,
-.memory-card.is-matched .card-inner {
-  transform: rotateY(180deg);
-}
-
-.card-face {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  border-radius: 14px;
-  backface-visibility: hidden;
-}
-
-.card-back {
-  border: 1px solid rgba(108, 123, 217, 0.6);
-  background:
-    radial-gradient(circle at center, rgba(108, 123, 217, 0.22) 0 10%, transparent 11%),
-    linear-gradient(45deg, transparent 47%, rgba(108, 123, 217, 0.17) 48% 52%, transparent 53%),
-    linear-gradient(-45deg, transparent 47%, rgba(108, 123, 217, 0.17) 48% 52%, transparent 53%),
-    var(--ink);
-  background-size: 54px 54px, 30px 30px, 30px 30px;
-  box-shadow: var(--shadow-soft);
-}
-
-.card-back-mark {
-  display: grid;
-  width: 54%;
-  aspect-ratio: 1;
-  place-items: center;
-  border: 1px solid rgba(108, 123, 217, 0.66);
-  border-radius: 50%;
-  color: var(--accent);
-  font-family: var(--serif);
-  font-size: clamp(1.5rem, 4vw, 2.4rem);
-  font-style: italic;
-}
-
-.card-front {
-  transform: rotateY(180deg);
-  border: 1px solid var(--line);
-  color: var(--ink);
-  background: var(--surface-strong);
-  box-shadow: var(--shadow-soft);
-}
-
-.card-content {
-  display: grid;
-  place-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem;
-  text-align: center;
-}
-
-.card-symbol {
-  font-size: clamp(2rem, 5vw, 3.8rem);
-  line-height: 1;
-}
-
-.card-name {
-  color: var(--ink-soft);
-  font-size: clamp(0.62rem, 1.2vw, 0.82rem);
-  font-weight: 700;
-}
-
-.matched-badge {
-  position: absolute;
-  right: 0.55rem;
-  top: 0.55rem;
-  display: grid;
-  width: 25px;
-  height: 25px;
-  place-items: center;
-  border-radius: 50%;
-  color: white;
-  background: var(--olive);
-  font-size: 0.72rem;
-  font-weight: 800;
-}
-
-.memory-card.is-matched .card-front {
-  border: 2px solid var(--olive);
-  background: var(--olive-soft);
-}
-
-.result-shell {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
-}
-
-.result-visual {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  min-height: 610px;
-  place-items: center;
-  padding: 3rem;
-  color: var(--surface);
-  background: var(--ink);
-  text-align: center;
-}
-
-.result-medallion {
-  display: grid;
-  width: min(260px, 70vw);
-  aspect-ratio: 1;
-  place-items: center;
-  border: 1px solid rgba(108, 123, 217, 0.65);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle, rgba(108, 123, 217, 0.17), transparent 67%);
-}
-
-.result-check {
-  display: grid;
-  width: 108px;
-  height: 108px;
-  place-items: center;
-  border: 2px solid var(--accent);
-  border-radius: 50%;
-  color: var(--accent);
-  font-size: 3rem;
-}
-
-.result-stars {
-  margin-top: 1rem;
-  color: var(--accent);
-  font-size: 1.45rem;
-  letter-spacing: 0.18em;
-}
-
-.result-content {
-  position: relative;
-  z-index: 1;
-  padding: clamp(2rem, 5vw, 4rem);
-}
-
-.result-title {
-  font-size: clamp(3rem, 6vw, 4.8rem);
-}
-
-.result-copy {
-  max-width: 620px;
-  margin: 1rem 0 0;
-  color: var(--ink-soft);
-}
-
-.result-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.9rem;
-  margin-top: 2rem;
-}
-
-.result-metric {
-  padding: 1rem;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: rgba(230, 234, 248, 0.45);
-}
-
-.result-metric-label {
-  display: block;
-  color: var(--muted);
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.result-metric-value {
-  display: block;
-  margin-top: 0.35rem;
-  font-family: var(--serif);
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.best-box {
-  margin-top: 1rem;
-  padding: 1rem 1.15rem;
-  border-left: 4px solid var(--olive);
-  color: var(--ink-soft);
-  background: var(--olive-soft);
-}
-
-.result-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-top: 2rem;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  min-height: 54px;
-  padding: 1rem;
-  color: var(--accent);
-  background: var(--ink);
-  font-size: 0.76rem;
-}
-
-@media (max-width: 980px) {
-  .setup-shell,
-  .result-shell {
-    grid-template-columns: 1fr;
-  }
-
-  .intro-panel,
-  .result-visual {
-    min-height: auto;
-  }
-
-  .game-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .stats-panel {
-    display: grid;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  }
-
-  .side-actions {
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 720px) {
-  .topbar {
-    align-items: flex-start;
-    padding: 0.75rem 1rem;
-  }
-
-  .topbar-actions {
-    gap: 0.65rem;
-  }
-
-  .back-link span {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-  }
-
-  .page-main {
-    width: min(100% - 1rem, 1220px);
-    padding: 1rem 0;
-  }
-
-  .intro-panel,
-  .config-panel,
-  .result-content {
-    padding: 2rem 1.25rem;
-  }
-
-  .game-shell {
-    padding: 1rem;
-  }
-
-  .choice-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .choice-card {
-    min-height: 104px;
-  }
-
-  .config-actions,
-  .game-header {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .config-actions .primary-button,
-  .game-header .secondary-button {
-    width: 100%;
-  }
-
-  .stats-panel {
-    display: flex;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .stat-box {
-    min-height: 76px;
-    padding: 0.65rem;
-  }
-
-  .stat-value {
-    font-size: 1.35rem;
-  }
-
-  .board {
-    gap: 0.5rem;
-  }
-
-  .card-name {
-    display: none;
-  }
-
-  .result-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .result-actions {
-    display: grid;
-  }
-
-  .result-actions .primary-button,
-  .result-actions .secondary-button {
-    width: 100%;
-  }
-}
-
-@media (max-width: 470px) {
-  .brand {
-    font-size: 1.05rem;
-  }
-
-  .lang-button {
-    min-width: 38px;
-    padding-inline: 0.55rem;
-  }
-
-  .intro-title {
-    font-size: 3.2rem;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .board {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .card-symbol {
-    font-size: clamp(1.45rem, 9vw, 2.3rem);
-  }
-
-  footer {
-    flex-wrap: wrap;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
+    :root {
+      --bg: #f5f6fb;
+      --surface: #ffffff;
+      --surface-soft: #f9faff;
+      --night: #202a44;
+      --night-2: #303b5c;
+      --lavender: #6c72d9;
+      --lavender-dark: #4f56b7;
+      --lavender-soft: #e9eafb;
+      --success: #2f8f7e;
+      --success-soft: #ddf3ed;
+      --gold: #b77d08;
+      --gold-soft: #fff2c9;
+      --danger: #b84c5c;
+      --danger-soft: #fde7ea;
+      --text: #202535;
+      --muted: #667086;
+      --line: #dce1ec;
+      --shadow-sm: 0 10px 30px rgba(32, 42, 68, 0.08);
+      --shadow-md: 0 24px 70px rgba(32, 42, 68, 0.13);
+      --radius-sm: 14px;
+      --radius-md: 22px;
+      --radius-lg: 32px;
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 8% 12%, rgba(108, 114, 217, 0.13), transparent 24rem),
+        radial-gradient(circle at 92% 78%, rgba(47, 143, 126, 0.09), transparent 23rem),
+        var(--bg);
+      font-family: var(--font-body);
+      line-height: 1.5;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible {
+      outline: 3px solid rgba(108, 114, 217, 0.38);
+      outline-offset: 3px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: -5rem;
+      left: 1rem;
+      z-index: 1000;
+      padding: 0.75rem 1rem;
+      color: var(--surface);
+      background: var(--night);
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      top: 1rem;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(220, 225, 236, 0.9);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-shell {
+      width: min(1180px, calc(100% - 2rem));
+      min-height: 72px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      color: var(--night);
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      color: var(--surface);
+      background: var(--night);
+      border-radius: 12px;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .portfolio-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      min-height: 42px;
+      padding: 0.65rem 0.9rem;
+      color: var(--night);
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .portfolio-link:hover {
+      color: var(--lavender-dark);
+      background: var(--lavender-soft);
+    }
+
+    .language-switcher {
+      display: inline-flex;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-soft);
+    }
+
+    .language-button {
+      min-width: 42px;
+      min-height: 36px;
+      padding: 0.4rem 0.65rem;
+      border: 0;
+      border-radius: 9px;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .language-button[aria-pressed="true"] {
+      color: var(--surface);
+      background: var(--night);
+    }
+
+    main {
+      width: min(1180px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: clamp(2rem, 5vw, 4.6rem) 0;
+    }
+
+    .screen {
+      animation: screen-in 300ms ease both;
+    }
+
+    @keyframes screen-in {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .setup-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(520px, 1.1fr);
+      gap: clamp(1.5rem, 4vw, 3.25rem);
+      align-items: start;
+    }
+
+    .intro-block {
+      position: sticky;
+      top: 110px;
+      padding: clamp(1rem, 3vw, 2rem) 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 0.85rem;
+      color: var(--lavender-dark);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    .intro-title {
+      max-width: 660px;
+      margin-bottom: 1rem;
+      color: var(--night);
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 8vw, 6.6rem);
+      line-height: 0.92;
+      letter-spacing: -0.045em;
+    }
+
+    .intro-tagline {
+      max-width: 560px;
+      margin-bottom: 2rem;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .how-to-play {
+      display: grid;
+      gap: 0.85rem;
+      max-width: 520px;
+    }
+
+    .how-step {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 0.85rem;
+      align-items: center;
+      padding: 0.85rem 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .how-step:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .step-number {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      color: var(--lavender-dark);
+      background: var(--lavender-soft);
+      border-radius: 50%;
+      font-weight: 800;
+    }
+
+    .how-step strong {
+      display: block;
+      margin-bottom: 0.15rem;
+      color: var(--night);
+    }
+
+    .how-step span:last-child {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .setup-card {
+      padding: clamp(1.35rem, 3vw, 2.25rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow-md);
+    }
+
+    .setup-heading {
+      margin-bottom: 0.3rem;
+      color: var(--night);
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.35rem);
+    }
+
+    .setup-subtitle {
+      margin-bottom: 1.8rem;
+      color: var(--muted);
+    }
+
+    .option-group {
+      margin: 0 0 1.8rem;
+      padding: 0;
+      border: 0;
+    }
+
+    .option-group legend {
+      width: 100%;
+      margin-bottom: 0.8rem;
+      color: var(--night);
+      font-weight: 800;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .choice-card {
+      position: relative;
+      min-height: 132px;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      cursor: pointer;
+      text-align: left;
+      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .choice-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(108, 114, 217, 0.58);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .choice-card[aria-pressed="true"] {
+      border-color: var(--lavender);
+      background: var(--lavender-soft);
+      box-shadow: inset 0 0 0 1px var(--lavender), var(--shadow-sm);
+    }
+
+    .choice-check {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      color: transparent;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--surface);
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .choice-card[aria-pressed="true"] .choice-check {
+      color: var(--surface);
+      border-color: var(--lavender-dark);
+      background: var(--lavender-dark);
+    }
+
+    .choice-title {
+      display: block;
+      margin: 0.55rem 0 0.25rem;
+      color: var(--night);
+      font-weight: 800;
+    }
+
+    .choice-meta {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    .level-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      color: var(--lavender-dark);
+      background: var(--surface);
+      border-radius: 10px;
+      font-weight: 900;
+    }
+
+    .theme-preview {
+      display: flex;
+      gap: 0.3rem;
+      margin-top: 0.25rem;
+      font-size: 1.38rem;
+      line-height: 1;
+    }
+
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.05rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--surface-soft);
+    }
+
+    .switch-copy strong {
+      display: block;
+      margin-bottom: 0.2rem;
+      color: var(--night);
+    }
+
+    .switch-copy span {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .switch {
+      position: relative;
+      flex: 0 0 auto;
+      width: 54px;
+      height: 30px;
+    }
+
+    .switch input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+
+    .switch-track {
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #cfd5e1;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    .switch-track::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--surface);
+      box-shadow: 0 3px 8px rgba(32, 42, 68, 0.2);
+      transition: transform 160ms ease;
+    }
+
+    .switch input:checked + .switch-track {
+      border-color: var(--lavender);
+      background: var(--lavender);
+    }
+
+    .switch input:checked + .switch-track::after {
+      transform: translateX(24px);
+    }
+
+    .switch input:focus-visible + .switch-track {
+      outline: 3px solid rgba(108, 114, 217, 0.38);
+      outline-offset: 3px;
+    }
+
+    .start-button,
+    .primary-button,
+    .secondary-button,
+    .text-button {
+      border: 0;
+      cursor: pointer;
+      font-weight: 800;
+      transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease, color 160ms ease;
+    }
+
+    .start-button,
+    .primary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      min-height: 52px;
+      padding: 0.85rem 1.25rem;
+      color: var(--surface);
+      border-radius: 14px;
+      background: var(--night);
+      box-shadow: 0 12px 26px rgba(32, 42, 68, 0.18);
+    }
+
+    .start-button {
+      width: 100%;
+      margin-top: 1.35rem;
+    }
+
+    .start-button:hover,
+    .primary-button:hover {
+      transform: translateY(-2px);
+      background: var(--lavender-dark);
+      box-shadow: 0 16px 30px rgba(79, 86, 183, 0.22);
+    }
+
+    .secondary-button {
+      min-height: 48px;
+      padding: 0.75rem 1.1rem;
+      color: var(--night);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface);
+    }
+
+    .secondary-button:hover {
+      border-color: var(--lavender);
+      color: var(--lavender-dark);
+      background: var(--lavender-soft);
+    }
+
+    .text-button {
+      min-height: 44px;
+      padding: 0.65rem 0.8rem;
+      color: var(--muted);
+      border-radius: 10px;
+      background: transparent;
+    }
+
+    .text-button:hover {
+      color: var(--night);
+      background: var(--lavender-soft);
+    }
+
+    .game-panel {
+      padding: clamp(1.15rem, 3vw, 2.1rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: var(--shadow-md);
+    }
+
+    .game-topline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .game-title-wrap h1 {
+      margin-bottom: 0.15rem;
+      color: var(--night);
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1;
+    }
+
+    .game-title-wrap p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(190px, 1.35fr);
+      gap: 0.7rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .stat-card,
+    .progress-card {
+      min-height: 78px;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface-soft);
+    }
+
+    .stat-label,
+    .progress-label {
+      display: block;
+      margin-bottom: 0.2rem;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      color: var(--night);
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    .progress-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-value {
+      color: var(--night);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .progress-track {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e3e6ef;
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--lavender), var(--success));
+      transition: width 280ms ease;
+    }
+
+    .feedback {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 1rem;
+      padding: 0.85rem 1rem;
+      color: var(--night);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--lavender-soft);
+      font-weight: 700;
+    }
+
+    .feedback-icon {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--surface);
+    }
+
+    .feedback.is-success {
+      border-color: rgba(47, 143, 126, 0.35);
+      background: var(--success-soft);
+    }
+
+    .feedback.is-warning {
+      border-color: rgba(183, 125, 8, 0.3);
+      background: var(--gold-soft);
+    }
+
+    .feedback.is-danger {
+      border-color: rgba(184, 76, 92, 0.28);
+      background: var(--danger-soft);
+    }
+
+    .memory-grid {
+      --grid-columns: 4;
+      display: grid;
+      grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+      gap: clamp(0.55rem, 1.6vw, 0.95rem);
+      width: min(760px, 100%);
+      margin: 0 auto;
+      perspective: 1200px;
+    }
+
+    .memory-card {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      padding: 0;
+      border: 0;
+      border-radius: clamp(12px, 2vw, 18px);
+      background: transparent;
+      cursor: pointer;
+      transform-style: preserve-3d;
+    }
+
+    .memory-card:disabled {
+      cursor: default;
+    }
+
+    .card-inner {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      transition: transform 420ms cubic-bezier(0.2, 0.75, 0.25, 1);
+    }
+
+    .memory-card.is-flipped .card-inner,
+    .memory-card.is-matched .card-inner,
+    .memory-card.is-preview .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: inherit;
+      backface-visibility: hidden;
+    }
+
+    .card-back {
+      color: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.16) 0 2px, transparent 3px),
+        radial-gradient(circle at 78% 72%, rgba(255, 255, 255, 0.13) 0 2px, transparent 3px),
+        linear-gradient(145deg, var(--night-2), var(--night));
+      background-size: 28px 28px, 34px 34px, auto;
+      box-shadow: 0 12px 25px rgba(32, 42, 68, 0.16);
+    }
+
+    .back-symbol {
+      width: 42%;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      font-family: var(--font-display);
+      font-size: clamp(1.45rem, 5vw, 2.6rem);
+      font-weight: 700;
+    }
+
+    .card-front {
+      transform: rotateY(180deg);
+      color: var(--night);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-emoji {
+      font-size: clamp(2rem, 7vw, 4.2rem);
+      line-height: 1;
+      filter: drop-shadow(0 5px 9px rgba(32, 42, 68, 0.09));
+    }
+
+    .card-label {
+      margin-top: 0.55rem;
+      padding: 0 0.35rem;
+      color: var(--muted);
+      font-size: clamp(0.62rem, 1.5vw, 0.82rem);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .match-badge {
+      position: absolute;
+      top: 0.48rem;
+      right: 0.48rem;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      color: var(--surface);
+      border-radius: 50%;
+      background: var(--success);
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .memory-card.is-matched .card-front {
+      border: 2px solid var(--success);
+      background: var(--success-soft);
+    }
+
+    .memory-card.is-matched .match-badge {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .memory-card.is-mismatch {
+      animation: card-shake 300ms ease;
+    }
+
+    @keyframes card-shake {
+      0%, 100% { transform: translateX(0); }
+      30% { transform: translateX(-5px); }
+      70% { transform: translateX(5px); }
+    }
+
+    .game-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      margin-top: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .result-card {
+      position: relative;
+      overflow: hidden;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: clamp(1.5rem, 5vw, 3.8rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+
+    .result-card::before {
+      content: "";
+      position: absolute;
+      top: -130px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(108, 114, 217, 0.1);
+    }
+
+    .result-icon {
+      position: relative;
+      width: 78px;
+      height: 78px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 1.1rem;
+      border-radius: 24px;
+      background: var(--gold-soft);
+      font-size: 2.6rem;
+    }
+
+    .result-title {
+      position: relative;
+      margin-bottom: 0.6rem;
+      color: var(--night);
+      font-family: var(--font-display);
+      font-size: clamp(2.3rem, 6vw, 4rem);
+      line-height: 1;
+    }
+
+    .result-message {
+      position: relative;
+      max-width: 560px;
+      margin: 0 auto 1.5rem;
+      color: var(--muted);
+    }
+
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 0.35rem;
+      margin-bottom: 1.5rem;
+      color: #d7dce8;
+      font-size: 1.8rem;
+    }
+
+    .stars .is-earned {
+      color: #e1a61e;
+    }
+
+    .result-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-stat {
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface-soft);
+    }
+
+    .result-stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .result-stat strong {
+      display: block;
+      margin-top: 0.3rem;
+      color: var(--night);
+      font-size: 1.35rem;
+    }
+
+    .best-result {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin: 0 auto 1.6rem;
+      padding: 0.65rem 0.9rem;
+      color: var(--gold);
+      border: 1px solid rgba(183, 125, 8, 0.22);
+      border-radius: 999px;
+      background: var(--gold-soft);
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    .result-actions {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .footer-shell {
+      width: min(1180px, calc(100% - 2rem));
+      min-height: 78px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .footer-shell a {
+      color: var(--night);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .footer-shell a:hover {
+      color: var(--lavender-dark);
+    }
+
+    dialog {
+      width: min(440px, calc(100% - 2rem));
+      padding: 0;
+      border: 0;
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: var(--shadow-md);
+    }
+
+    dialog::backdrop {
+      background: rgba(20, 26, 45, 0.58);
+      backdrop-filter: blur(4px);
+    }
+
+    .dialog-content {
+      padding: 1.5rem;
+    }
+
+    .dialog-content h2 {
+      margin-bottom: 0.5rem;
+      color: var(--night);
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+    }
+
+    .dialog-content p {
+      color: var(--muted);
+    }
+
+    .dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.65rem;
+      margin-top: 1.3rem;
+    }
+
+    .toast {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 100;
+      max-width: min(360px, calc(100% - 2rem));
+      padding: 0.85rem 1rem;
+      color: var(--surface);
+      border-radius: 13px;
+      background: var(--night);
+      box-shadow: var(--shadow-md);
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .setup-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .intro-block {
+        position: static;
+        padding-bottom: 0;
+      }
+
+      .intro-title {
+        font-size: clamp(3.4rem, 13vw, 6rem);
+      }
+
+      .stats-bar {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .progress-card {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .nav-shell {
+        min-height: 64px;
+      }
+
+      .brand-name,
+      .portfolio-link span {
+        display: none;
+      }
+
+      main {
+        width: min(100% - 1rem, 1180px);
+        padding-top: 1.2rem;
+      }
+
+      .setup-card,
+      .game-panel,
+      .result-card {
+        border-radius: 22px;
+      }
+
+      .choice-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .choice-card {
+        min-height: 102px;
+      }
+
+      .stats-bar {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.45rem;
+      }
+
+      .stat-card,
+      .progress-card {
+        min-height: 68px;
+        padding: 0.7rem;
+      }
+
+      .stat-label,
+      .progress-label {
+        font-size: 0.63rem;
+      }
+
+      .stat-value {
+        font-size: 1.05rem;
+      }
+
+      .memory-grid {
+        gap: 0.45rem;
+      }
+
+      .card-label {
+        display: none;
+      }
+
+      .game-topline {
+        align-items: center;
+      }
+
+      .game-title-wrap p {
+        display: none;
+      }
+
+      .result-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-shell {
+        min-height: 92px;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .language-button {
+        min-width: 38px;
+      }
+
+      .setup-card,
+      .game-panel {
+        padding: 1rem;
+      }
+
+      .intro-title {
+        font-size: 3.4rem;
+      }
+
+      .feedback {
+        font-size: 0.86rem;
+      }
+
+      .card-emoji {
+        font-size: 2rem;
+      }
+
+      .match-badge {
+        width: 22px;
+        height: 22px;
+        font-size: 0.7rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+  <a class="skip-link" href="#main-content" data-i18n="skip">Aller au contenu principal</a>
 
-  <nav class="topbar" aria-label="Navigation principale">
-    <a class="brand" href="index.html">Aicha Lfakir</a>
-
-    <div class="topbar-actions">
-      <a class="back-link" href="index.html#projects">
-        <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        <span id="back-label">Retour au portfolio</span>
+  <header class="site-header">
+    <nav class="nav-shell" aria-label="Navigation principale">
+      <a class="brand" href="#setup-screen" aria-label="Mémoria, accueil du jeu">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span class="brand-name">Mémoria</span>
       </a>
-      <div id="language-root"></div>
+
+      <div class="nav-actions">
+        <a class="portfolio-link" href="index.html">
+          <span aria-hidden="true">←</span>
+          <span data-i18n="portfolio">Retour au portfolio</span>
+        </a>
+
+        <div class="language-switcher" aria-label="Choisir la langue">
+          <button class="language-button" type="button" data-lang="fr" aria-pressed="true">FR</button>
+          <button class="language-button" type="button" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section id="setup-screen" class="screen" aria-labelledby="setup-title">
+      <div class="setup-layout">
+        <div class="intro-block">
+          <p class="eyebrow" data-i18n="eyebrow">Jeu de mémoire visuelle</p>
+          <h1 id="setup-title" class="intro-title">Mémoria</h1>
+          <p class="intro-tagline" data-i18n="tagline">Observe. Mémorise. Retrouve les paires.</p>
+
+          <div class="how-to-play" aria-label="Comment jouer">
+            <div class="how-step">
+              <span class="step-number">1</span>
+              <span>
+                <strong data-i18n="how1Title">Choisis tes options</strong>
+                <span data-i18n="how1Text">Adapte le niveau et l’univers à ton envie.</span>
+              </span>
+            </div>
+            <div class="how-step">
+              <span class="step-number">2</span>
+              <span>
+                <strong data-i18n="how2Title">Observe les cartes</strong>
+                <span data-i18n="how2Text">Retourne deux cartes pour comparer leurs symboles.</span>
+              </span>
+            </div>
+            <div class="how-step">
+              <span class="step-number">3</span>
+              <span>
+                <strong data-i18n="how3Title">Trouve toutes les paires</strong>
+                <span data-i18n="how3Text">Termine la grille avec le moins de coups possible.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <form id="setup-form" class="setup-card">
+          <h2 class="setup-heading" data-i18n="setupHeading">Prépare ta partie</h2>
+          <p class="setup-subtitle" data-i18n="setupSubtitle">Trois choix rapides, puis le jeu commence.</p>
+
+          <fieldset class="option-group">
+            <legend data-i18n="levelLegend">Niveau</legend>
+            <div class="choice-grid" id="level-options">
+              <button class="choice-card level-choice" type="button" data-level="relax" aria-pressed="false">
+                <span class="choice-check" aria-hidden="true">✓</span>
+                <span class="level-icon" aria-hidden="true">4</span>
+                <span class="choice-title" data-i18n="levelRelax">Détente</span>
+                <span class="choice-meta" data-i18n="levelRelaxMeta">4 paires · 8 cartes</span>
+              </button>
+
+              <button class="choice-card level-choice" type="button" data-level="challenge" aria-pressed="true">
+                <span class="choice-check" aria-hidden="true">✓</span>
+                <span class="level-icon" aria-hidden="true">6</span>
+                <span class="choice-title" data-i18n="levelChallenge">Défi</span>
+                <span class="choice-meta" data-i18n="levelChallengeMeta">6 paires · 12 cartes</span>
+              </button>
+
+              <button class="choice-card level-choice" type="button" data-level="expert" aria-pressed="false">
+                <span class="choice-check" aria-hidden="true">✓</span>
+                <span class="level-icon" aria-hidden="true">8</span>
+                <span class="choice-title" data-i18n="levelExpert">Expert</span>
+                <span class="choice-meta" data-i18n="levelExpertMeta">8 paires · 16 cartes</span>
+              </button>
+            </div>
+          </fieldset>
+
+          <fieldset class="option-group">
+            <legend data-i18n="themeLegend">Univers</legend>
+            <div class="choice-grid" id="theme-options">
+              <button class="choice-card theme-choice" type="button" data-theme="nature" aria-pressed="true">
+                <span class="choice-check" aria-hidden="true">✓</span>
+                <span class="theme-preview" aria-hidden="true">🌿 🌻 🦋</span>
+                <span class="choice-title" data-i18n="themeNature">Nature</span>
+                <span class="choice-meta" data-i18n="themeNatureMeta">Plantes, animaux et couleurs douces</span>
+              </button>
+
+              <button class="choice-card theme-choice" type="button" data-theme="space" aria-pressed="false">
+                <span class="choice-check" aria-hidden="true">✓</span>
+                <span class="theme-preview" aria-hidden="true">🚀 🪐 ⭐</span>
+                <span class="choice-title" data-i18n="themeSpace">Espace</span>
+                <span class="choice-meta" data-i18n="themeSpaceMeta">Planètes, étoiles et exploration</span>
+              </button>
+
+              <button class="choice-card theme-choice" type="button" data-theme="science" aria-pressed="false">
+                <span class="choice-check" aria-hidden="true">✓</span>
+                <span class="theme-preview" aria-hidden="true">🔬 🧬 ⚗️</span>
+                <span class="choice-title" data-i18n="themeScience">Science</span>
+                <span class="choice-meta" data-i18n="themeScienceMeta">Découvertes, expériences et idées</span>
+              </button>
+            </div>
+          </fieldset>
+
+          <div class="switch-row">
+            <div class="switch-copy">
+              <strong data-i18n="previewTitle">Aperçu de 3 secondes</strong>
+              <span data-i18n="previewText">Les cartes sont révélées brièvement au début.</span>
+            </div>
+            <label class="switch">
+              <input id="preview-toggle" type="checkbox" checked>
+              <span class="switch-track" aria-hidden="true"></span>
+              <span class="visually-hidden" hidden data-i18n="previewTitle">Aperçu de 3 secondes</span>
+            </label>
+          </div>
+
+          <button class="start-button" type="submit">
+            <span data-i18n="start">Commencer la partie</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section id="game-screen" class="screen" aria-labelledby="game-title" hidden>
+      <div class="game-panel">
+        <div class="game-topline">
+          <div class="game-title-wrap">
+            <h1 id="game-title">Mémoria</h1>
+            <p id="game-subtitle">Nature · Défi</p>
+          </div>
+          <button id="options-button" class="text-button" type="button" data-i18n="changeOptions">Changer les options</button>
+        </div>
+
+        <div class="stats-bar" aria-label="Statistiques de la partie">
+          <div class="stat-card">
+            <span class="stat-label" data-i18n="moves">Coups</span>
+            <strong id="moves-value" class="stat-value">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label" data-i18n="time">Temps</span>
+            <strong id="time-value" class="stat-value">00:00</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label" data-i18n="pairs">Paires</span>
+            <strong id="pairs-value" class="stat-value">0/6</strong>
+          </div>
+          <div class="progress-card">
+            <div class="progress-row">
+              <span class="progress-label" data-i18n="progress">Progression</span>
+              <span id="progress-value" class="progress-value">0 %</span>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <div id="progress-fill" class="progress-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="feedback" class="feedback" role="status" aria-live="polite">
+          <span id="feedback-icon" class="feedback-icon" aria-hidden="true">◎</span>
+          <span id="feedback-text">Choisis une première carte.</span>
+        </div>
+
+        <div id="memory-grid" class="memory-grid" role="group" aria-label="Grille de cartes mémoire"></div>
+
+        <div class="game-actions">
+          <button id="restart-button" class="secondary-button" type="button" data-i18n="restart">Recommencer</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="result-screen" class="screen" aria-labelledby="result-title" hidden>
+      <div class="result-card">
+        <div class="result-icon" aria-hidden="true">🏆</div>
+        <h1 id="result-title" class="result-title" data-i18n="resultTitle">Bravo, toutes les paires sont trouvées !</h1>
+        <p class="result-message" data-i18n="resultMessage">Ta mémoire a fait tout le travail. Voici le résumé de ta partie.</p>
+
+        <div id="stars" class="stars" aria-label="Évaluation sur trois étoiles">
+          <span>★</span><span>★</span><span>★</span>
+        </div>
+
+        <div class="result-stats">
+          <div class="result-stat">
+            <span data-i18n="time">Temps</span>
+            <strong id="result-time">00:00</strong>
+          </div>
+          <div class="result-stat">
+            <span data-i18n="moves">Coups</span>
+            <strong id="result-moves">0</strong>
+          </div>
+          <div class="result-stat">
+            <span data-i18n="accuracy">Précision</span>
+            <strong id="result-accuracy">100 %</strong>
+          </div>
+        </div>
+
+        <div id="best-result" class="best-result">
+          <span aria-hidden="true">✦</span>
+          <span id="best-result-text">Nouveau meilleur résultat !</span>
+        </div>
+
+        <div class="result-actions">
+          <button id="play-again-button" class="primary-button" type="button" data-i18n="playAgain">Rejouer</button>
+          <button id="result-options-button" class="secondary-button" type="button" data-i18n="changeOptions">Changer les options</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-shell">
+      <span>© 2026 Mémoria</span>
+      <a href="index.html" data-i18n="portfolio">Retour au portfolio</a>
     </div>
-  </nav>
-
-  <div id="root"></div>
-
-  <footer>
-    <span>© 2026 Aicha Lfakir · Ottawa, Canada</span>
-    <span class="footer-dot" aria-hidden="true">·</span>
-    <span>SEG3525</span>
   </footer>
 
-  <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <dialog id="confirm-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-message">
+    <div class="dialog-content">
+      <h2 id="dialog-title">Recommencer la partie ?</h2>
+      <p id="dialog-message">Ta progression actuelle sera perdue.</p>
+      <div class="dialog-actions">
+        <button id="dialog-cancel" class="secondary-button" type="button" data-i18n="cancel">Annuler</button>
+        <button id="dialog-confirm" class="primary-button" type="button" data-i18n="confirm">Confirmer</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
   <script>
-const { useEffect, useMemo, useRef, useState } = React;
-const COPY = {
-    fr: {
-        back: "Retour au portfolio",
+    "use strict";
+
+    const translations = {
+      fr: {
         skip: "Aller au contenu principal",
-        project: "Design 02 · Jeu de mémoire",
-        introTitle: "Mémoria",
-        introCopy: "Un jeu de paires qui entraîne la mémoire visuelle sans surcharger l’attention. Choisis un niveau, un univers et commence à jouer.",
-        principle1: "Reconnaissance plutôt que rappel",
-        principle2: "Rétroaction claire à chaque action",
-        principle3: "Interface calme et cohérente",
-        introNote: "Conçu avec React · SEG3525",
-        configureEyebrow: "Configurer la partie",
-        configureTitle: "Prépare ton défi",
-        configureDescription: "Les choix sont regroupés par proximité afin de rendre la configuration rapide et facile à comprendre.",
-        levelTitle: "1 · Niveau",
-        levelHelp: "Choisis le nombre de paires.",
-        themeTitle: "2 · Univers visuel",
-        themeHelp: "Choisis les images à mémoriser.",
+        portfolio: "Retour au portfolio",
+        eyebrow: "Jeu de mémoire visuelle",
+        tagline: "Observe. Mémorise. Retrouve les paires.",
+        how1Title: "Choisis tes options",
+        how1Text: "Adapte le niveau et l’univers à ton envie.",
+        how2Title: "Observe les cartes",
+        how2Text: "Retourne deux cartes pour comparer leurs symboles.",
+        how3Title: "Trouve toutes les paires",
+        how3Text: "Termine la grille avec le moins de coups possible.",
+        setupHeading: "Prépare ta partie",
+        setupSubtitle: "Trois choix rapides, puis le jeu commence.",
+        levelLegend: "Niveau",
+        levelRelax: "Détente",
+        levelRelaxMeta: "4 paires · 8 cartes",
+        levelChallenge: "Défi",
+        levelChallengeMeta: "6 paires · 12 cartes",
+        levelExpert: "Expert",
+        levelExpertMeta: "8 paires · 16 cartes",
+        themeLegend: "Univers",
+        themeNature: "Nature",
+        themeNatureMeta: "Plantes, animaux et couleurs douces",
+        themeSpace: "Espace",
+        themeSpaceMeta: "Planètes, étoiles et exploration",
+        themeScience: "Science",
+        themeScienceMeta: "Découvertes, expériences et idées",
         previewTitle: "Aperçu de 3 secondes",
-        previewHelp: "Toutes les cartes seront brièvement visibles avant le début.",
+        previewText: "Les cartes sont révélées brièvement au début.",
         start: "Commencer la partie",
-        instructions: "Comment jouer",
-        instruction1: "Retourne deux cartes.",
-        instruction2: "Si elles sont identiques, la paire reste visible.",
-        instruction3: "Trouve toutes les paires avec le moins de coups possible.",
-        selected: "Sélectionné",
-        pairs: "paires",
-        cards: "cartes",
-        previewOn: "Aperçu activé",
-        previewOff: "Sans aperçu",
-        gameEyebrow: "Mémoire visuelle · Jeu de paires",
-        gameSubtitle: "Trouve toutes les paires. Les cartes appariées restent visibles.",
-        changeConfig: "Changer les options",
-        level: "Niveau",
-        theme: "Univers",
+        changeOptions: "Changer les options",
         moves: "Coups",
         time: "Temps",
-        found: "Trouvées",
-        score: "Score",
+        pairs: "Paires",
         progress: "Progression",
-        feedback: "Rétroaction",
-        ready: "Choisis une première carte.",
-        oneCard: "Bien. Cherche maintenant la carte correspondante.",
-        match: "Paire trouvée. Continue !",
-        miss: "Ces cartes sont différentes. Observe-les avant qu’elles se retournent.",
-        previewing: "Mémorise les cartes : la partie commence dans quelques secondes.",
         restart: "Recommencer",
-        setup: "Nouvelle configuration",
-        hiddenCard: "Carte cachée",
-        matchedCard: "Paire trouvée",
-        flipCard: "Retourner la carte",
-        previewBanner: "Aperçu en cours · mémorise les positions",
-        resultEyebrow: "Partie terminée",
-        resultTitle: "Défi réussi",
-        resultCopy: "Toutes les paires ont été retrouvées. Compare ton nombre de coups et ton temps, puis essaie d’améliorer ton résultat.",
-        accuracy: "Efficacité",
-        bestNew: "Nouveau meilleur résultat pour cette configuration.",
-        bestExisting: "Meilleur score enregistré",
-        replay: "Rejouer",
-        returnSetup: "Changer de niveau",
-        starLabel: "étoiles sur trois",
-        footerCourse: "SEG3525",
-        easy: "Débutant",
-        easyDetail: "4 paires · grille 4 × 2",
-        medium: "Intermédiaire",
-        mediumDetail: "6 paires · grille 4 × 3",
-        hard: "Avancé",
-        hardDetail: "8 paires · grille 4 × 4",
+        accuracy: "Précision",
+        resultTitle: "Bravo, toutes les paires sont trouvées !",
+        resultMessage: "Ta mémoire a fait tout le travail. Voici le résumé de ta partie.",
+        playAgain: "Rejouer",
+        cancel: "Annuler",
+        confirm: "Confirmer",
+        firstCard: "Choisis une première carte.",
+        secondCard: "Cherche maintenant la carte correspondante.",
+        match: "Paire trouvée ! Continue.",
+        mismatch: "Elles sont différentes. Observe-les bien.",
+        remainingOne: "Plus qu’une paire à trouver.",
+        remainingMany: "Plus que {count} paires à trouver.",
+        previewCountdown: "Observe les cartes… {count}",
+        previewGo: "À toi de jouer ! Choisis une première carte.",
+        newBest: "Nouveau meilleur résultat !",
+        bestScore: "Meilleur résultat : {time} · {moves} coups",
+        noBest: "Première partie enregistrée pour ce niveau.",
+        restartTitle: "Recommencer la partie ?",
+        restartMessage: "Ta progression actuelle sera perdue.",
+        optionsTitle: "Changer les options ?",
+        optionsMessage: "La partie en cours sera abandonnée.",
+        hiddenCard: "Carte cachée {number}",
+        revealedCard: "Carte {label}",
+        matchedCard: "Paire trouvée : {label}",
         nature: "Nature",
-        natureDetail: "Formes organiques familières",
         space: "Espace",
-        spaceDetail: "Symboles célestes contrastés",
         science: "Science",
-        scienceDetail: "Objets et concepts scientifiques",
-        secondsShort: "s",
-        scoreShort: "pts"
-    },
-    en: {
-        back: "Back to portfolio",
+        relax: "Détente",
+        challenge: "Défi",
+        expert: "Expert",
+        saved: "Tes options sont prêtes.",
+        cardGrid: "Grille de cartes mémoire",
+        starsLabel: "Évaluation : {count} étoile(s) sur trois"
+      },
+      en: {
         skip: "Skip to main content",
-        project: "Design 02 · Memory game",
-        introTitle: "Mémoria",
-        introCopy: "A matching game that trains visual memory without overloading attention. Choose a level, a visual theme, and start playing.",
-        principle1: "Recognition rather than recall",
-        principle2: "Clear feedback after every action",
-        principle3: "Calm and consistent interface",
-        introNote: "Built with React · SEG3525",
-        configureEyebrow: "Configure the game",
-        configureTitle: "Prepare your challenge",
-        configureDescription: "Choices are grouped by proximity so the setup remains quick and easy to understand.",
-        levelTitle: "1 · Level",
-        levelHelp: "Choose the number of pairs.",
-        themeTitle: "2 · Visual theme",
-        themeHelp: "Choose the images to remember.",
+        portfolio: "Back to portfolio",
+        eyebrow: "Visual memory game",
+        tagline: "Observe. Remember. Match the pairs.",
+        how1Title: "Choose your options",
+        how1Text: "Adjust the level and theme to suit you.",
+        how2Title: "Observe the cards",
+        how2Text: "Turn over two cards to compare their symbols.",
+        how3Title: "Find every pair",
+        how3Text: "Complete the grid in as few moves as possible.",
+        setupHeading: "Set up your game",
+        setupSubtitle: "Three quick choices, then the game begins.",
+        levelLegend: "Level",
+        levelRelax: "Relax",
+        levelRelaxMeta: "4 pairs · 8 cards",
+        levelChallenge: "Challenge",
+        levelChallengeMeta: "6 pairs · 12 cards",
+        levelExpert: "Expert",
+        levelExpertMeta: "8 pairs · 16 cards",
+        themeLegend: "Theme",
+        themeNature: "Nature",
+        themeNatureMeta: "Plants, animals and soft colours",
+        themeSpace: "Space",
+        themeSpaceMeta: "Planets, stars and exploration",
+        themeScience: "Science",
+        themeScienceMeta: "Discoveries, experiments and ideas",
         previewTitle: "3-second preview",
-        previewHelp: "All cards will be briefly visible before the game starts.",
+        previewText: "The cards are briefly revealed at the start.",
         start: "Start the game",
-        instructions: "How to play",
-        instruction1: "Flip two cards.",
-        instruction2: "If they match, the pair remains visible.",
-        instruction3: "Find every pair in as few moves as possible.",
-        selected: "Selected",
-        pairs: "pairs",
-        cards: "cards",
-        previewOn: "Preview enabled",
-        previewOff: "No preview",
-        gameEyebrow: "Visual memory · Matching game",
-        gameSubtitle: "Find every pair. Matched cards remain visible.",
-        changeConfig: "Change options",
-        level: "Level",
-        theme: "Theme",
+        changeOptions: "Change options",
         moves: "Moves",
         time: "Time",
-        found: "Found",
-        score: "Score",
+        pairs: "Pairs",
         progress: "Progress",
-        feedback: "Feedback",
-        ready: "Choose your first card.",
-        oneCard: "Good. Now look for the matching card.",
-        match: "Pair found. Keep going!",
-        miss: "These cards are different. Observe them before they turn back.",
-        previewing: "Memorize the cards: the game will begin in a few seconds.",
         restart: "Restart",
-        setup: "New configuration",
-        hiddenCard: "Hidden card",
-        matchedCard: "Matched pair",
-        flipCard: "Flip card",
-        previewBanner: "Preview in progress · remember the positions",
-        resultEyebrow: "Game complete",
-        resultTitle: "Challenge completed",
-        resultCopy: "You found every pair. Compare your moves and time, then try to improve your result.",
-        accuracy: "Efficiency",
-        bestNew: "New best result for this configuration.",
-        bestExisting: "Saved best score",
-        replay: "Play again",
-        returnSetup: "Change level",
-        starLabel: "stars out of three",
-        footerCourse: "SEG3525",
-        easy: "Beginner",
-        easyDetail: "4 pairs · 4 × 2 grid",
-        medium: "Intermediate",
-        mediumDetail: "6 pairs · 4 × 3 grid",
-        hard: "Advanced",
-        hardDetail: "8 pairs · 4 × 4 grid",
+        accuracy: "Accuracy",
+        resultTitle: "Well done, you found every pair!",
+        resultMessage: "Your memory did the work. Here is your game summary.",
+        playAgain: "Play again",
+        cancel: "Cancel",
+        confirm: "Confirm",
+        firstCard: "Choose your first card.",
+        secondCard: "Now find the matching card.",
+        match: "Pair found! Keep going.",
+        mismatch: "They are different. Take a good look.",
+        remainingOne: "Only one pair left.",
+        remainingMany: "Only {count} pairs left.",
+        previewCountdown: "Observe the cards… {count}",
+        previewGo: "Your turn! Choose your first card.",
+        newBest: "New best result!",
+        bestScore: "Best result: {time} · {moves} moves",
+        noBest: "Your first result for this level has been saved.",
+        restartTitle: "Restart the game?",
+        restartMessage: "Your current progress will be lost.",
+        optionsTitle: "Change the options?",
+        optionsMessage: "The current game will be abandoned.",
+        hiddenCard: "Hidden card {number}",
+        revealedCard: "Card: {label}",
+        matchedCard: "Matched pair: {label}",
         nature: "Nature",
-        natureDetail: "Familiar organic shapes",
         space: "Space",
-        spaceDetail: "High-contrast celestial symbols",
         science: "Science",
-        scienceDetail: "Scientific objects and concepts",
-        secondsShort: "s",
-        scoreShort: "pts"
-    }
-};
-const LEVELS = {
-    easy: { pairs: 4, columns: 4, icon: "01" },
-    medium: { pairs: 6, columns: 4, icon: "02" },
-    hard: { pairs: 8, columns: 4, icon: "03" }
-};
-const THEMES = {
-    nature: {
-        icon: "🌿",
-        items: [
-            { id: "leaf", symbol: "🌿", fr: "Feuille", en: "Leaf" },
-            { id: "flower", symbol: "🌸", fr: "Fleur", en: "Flower" },
-            { id: "mushroom", symbol: "🍄", fr: "Champignon", en: "Mushroom" },
-            { id: "butterfly", symbol: "🦋", fr: "Papillon", en: "Butterfly" },
-            { id: "shell", symbol: "🐚", fr: "Coquillage", en: "Shell" },
-            { id: "feather", symbol: "🪶", fr: "Plume", en: "Feather" },
-            { id: "sun", symbol: "☀️", fr: "Soleil", en: "Sun" },
-            { id: "moon", symbol: "🌙", fr: "Lune", en: "Moon" }
-        ]
-    },
-    space: {
-        icon: "🪐",
-        items: [
-            { id: "planet", symbol: "🪐", fr: "Planète", en: "Planet" },
-            { id: "rocket", symbol: "🚀", fr: "Fusée", en: "Rocket" },
-            { id: "star", symbol: "⭐", fr: "Étoile", en: "Star" },
-            { id: "comet", symbol: "☄️", fr: "Comète", en: "Comet" },
-            { id: "earth", symbol: "🌍", fr: "Terre", en: "Earth" },
-            { id: "satellite", symbol: "🛰️", fr: "Satellite", en: "Satellite" },
-            { id: "telescope", symbol: "🔭", fr: "Télescope", en: "Telescope" },
-            { id: "astronaut", symbol: "🧑‍🚀", fr: "Astronaute", en: "Astronaut" }
-        ]
-    },
-    science: {
-        icon: "🔬",
-        items: [
-            { id: "dna", symbol: "🧬", fr: "ADN", en: "DNA" },
-            { id: "microscope", symbol: "🔬", fr: "Microscope", en: "Microscope" },
-            { id: "flask", symbol: "⚗️", fr: "Fiole", en: "Flask" },
-            { id: "brain", symbol: "🧠", fr: "Cerveau", en: "Brain" },
-            { id: "atom", symbol: "⚛️", fr: "Atome", en: "Atom" },
-            { id: "magnet", symbol: "🧲", fr: "Aimant", en: "Magnet" },
-            { id: "light", symbol: "💡", fr: "Lumière", en: "Light" },
-            { id: "computer", symbol: "💻", fr: "Ordinateur", en: "Computer" }
-        ]
-    }
-};
-function shuffle(items) {
-    const array = [...items];
-    for (let index = array.length - 1; index > 0; index -= 1) {
-        const randomIndex = Math.floor(Math.random() * (index + 1));
-        [array[index], array[randomIndex]] = [array[randomIndex], array[index]];
-    }
-    return array;
-}
-function buildDeck(levelKey, themeKey) {
-    const pairCount = LEVELS[levelKey].pairs;
-    const selectedItems = THEMES[themeKey].items.slice(0, pairCount);
-    const doubled = selectedItems.flatMap((item, index) => [
-        { ...item, uid: `${item.id}-a-${index}` },
-        { ...item, uid: `${item.id}-b-${index}` }
-    ]);
-    return shuffle(doubled);
-}
-function formatTime(totalSeconds) {
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = String(totalSeconds % 60).padStart(2, "0");
-    return `${minutes}:${seconds}`;
-}
-function calculateScore(levelKey, moves, seconds) {
-    const base = { easy: 650, medium: 950, hard: 1300 }[levelKey];
-    return Math.max(100, Math.round(base - moves * 12 - seconds * 2));
-}
-function calculateStars(levelKey, moves) {
-    const pairs = LEVELS[levelKey].pairs;
-    if (moves <= pairs + 2)
-        return 3;
-    if (moves <= pairs * 2)
-        return 2;
-    return 1;
-}
-function LanguageSwitcher({ lang, onChange }) {
-    return (React.createElement("div", { className: "lang-switcher", "aria-label": "Language selector" },
-        React.createElement("button", { className: "lang-button", type: "button", "aria-pressed": lang === "fr", onClick: () => onChange("fr") }, "FR"),
-        React.createElement("button", { className: "lang-button", type: "button", "aria-pressed": lang === "en", onClick: () => onChange("en") }, "EN")));
-}
-function ChoiceCard({ active, icon, name, detail, onClick, label }) {
-    return (React.createElement("button", { className: "choice-card", type: "button", "aria-pressed": active, "aria-label": `${label}: ${name}`, onClick: onClick },
-        React.createElement("span", { className: "choice-icon", "aria-hidden": "true" }, icon),
-        React.createElement("span", { className: "choice-name" }, name),
-        React.createElement("span", { className: "choice-detail" }, detail)));
-}
-function SetupScreen({ lang, level, theme, previewEnabled, setLevel, setTheme, setPreviewEnabled, startGame }) {
-    const t = COPY[lang];
-    const levelInfo = LEVELS[level];
-    return (React.createElement("main", { className: "page-main", id: "main-content" },
-        React.createElement("section", { className: "setup-shell", "aria-labelledby": "setup-title" },
-            React.createElement("aside", { className: "intro-panel" },
-                React.createElement("div", null,
-                    React.createElement("span", { className: "project-number" }, "02"),
-                    React.createElement("p", { className: "kicker" }, t.project),
-                    React.createElement("h1", { className: "intro-title" }, t.introTitle),
-                    React.createElement("p", { className: "intro-copy" }, t.introCopy),
-                    React.createElement("div", { className: "principle-list", "aria-label": "Principes de conception" }, [t.principle1, t.principle2, t.principle3].map((principle, index) => (React.createElement("div", { className: "principle-item", key: principle },
-                        React.createElement("span", { className: "principle-icon", "aria-hidden": "true" }, index + 1),
-                        React.createElement("span", null, principle)))))),
-                React.createElement("p", { className: "intro-note" }, t.introNote)),
-            React.createElement("section", { className: "config-panel" },
-                React.createElement("header", { className: "section-heading" },
-                    React.createElement("p", { className: "eyebrow" }, t.configureEyebrow),
-                    React.createElement("h2", { className: "page-title", id: "setup-title" }, t.configureTitle),
-                    React.createElement("p", { className: "section-description" }, t.configureDescription)),
-                React.createElement("div", { className: "option-group" },
-                    React.createElement("div", { className: "option-header" },
-                        React.createElement("h3", { className: "option-title" }, t.levelTitle),
-                        React.createElement("p", { className: "option-help" }, t.levelHelp)),
-                    React.createElement("div", { className: "choice-grid" }, Object.keys(LEVELS).map((key) => (React.createElement(ChoiceCard, { key: key, active: level === key, icon: LEVELS[key].icon, name: t[key], detail: t[`${key}Detail`], label: t.level, onClick: () => setLevel(key) }))))),
-                React.createElement("div", { className: "option-group" },
-                    React.createElement("div", { className: "option-header" },
-                        React.createElement("h3", { className: "option-title" }, t.themeTitle),
-                        React.createElement("p", { className: "option-help" }, t.themeHelp)),
-                    React.createElement("div", { className: "choice-grid" }, Object.keys(THEMES).map((key) => (React.createElement(ChoiceCard, { key: key, active: theme === key, icon: THEMES[key].icon, name: t[key], detail: t[`${key}Detail`], label: t.theme, onClick: () => setTheme(key) }))))),
-                React.createElement("div", { className: "option-group" },
-                    React.createElement("div", { className: "preview-row" },
-                        React.createElement("div", { className: "preview-copy" },
-                            React.createElement("strong", null, t.previewTitle),
-                            React.createElement("span", null, t.previewHelp)),
-                        React.createElement("button", { className: "switch", type: "button", role: "switch", "aria-checked": previewEnabled, "aria-label": t.previewTitle, "aria-pressed": previewEnabled, onClick: () => setPreviewEnabled((current) => !current) },
-                            React.createElement("span", { className: "sr-only" }, previewEnabled ? t.previewOn : t.previewOff)))),
-                React.createElement("div", { className: "config-summary", "aria-label": "R\u00E9sum\u00E9 de la configuration" },
-                    React.createElement("span", { className: "summary-chip" }, t[level]),
-                    React.createElement("span", { className: "summary-chip" }, t[theme]),
-                    React.createElement("span", { className: "summary-chip" },
-                        levelInfo.pairs,
-                        " ",
-                        t.pairs),
-                    React.createElement("span", { className: "summary-chip" }, previewEnabled ? t.previewOn : t.previewOff)),
-                React.createElement("div", { className: "config-actions" },
-                    React.createElement("details", { className: "instructions" },
-                        React.createElement("summary", null, t.instructions),
-                        React.createElement("ol", null,
-                            React.createElement("li", null, t.instruction1),
-                            React.createElement("li", null, t.instruction2),
-                            React.createElement("li", null, t.instruction3))),
-                    React.createElement("button", { className: "primary-button", type: "button", onClick: startGame },
-                        t.start,
-                        React.createElement("svg", { "aria-hidden": "true", width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2" },
-                            React.createElement("line", { x1: "5", y1: "12", x2: "19", y2: "12" }),
-                            React.createElement("polyline", { points: "12 5 19 12 12 19" }))))))));
-}
-function MemoryCard({ card, lang, isFlipped, isMatched, isDisabled, onClick }) {
-    const t = COPY[lang];
-    const name = card[lang];
-    const label = isMatched ? `${t.matchedCard}: ${name}` : isFlipped ? name : `${t.flipCard}: ${t.hiddenCard}`;
-    return (React.createElement("button", { className: `memory-card${isFlipped ? " is-flipped" : ""}${isMatched ? " is-matched" : ""}`, type: "button", "aria-label": label, "aria-pressed": isFlipped || isMatched, disabled: isDisabled || isMatched, onClick: onClick },
-        React.createElement("span", { className: "card-inner" },
-            React.createElement("span", { className: "card-face card-back", "aria-hidden": "true" },
-                React.createElement("span", { className: "card-back-mark" }, "M")),
-            React.createElement("span", { className: "card-face card-front" },
-                React.createElement("span", { className: "card-content" },
-                    React.createElement("span", { className: "card-symbol", "aria-hidden": "true" }, card.symbol),
-                    React.createElement("span", { className: "card-name" }, name)),
-                isMatched && React.createElement("span", { className: "matched-badge", "aria-hidden": "true" }, "\u2713")))));
-}
-function GameScreen({ lang, level, theme, cards, flipped, matched, moves, seconds, previewing, feedbackKey, busy, onCardClick, onRestart, onSetup }) {
-    const t = COPY[lang];
-    const totalPairs = LEVELS[level].pairs;
-    const foundPairs = matched.length / 2;
-    const progress = Math.round((foundPairs / totalPairs) * 100);
-    const visibleCards = new Set([...flipped, ...matched]);
-    return (React.createElement("main", { className: "page-main", id: "main-content" },
-        React.createElement("section", { className: "game-shell", "aria-labelledby": "game-title" },
-            React.createElement("header", { className: "game-header" },
-                React.createElement("div", { className: "game-heading-wrap" },
-                    React.createElement("p", { className: "eyebrow" }, t.gameEyebrow),
-                    React.createElement("h1", { className: "game-title", id: "game-title" }, "M\u00E9moria"),
-                    React.createElement("p", { className: "game-subtitle" }, t.gameSubtitle)),
-                React.createElement("button", { className: "secondary-button", type: "button", onClick: onSetup }, t.changeConfig)),
-            React.createElement("div", { className: "game-layout" },
-                React.createElement("aside", { className: "stats-panel", "aria-label": "Informations de la partie" },
-                    React.createElement("div", { className: "stats-card" },
-                        React.createElement("div", { className: "stats-grid" },
-                            React.createElement("div", { className: "stat-box" },
-                                React.createElement("span", { className: "stat-label" }, t.moves),
-                                React.createElement("span", { className: "stat-value" }, moves)),
-                            React.createElement("div", { className: "stat-box" },
-                                React.createElement("span", { className: "stat-label" }, t.time),
-                                React.createElement("span", { className: "stat-value" }, formatTime(seconds))),
-                            React.createElement("div", { className: "stat-box" },
-                                React.createElement("span", { className: "stat-label" }, t.found),
-                                React.createElement("span", { className: "stat-value" },
-                                    foundPairs,
-                                    "/",
-                                    totalPairs)),
-                            React.createElement("div", { className: "stat-box" },
-                                React.createElement("span", { className: "stat-label" }, t.level),
-                                React.createElement("span", { className: "stat-value", style: { fontSize: "1.1rem" } }, t[level]))),
-                        React.createElement("div", { className: "progress-block" },
-                            React.createElement("div", { className: "progress-heading" },
-                                React.createElement("span", null, t.progress),
-                                React.createElement("strong", null,
-                                    progress,
-                                    "%")),
-                            React.createElement("div", { className: "progress-track", "aria-label": `${t.progress}: ${progress}%` },
-                                React.createElement("div", { className: "progress-bar", style: { width: `${progress}%` } })))),
-                    React.createElement("div", { className: "feedback-card", "aria-live": "polite", "aria-atomic": "true" },
-                        React.createElement("span", { className: "feedback-label" }, t.feedback),
-                        React.createElement("p", { className: "feedback-message" }, t[feedbackKey])),
-                    React.createElement("div", { className: "side-actions" },
-                        React.createElement("button", { className: "secondary-button", type: "button", onClick: onRestart }, t.restart),
-                        React.createElement("button", { className: "text-button", type: "button", onClick: onSetup }, t.setup))),
-                React.createElement("section", { className: "board-panel", "aria-label": `${t.theme}: ${t[theme]}` },
-                    previewing && (React.createElement("div", { className: "preview-banner", role: "status" },
-                        React.createElement("span", { "aria-hidden": "true" }, "\u25C9"),
-                        React.createElement("span", null, t.previewBanner))),
-                    React.createElement("div", { className: "board", style: { "--columns": LEVELS[level].columns }, "aria-busy": busy || previewing }, cards.map((card) => (React.createElement(MemoryCard, { key: card.uid, card: card, lang: lang, isFlipped: previewing || visibleCards.has(card.uid), isMatched: matched.includes(card.uid), isDisabled: busy || previewing, onClick: () => onCardClick(card) })))))))));
-}
-function ResultScreen({ lang, level, theme, result, bestResult, isNewBest, onReplay, onSetup }) {
-    const t = COPY[lang];
-    const stars = calculateStars(level, result.moves);
-    const efficiency = Math.max(1, Math.round((LEVELS[level].pairs / result.moves) * 100));
-    return (React.createElement("main", { className: "page-main", id: "main-content" },
-        React.createElement("section", { className: "result-shell", "aria-labelledby": "result-title" },
-            React.createElement("div", { className: "result-visual" },
-                React.createElement("div", null,
-                    React.createElement("div", { className: "result-medallion", "aria-hidden": "true" },
-                        React.createElement("span", { className: "result-check" }, "\u2713")),
-                    React.createElement("div", { className: "result-stars", "aria-label": `${stars} ${t.starLabel}` },
-                        "★".repeat(stars),
-                        "☆".repeat(3 - stars)))),
-            React.createElement("section", { className: "result-content" },
-                React.createElement("p", { className: "eyebrow" }, t.resultEyebrow),
-                React.createElement("h1", { className: "result-title", id: "result-title" }, t.resultTitle),
-                React.createElement("p", { className: "result-copy" }, t.resultCopy),
-                React.createElement("div", { className: "config-summary" },
-                    React.createElement("span", { className: "summary-chip" }, t[level]),
-                    React.createElement("span", { className: "summary-chip" }, t[theme])),
-                React.createElement("div", { className: "result-grid" },
-                    React.createElement("div", { className: "result-metric" },
-                        React.createElement("span", { className: "result-metric-label" }, t.moves),
-                        React.createElement("span", { className: "result-metric-value" }, result.moves)),
-                    React.createElement("div", { className: "result-metric" },
-                        React.createElement("span", { className: "result-metric-label" }, t.time),
-                        React.createElement("span", { className: "result-metric-value" }, formatTime(result.seconds))),
-                    React.createElement("div", { className: "result-metric" },
-                        React.createElement("span", { className: "result-metric-label" }, t.score),
-                        React.createElement("span", { className: "result-metric-value" }, result.score))),
-                React.createElement("div", { className: "best-box" },
-                    React.createElement("strong", null, isNewBest ? t.bestNew : t.bestExisting),
-                    !isNewBest && bestResult && (React.createElement("span", null,
-                        " \u00B7 ",
-                        bestResult.score,
-                        " ",
-                        t.scoreShort,
-                        " \u00B7 ",
-                        bestResult.moves,
-                        " ",
-                        t.moves.toLowerCase(),
-                        " \u00B7 ",
-                        formatTime(bestResult.seconds))),
-                    React.createElement("span", null,
-                        " \u00B7 ",
-                        t.accuracy,
-                        ": ",
-                        efficiency,
-                        "%")),
-                React.createElement("div", { className: "result-actions" },
-                    React.createElement("button", { className: "primary-button", type: "button", onClick: onReplay }, t.replay),
-                    React.createElement("button", { className: "secondary-button", type: "button", onClick: onSetup }, t.returnSetup))))));
-}
-function App() {
-    const [lang, setLang] = useState("fr");
-    const [screen, setScreen] = useState("setup");
-    const [level, setLevel] = useState("easy");
-    const [theme, setTheme] = useState("nature");
-    const [previewEnabled, setPreviewEnabled] = useState(true);
-    const [cards, setCards] = useState([]);
-    const [flipped, setFlipped] = useState([]);
-    const [matched, setMatched] = useState([]);
-    const [moves, setMoves] = useState(0);
-    const [seconds, setSeconds] = useState(0);
-    const [previewing, setPreviewing] = useState(false);
-    const [feedbackKey, setFeedbackKey] = useState("ready");
-    const [busy, setBusy] = useState(false);
-    const [result, setResult] = useState(null);
-    const [bestResult, setBestResult] = useState(null);
-    const [isNewBest, setIsNewBest] = useState(false);
-    const previewTimerRef = useRef(null);
-    const pairTimerRef = useRef(null);
-    const finishingRef = useRef(false);
-    const storageKey = useMemo(() => `memoria-best-${level}-${theme}`, [level, theme]);
-    useEffect(() => {
-        document.documentElement.lang = lang;
-        const backLabel = document.getElementById("back-label");
-        const skipLink = document.querySelector(".skip-link");
-        if (backLabel)
-            backLabel.textContent = COPY[lang].back;
-        if (skipLink)
-            skipLink.textContent = COPY[lang].skip;
-    }, [lang]);
-    useEffect(() => {
-        const languageRoot = document.getElementById("language-root");
-        if (!languageRoot)
-            return undefined;
-        ReactDOM.render(React.createElement(LanguageSwitcher, { lang: lang, onChange: setLang }), languageRoot);
-        return () => ReactDOM.unmountComponentAtNode(languageRoot);
-    }, [lang]);
-    useEffect(() => {
-        if (screen !== "play" || previewing || finishingRef.current)
-            return undefined;
-        const timer = window.setInterval(() => {
-            setSeconds((current) => current + 1);
-        }, 1000);
-        return () => window.clearInterval(timer);
-    }, [screen, previewing]);
-    useEffect(() => {
-        return () => {
-            window.clearTimeout(previewTimerRef.current);
-            window.clearTimeout(pairTimerRef.current);
-        };
-    }, []);
-    useEffect(() => {
-        if (screen === "play" &&
-            cards.length > 0 &&
-            matched.length === cards.length &&
-            !finishingRef.current) {
-            finishingRef.current = true;
-            const finalResult = {
-                moves,
-                seconds,
-                score: calculateScore(level, moves, seconds)
-            };
-            const finishTimer = window.setTimeout(() => {
-                let storedBest = null;
-                try {
-                    const saved = window.localStorage.getItem(storageKey);
-                    storedBest = saved ? JSON.parse(saved) : null;
-                }
-                catch (error) {
-                    storedBest = null;
-                }
-                const newBest = !storedBest || finalResult.score > storedBest.score;
-                if (newBest) {
-                    try {
-                        window.localStorage.setItem(storageKey, JSON.stringify(finalResult));
-                    }
-                    catch (error) {
-                        // The game remains functional even if storage is unavailable.
-                    }
-                    setBestResult(finalResult);
-                }
-                else {
-                    setBestResult(storedBest);
-                }
-                setIsNewBest(newBest);
-                setResult(finalResult);
-                setScreen("result");
-            }, 700);
-            return () => window.clearTimeout(finishTimer);
-        }
-        return undefined;
-    }, [screen, cards, matched, moves, seconds, level, storageKey]);
-    function resetTimers() {
-        window.clearTimeout(previewTimerRef.current);
-        window.clearTimeout(pairTimerRef.current);
-    }
-    function startGame() {
-        resetTimers();
-        finishingRef.current = false;
-        setCards(buildDeck(level, theme));
-        setFlipped([]);
-        setMatched([]);
-        setMoves(0);
-        setSeconds(0);
-        setBusy(false);
-        setResult(null);
-        setBestResult(null);
-        setIsNewBest(false);
-        setScreen("play");
-        if (previewEnabled) {
-            setPreviewing(true);
-            setFeedbackKey("previewing");
-            previewTimerRef.current = window.setTimeout(() => {
-                setPreviewing(false);
-                setFeedbackKey("ready");
-            }, 3000);
-        }
-        else {
-            setPreviewing(false);
-            setFeedbackKey("ready");
-        }
-    }
-    function handleCardClick(card) {
-        if (busy || previewing || matched.includes(card.uid) || flipped.includes(card.uid))
-            return;
-        const nextFlipped = [...flipped, card.uid];
-        setFlipped(nextFlipped);
-        if (nextFlipped.length === 1) {
-            setFeedbackKey("oneCard");
-            return;
-        }
-        setBusy(true);
-        setMoves((current) => current + 1);
-        const firstCard = cards.find((item) => item.uid === nextFlipped[0]);
-        const secondCard = cards.find((item) => item.uid === nextFlipped[1]);
-        const isMatch = firstCard && secondCard && firstCard.id === secondCard.id;
-        if (isMatch) {
-            setFeedbackKey("match");
-            pairTimerRef.current = window.setTimeout(() => {
-                setMatched((current) => [...current, ...nextFlipped]);
-                setFlipped([]);
-                setBusy(false);
-            }, 420);
-        }
-        else {
-            setFeedbackKey("miss");
-            pairTimerRef.current = window.setTimeout(() => {
-                setFlipped([]);
-                setBusy(false);
-                setFeedbackKey("ready");
-            }, 950);
-        }
-    }
-    function returnToSetup() {
-        resetTimers();
-        finishingRef.current = false;
-        setPreviewing(false);
-        setBusy(false);
-        setScreen("setup");
-    }
-    let content;
-    if (screen === "play") {
-        content = (React.createElement(GameScreen, { lang: lang, level: level, theme: theme, cards: cards, flipped: flipped, matched: matched, moves: moves, seconds: seconds, previewing: previewing, feedbackKey: feedbackKey, busy: busy, onCardClick: handleCardClick, onRestart: startGame, onSetup: returnToSetup }));
-    }
-    else if (screen === "result" && result) {
-        content = (React.createElement(ResultScreen, { lang: lang, level: level, theme: theme, result: result, bestResult: bestResult, isNewBest: isNewBest, onReplay: startGame, onSetup: returnToSetup }));
-    }
-    else {
-        content = (React.createElement(SetupScreen, { lang: lang, level: level, theme: theme, previewEnabled: previewEnabled, setLevel: setLevel, setTheme: setTheme, setPreviewEnabled: setPreviewEnabled, startGame: startGame }));
-    }
-    return content;
-}
-const rootElement = document.getElementById("root");
-ReactDOM.render(React.createElement(App, null), rootElement);
+        relax: "Relax",
+        challenge: "Challenge",
+        expert: "Expert",
+        saved: "Your options are ready.",
+        cardGrid: "Memory card grid",
+        starsLabel: "Rating: {count} star(s) out of three"
+      }
+    };
 
+    const cardThemes = {
+      nature: [
+        { id: "leaf", emoji: "🌿", fr: "Feuille", en: "Leaf" },
+        { id: "sunflower", emoji: "🌻", fr: "Tournesol", en: "Sunflower" },
+        { id: "mushroom", emoji: "🍄", fr: "Champignon", en: "Mushroom" },
+        { id: "butterfly", emoji: "🦋", fr: "Papillon", en: "Butterfly" },
+        { id: "bee", emoji: "🐝", fr: "Abeille", en: "Bee" },
+        { id: "cactus", emoji: "🌵", fr: "Cactus", en: "Cactus" },
+        { id: "maple", emoji: "🍁", fr: "Érable", en: "Maple" },
+        { id: "shell", emoji: "🐚", fr: "Coquillage", en: "Shell" }
+      ],
+      space: [
+        { id: "rocket", emoji: "🚀", fr: "Fusée", en: "Rocket" },
+        { id: "planet", emoji: "🪐", fr: "Planète", en: "Planet" },
+        { id: "moon", emoji: "🌙", fr: "Lune", en: "Moon" },
+        { id: "star", emoji: "⭐", fr: "Étoile", en: "Star" },
+        { id: "satellite", emoji: "🛰️", fr: "Satellite", en: "Satellite" },
+        { id: "astronaut", emoji: "🧑‍🚀", fr: "Astronaute", en: "Astronaut" },
+        { id: "comet", emoji: "☄️", fr: "Comète", en: "Comet" },
+        { id: "galaxy", emoji: "🌌", fr: "Galaxie", en: "Galaxy" }
+      ],
+      science: [
+        { id: "microscope", emoji: "🔬", fr: "Microscope", en: "Microscope" },
+        { id: "dna", emoji: "🧬", fr: "ADN", en: "DNA" },
+        { id: "flask", emoji: "⚗️", fr: "Fiole", en: "Flask" },
+        { id: "testtube", emoji: "🧪", fr: "Éprouvette", en: "Test tube" },
+        { id: "magnet", emoji: "🧲", fr: "Aimant", en: "Magnet" },
+        { id: "bulb", emoji: "💡", fr: "Ampoule", en: "Light bulb" },
+        { id: "brain", emoji: "🧠", fr: "Cerveau", en: "Brain" },
+        { id: "atom", emoji: "⚛️", fr: "Atome", en: "Atom" }
+      ]
+    };
+
+    const levelPairs = {
+      relax: 4,
+      challenge: 6,
+      expert: 8
+    };
+
+    const state = {
+      lang: "fr",
+      level: "challenge",
+      theme: "nature",
+      preview: true,
+      deck: [],
+      moves: 0,
+      matches: 0,
+      seconds: 0,
+      firstCardId: null,
+      secondCardId: null,
+      locked: false,
+      previewing: false,
+      timerId: null,
+      previewTimerId: null,
+      pendingAction: null,
+      gameFinished: false
+    };
+
+    const setupScreen = document.getElementById("setup-screen");
+    const gameScreen = document.getElementById("game-screen");
+    const resultScreen = document.getElementById("result-screen");
+    const setupForm = document.getElementById("setup-form");
+    const previewToggle = document.getElementById("preview-toggle");
+    const memoryGrid = document.getElementById("memory-grid");
+    const movesValue = document.getElementById("moves-value");
+    const timeValue = document.getElementById("time-value");
+    const pairsValue = document.getElementById("pairs-value");
+    const progressValue = document.getElementById("progress-value");
+    const progressFill = document.getElementById("progress-fill");
+    const feedback = document.getElementById("feedback");
+    const feedbackIcon = document.getElementById("feedback-icon");
+    const feedbackText = document.getElementById("feedback-text");
+    const gameSubtitle = document.getElementById("game-subtitle");
+    const confirmDialog = document.getElementById("confirm-dialog");
+    const dialogTitle = document.getElementById("dialog-title");
+    const dialogMessage = document.getElementById("dialog-message");
+    const dialogCancel = document.getElementById("dialog-cancel");
+    const dialogConfirm = document.getElementById("dialog-confirm");
+    const toast = document.getElementById("toast");
+
+    function t(key, replacements = {}) {
+      let value = translations[state.lang][key] ?? key;
+      Object.entries(replacements).forEach(([name, replacement]) => {
+        value = value.replace(`{${name}}`, String(replacement));
+      });
+      return value;
+    }
+
+    function applyTranslations() {
+      document.documentElement.lang = state.lang;
+      document.title = state.lang === "fr" ? "Mémoria | Jeu de mémoire" : "Mémoria | Memory game";
+
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        const key = element.dataset.i18n;
+        if (translations[state.lang][key]) {
+          element.textContent = translations[state.lang][key];
+        }
+      });
+
+      document.querySelectorAll(".language-button").forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.lang === state.lang));
+      });
+
+      document.querySelector(".site-header nav").setAttribute(
+        "aria-label",
+        state.lang === "fr" ? "Navigation principale" : "Main navigation"
+      );
+      document.querySelector(".language-switcher").setAttribute(
+        "aria-label",
+        state.lang === "fr" ? "Choisir la langue" : "Choose language"
+      );
+      document.querySelector(".how-to-play").setAttribute(
+        "aria-label",
+        state.lang === "fr" ? "Comment jouer" : "How to play"
+      );
+      memoryGrid.setAttribute("aria-label", t("cardGrid"));
+
+      if (!gameScreen.hidden) {
+        gameSubtitle.textContent = `${t(state.theme)} · ${t(state.level)}`;
+        renderDeck();
+      }
+
+      if (!resultScreen.hidden) {
+        updateResultLanguage();
+      }
+    }
+
+    function shuffle(items) {
+      const array = [...items];
+      for (let i = array.length - 1; i > 0; i -= 1) {
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+        [array[i], array[randomIndex]] = [array[randomIndex], array[i]];
+      }
+      return array;
+    }
+
+    function formatTime(totalSeconds) {
+      const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, "0");
+      const seconds = (totalSeconds % 60).toString().padStart(2, "0");
+      return `${minutes}:${seconds}`;
+    }
+
+    function buildDeck() {
+      const pairCount = levelPairs[state.level];
+      const selectedItems = cardThemes[state.theme].slice(0, pairCount);
+      const pairs = selectedItems.flatMap((item) => [
+        { ...item, uid: `${item.id}-a`, matched: false, revealed: false },
+        { ...item, uid: `${item.id}-b`, matched: false, revealed: false }
+      ]);
+      state.deck = shuffle(pairs);
+    }
+
+    function getCardLabel(card) {
+      return card[state.lang];
+    }
+
+    function cardAriaLabel(card, index) {
+      if (card.matched) {
+        return t("matchedCard", { label: getCardLabel(card) });
+      }
+      if (card.revealed || state.previewing) {
+        return t("revealedCard", { label: getCardLabel(card) });
+      }
+      return t("hiddenCard", { number: index + 1 });
+    }
+
+    function renderDeck() {
+      memoryGrid.innerHTML = "";
+      const fragment = document.createDocumentFragment();
+
+      state.deck.forEach((card, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "memory-card";
+        button.dataset.uid = card.uid;
+        button.setAttribute("aria-label", cardAriaLabel(card, index));
+        button.setAttribute("aria-pressed", String(card.revealed || card.matched || state.previewing));
+
+        if (card.revealed) button.classList.add("is-flipped");
+        if (card.matched) button.classList.add("is-matched");
+        if (state.previewing) button.classList.add("is-preview");
+        button.disabled = state.locked || state.previewing || card.matched;
+
+        button.innerHTML = `
+          <span class="card-inner" aria-hidden="true">
+            <span class="card-face card-back">
+              <span class="back-symbol">M</span>
+            </span>
+            <span class="card-face card-front">
+              <span class="match-badge">✓</span>
+              <span class="card-emoji">${card.emoji}</span>
+              <span class="card-label">${getCardLabel(card)}</span>
+            </span>
+          </span>
+        `;
+
+        button.addEventListener("click", () => handleCardClick(card.uid));
+        fragment.appendChild(button);
+      });
+
+      memoryGrid.appendChild(fragment);
+    }
+
+    function updateStats() {
+      const totalPairs = levelPairs[state.level];
+      const progress = Math.round((state.matches / totalPairs) * 100);
+      movesValue.textContent = String(state.moves);
+      timeValue.textContent = formatTime(state.seconds);
+      pairsValue.textContent = `${state.matches}/${totalPairs}`;
+      progressValue.textContent = `${progress} %`;
+      progressFill.style.width = `${progress}%`;
+    }
+
+    function setFeedback(message, type = "neutral", icon = "◎") {
+      feedback.className = "feedback";
+      if (type !== "neutral") feedback.classList.add(`is-${type}`);
+      feedbackIcon.textContent = icon;
+      feedbackText.textContent = message;
+    }
+
+    function clearTimers() {
+      if (state.timerId) {
+        clearInterval(state.timerId);
+        state.timerId = null;
+      }
+      if (state.previewTimerId) {
+        clearInterval(state.previewTimerId);
+        state.previewTimerId = null;
+      }
+    }
+
+    function startClock() {
+      if (state.timerId) clearInterval(state.timerId);
+      state.timerId = setInterval(() => {
+        state.seconds += 1;
+        updateStats();
+      }, 1000);
+    }
+
+    function runPreview() {
+      state.previewing = true;
+      state.locked = true;
+      let remaining = 3;
+      setFeedback(t("previewCountdown", { count: remaining }), "warning", "◷");
+      renderDeck();
+
+      state.previewTimerId = setInterval(() => {
+        remaining -= 1;
+        if (remaining > 0) {
+          setFeedback(t("previewCountdown", { count: remaining }), "warning", "◷");
+          return;
+        }
+
+        clearInterval(state.previewTimerId);
+        state.previewTimerId = null;
+        state.previewing = false;
+        state.locked = false;
+        renderDeck();
+        setFeedback(t("previewGo"), "neutral", "◎");
+        startClock();
+      }, 1000);
+    }
+
+    function resetGameState() {
+      clearTimers();
+      state.moves = 0;
+      state.matches = 0;
+      state.seconds = 0;
+      state.firstCardId = null;
+      state.secondCardId = null;
+      state.locked = false;
+      state.previewing = false;
+      state.gameFinished = false;
+      buildDeck();
+      updateStats();
+    }
+
+    function showScreen(screen) {
+      setupScreen.hidden = screen !== "setup";
+      gameScreen.hidden = screen !== "game";
+      resultScreen.hidden = screen !== "result";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function startGame() {
+      state.preview = previewToggle.checked;
+      resetGameState();
+      showScreen("game");
+      gameSubtitle.textContent = `${t(state.theme)} · ${t(state.level)}`;
+      renderDeck();
+
+      if (state.preview) {
+        runPreview();
+      } else {
+        setFeedback(t("firstCard"), "neutral", "◎");
+        startClock();
+      }
+
+      setTimeout(() => {
+        const firstCard = memoryGrid.querySelector(".memory-card:not(:disabled)");
+        firstCard?.focus();
+      }, state.preview ? 3200 : 100);
+    }
+
+    function handleCardClick(uid) {
+      if (state.locked || state.previewing || state.gameFinished) return;
+
+      const card = state.deck.find((item) => item.uid === uid);
+      if (!card || card.matched || card.revealed) return;
+
+      card.revealed = true;
+
+      if (!state.firstCardId) {
+        state.firstCardId = uid;
+        renderDeck();
+        setFeedback(t("secondCard"), "neutral", "⌁");
+        return;
+      }
+
+      state.secondCardId = uid;
+      state.moves += 1;
+      state.locked = true;
+      renderDeck();
+      updateStats();
+
+      const firstCard = state.deck.find((item) => item.uid === state.firstCardId);
+      const secondCard = state.deck.find((item) => item.uid === state.secondCardId);
+      const isMatch = firstCard.id === secondCard.id;
+
+      if (isMatch) {
+        window.setTimeout(() => resolveMatch(firstCard, secondCard), 520);
+      } else {
+        setFeedback(t("mismatch"), "danger", "↺");
+        markMismatchAnimation(firstCard.uid, secondCard.uid);
+        window.setTimeout(() => resolveMismatch(firstCard, secondCard), 920);
+      }
+    }
+
+    function markMismatchAnimation(firstUid, secondUid) {
+      [firstUid, secondUid].forEach((uid) => {
+        const element = memoryGrid.querySelector(`[data-uid="${uid}"]`);
+        element?.classList.add("is-mismatch");
+      });
+    }
+
+    function resolveMatch(firstCard, secondCard) {
+      firstCard.matched = true;
+      secondCard.matched = true;
+      state.matches += 1;
+      state.firstCardId = null;
+      state.secondCardId = null;
+      state.locked = false;
+      updateStats();
+      renderDeck();
+
+      const remaining = levelPairs[state.level] - state.matches;
+      if (remaining === 0) {
+        setFeedback(t("match"), "success", "✓");
+        window.setTimeout(finishGame, 650);
+        return;
+      }
+
+      const remainingText = remaining === 1
+        ? t("remainingOne")
+        : t("remainingMany", { count: remaining });
+      setFeedback(`${t("match")} ${remainingText}`, "success", "✓");
+    }
+
+    function resolveMismatch(firstCard, secondCard) {
+      firstCard.revealed = false;
+      secondCard.revealed = false;
+      state.firstCardId = null;
+      state.secondCardId = null;
+      state.locked = false;
+      renderDeck();
+      setFeedback(t("firstCard"), "neutral", "◎");
+    }
+
+    function getBestKey() {
+      return `memoria-best-${state.level}-${state.theme}`;
+    }
+
+    function loadBestScore() {
+      try {
+        const raw = localStorage.getItem(getBestKey());
+        return raw ? JSON.parse(raw) : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function isBetterScore(current, best) {
+      if (!best) return true;
+      if (current.seconds < best.seconds) return true;
+      return current.seconds === best.seconds && current.moves < best.moves;
+    }
+
+    function saveBestScore(score) {
+      try {
+        localStorage.setItem(getBestKey(), JSON.stringify(score));
+      } catch (error) {
+        // The game remains fully usable when storage is unavailable.
+      }
+    }
+
+    function calculateStars() {
+      const pairs = levelPairs[state.level];
+      if (state.moves <= pairs + 2) return 3;
+      if (state.moves <= pairs * 2) return 2;
+      return 1;
+    }
+
+    function finishGame() {
+      clearTimers();
+      state.gameFinished = true;
+
+      const currentScore = { seconds: state.seconds, moves: state.moves };
+      const previousBest = loadBestScore();
+      const newBest = isBetterScore(currentScore, previousBest);
+      if (newBest) saveBestScore(currentScore);
+      const displayedBest = newBest ? currentScore : previousBest;
+
+      const accuracy = Math.round((levelPairs[state.level] / Math.max(state.moves, 1)) * 100);
+      const starsCount = calculateStars();
+
+      document.getElementById("result-time").textContent = formatTime(state.seconds);
+      document.getElementById("result-moves").textContent = String(state.moves);
+      document.getElementById("result-accuracy").textContent = `${Math.min(100, accuracy)} %`;
+
+      document.querySelectorAll("#stars span").forEach((star, index) => {
+        star.classList.toggle("is-earned", index < starsCount);
+      });
+      document.getElementById("stars").setAttribute("aria-label", t("starsLabel", { count: starsCount }));
+
+      const bestResultText = document.getElementById("best-result-text");
+      if (newBest) {
+        bestResultText.textContent = t("newBest");
+      } else if (displayedBest) {
+        bestResultText.textContent = t("bestScore", {
+          time: formatTime(displayedBest.seconds),
+          moves: displayedBest.moves
+        });
+      } else {
+        bestResultText.textContent = t("noBest");
+      }
+
+      showScreen("result");
+      document.getElementById("play-again-button").focus();
+    }
+
+    function updateResultLanguage() {
+      const best = loadBestScore();
+      const bestResultText = document.getElementById("best-result-text");
+      if (best) {
+        bestResultText.textContent = t("bestScore", {
+          time: formatTime(best.seconds),
+          moves: best.moves
+        });
+      }
+    }
+
+    function openConfirmation(action) {
+      state.pendingAction = action;
+      if (action === "restart") {
+        dialogTitle.textContent = t("restartTitle");
+        dialogMessage.textContent = t("restartMessage");
+      } else {
+        dialogTitle.textContent = t("optionsTitle");
+        dialogMessage.textContent = t("optionsMessage");
+      }
+      confirmDialog.showModal();
+    }
+
+    function returnToSetup() {
+      clearTimers();
+      state.gameFinished = false;
+      showScreen("setup");
+      document.querySelector(".start-button").focus();
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("is-visible");
+      window.setTimeout(() => toast.classList.remove("is-visible"), 1800);
+    }
+
+    document.querySelectorAll(".level-choice").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.level = button.dataset.level;
+        document.querySelectorAll(".level-choice").forEach((option) => {
+          option.setAttribute("aria-pressed", String(option === button));
+        });
+        showToast(t("saved"));
+      });
+    });
+
+    document.querySelectorAll(".theme-choice").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.theme = button.dataset.theme;
+        document.querySelectorAll(".theme-choice").forEach((option) => {
+          option.setAttribute("aria-pressed", String(option === button));
+        });
+        showToast(t("saved"));
+      });
+    });
+
+    document.querySelectorAll(".language-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.lang = button.dataset.lang;
+        applyTranslations();
+      });
+    });
+
+    setupForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      startGame();
+    });
+
+    document.getElementById("restart-button").addEventListener("click", () => openConfirmation("restart"));
+    document.getElementById("options-button").addEventListener("click", () => openConfirmation("options"));
+    document.getElementById("play-again-button").addEventListener("click", startGame);
+    document.getElementById("result-options-button").addEventListener("click", returnToSetup);
+
+    dialogCancel.addEventListener("click", () => confirmDialog.close());
+    dialogConfirm.addEventListener("click", () => {
+      confirmDialog.close();
+      if (state.pendingAction === "restart") {
+        startGame();
+      } else {
+        returnToSetup();
+      }
+      state.pendingAction = null;
+    });
+
+    confirmDialog.addEventListener("close", () => {
+      state.pendingAction = null;
+    });
+
+    applyTranslations();
+    updateStats();
   </script>
 </body>
 </html>
