@@ -235,6 +235,19 @@
     .footer a { display: block; margin: 8px 0; font-size: .86rem; }
     .footer-bottom { margin-top: 35px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); display: flex; justify-content: space-between; font-size: .78rem; }
 
+
+    .nav-portfolio {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      white-space: nowrap;
+    }
+    .nav-portfolio:hover { background: var(--soft); }
+
     .portfolio-link {
       position: fixed; left: 20px; bottom: 20px; z-index: 70;
       display: inline-flex; align-items: center; gap: 9px;
@@ -377,7 +390,7 @@
         price: 34,
         level: "Débutant",
         badge: "Kit d’écriture",
-        image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=900&q=85",
+        image: "assets/rituel-du-soir.png",
         description: "Un carnet guidé, des cartes d’introspection et un crayon pour ralentir avant de dormir."
       },
       {
@@ -390,7 +403,7 @@
         price: 42,
         level: "Débutant",
         badge: "Kit collage",
-        image: "https://images.unsplash.com/photo-1547483238-2cbf881a559f?auto=format&fit=crop&w=900&q=85",
+        image: "assets/collage-du-dimanche.png",
         description: "Papiers texturés, cartes, autocollants et guide simple pour composer une page personnelle."
       },
       {
@@ -403,7 +416,7 @@
         price: 29,
         level: "Débutant",
         badge: "Jeu pour deux",
-        image: "https://images.unsplash.com/photo-1523294587484-bae6cc870010?auto=format&fit=crop&w=900&q=85",
+        image: "assets/cafe-et-conversation.png",
         description: "Des questions chaleureuses pour rire, se raconter et retrouver le plaisir d’une vraie conversation."
       },
       {
@@ -416,7 +429,7 @@
         price: 31,
         level: "Débutant",
         badge: "Kit coloriage",
-        image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=900&q=85",
+        image: "assets/bulle-de-couleurs.png",
         description: "Illustrations botaniques, crayons de couleur et mini-rituel respiratoire pour créer sans pression."
       },
       {
@@ -429,7 +442,7 @@
         price: 39,
         level: "Intermédiaire",
         badge: "Kit nature",
-        image: "https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=900&q=85",
+        image: "assets/pause-botanique.png",
         description: "Un carnet, une presse légère et des fiches pour observer, récolter et conserver des feuilles."
       },
       {
@@ -442,7 +455,7 @@
         price: 27,
         level: "Débutant",
         badge: "Papeterie",
-        image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=85",
+        image: "assets/lettre-a-soi.png",
         description: "Papier à lettres, enveloppes, autocollants et amorces pour écrire un message qui compte vraiment."
       },
       {
@@ -455,7 +468,7 @@
         price: 45,
         level: "Débutant",
         badge: "Kit famille",
-        image: "https://images.unsplash.com/photo-1607453998774-d533f65dac99?auto=format&fit=crop&w=900&q=85",
+        image: "assets/collage-du-dimanche.png",
         description: "Une activité joyeuse à partager, avec du matériel sécuritaire et des étapes illustrées."
       },
       {
@@ -468,7 +481,7 @@
         price: 36,
         level: "Intermédiaire",
         badge: "Kit dessin",
-        image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=85",
+        image: "assets/pause-botanique.png",
         description: "Apprenez à dessiner des feuilles et des fleurs avec des exercices progressifs et bienveillants."
       },
       {
@@ -481,7 +494,7 @@
         price: 49,
         level: "Intermédiaire",
         badge: "Album créatif",
-        image: "https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=900&q=85",
+        image: "assets/journal-creatif.png",
         description: "Un album, des coins photo, des papiers et des questions pour raconter vos souvenirs en famille."
       },
       {
@@ -494,7 +507,7 @@
         price: 46,
         level: "Débutant",
         badge: "Kit aquarelle",
-        image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=900&q=85",
+        image: "assets/bulle-de-couleurs.png",
         description: "Une palette douce, du papier adapté et quatre exercices simples pour peindre sans appréhension."
       },
       {
@@ -507,7 +520,7 @@
         price: 32,
         level: "Débutant",
         badge: "Cartes créatives",
-        image: "https://images.unsplash.com/photo-1607344645866-009c7dabe16a?auto=format&fit=crop&w=900&q=85",
+        image: "assets/lettre-a-soi.png",
         description: "Créez six cartes uniques avec papiers, tampons et messages à personnaliser."
       },
       {
@@ -520,7 +533,7 @@
         price: 24,
         level: "Débutant",
         badge: "30 idées",
-        image: "https://images.unsplash.com/photo-1494059980473-813e73ee784b?auto=format&fit=crop&w=900&q=85",
+        image: "assets/douce-parenthese.png",
         description: "Trente petites invitations à jouer, observer, raconter et créer ensemble, sans téléphone."
       }
     ];
@@ -617,6 +630,7 @@
               <a href="#apropos">À propos</a>
               <a href="#journal">Journal</a>
               <a href="#contact">Contact</a>
+              <a href="index.html#projets" className="nav-portfolio"><i className="bi bi-arrow-left-circle"></i> Portfolio</a>
             </nav>
             <div className="nav-actions">
               <button className="lang-btn" aria-label="Langue française">FR</button>
@@ -632,6 +646,8 @@
               <a href="#kits" onClick={() => setMobileOpen(false)}>Kits créatifs</a>
               <a href="#apropos" onClick={() => setMobileOpen(false)}>À propos</a>
               <a href="#journal" onClick={() => setMobileOpen(false)}>Journal</a>
+              <a href="#contact" onClick={() => setMobileOpen(false)}>Contact</a>
+              <a href="index.html#projets" onClick={() => setMobileOpen(false)}><i className="bi bi-arrow-left-circle"></i> Portfolio</a>
               <button className="btn btn-primary" onClick={() => { setCartOpen(true); setMobileOpen(false); }}>Panier ({cartCount})</button>
             </div>}
           </div>
