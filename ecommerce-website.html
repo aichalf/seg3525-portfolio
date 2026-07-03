@@ -195,7 +195,7 @@
       transition: transform .25s, box-shadow .25s; position: relative;
     }
     .product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-    .product-image { aspect-ratio: 1/1; overflow: hidden; background: #eee7dc; position: relative; }
+    .product-image { aspect-ratio: 4/3; overflow: hidden; background: #eee7dc; position: relative; }
     .product-image img { height: 100%; object-fit: cover; transition: transform .35s; }
     .product-card:hover .product-image img { transform: scale(1.035); }
     .badge {
@@ -234,6 +234,18 @@
     .footer h4 { font-family: "DM Sans", sans-serif; font-size: .88rem; }
     .footer a { display: block; margin: 8px 0; font-size: .86rem; }
     .footer-bottom { margin-top: 35px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); display: flex; justify-content: space-between; font-size: .78rem; }
+
+    .portfolio-link {
+      position: fixed; left: 20px; bottom: 20px; z-index: 70;
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 11px 15px; border-radius: 999px;
+      background: rgba(255,255,255,.96); color: var(--green);
+      border: 1px solid var(--line); box-shadow: 0 10px 28px rgba(20,40,29,.16);
+      font-size: .82rem; font-weight: 800;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .portfolio-link:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(20,40,29,.22); background: white; }
+    .portfolio-link i { font-size: 1rem; }
 
     .overlay { position: fixed; inset: 0; background: rgba(15,25,19,.50); z-index: 80; animation: fade .2s; }
     @keyframes fade { from { opacity: 0; } }
@@ -343,6 +355,7 @@
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .footer-grid > div:first-child, .footer-grid > div:last-child { grid-column: 1/-1; }
       .footer-bottom { flex-direction: column; gap: 8px; }
+      .portfolio-link { left: 12px; bottom: 12px; padding: 10px 13px; }
       .survey-trigger { right: 12px; bottom: 12px; padding: 11px 14px; }
     }
   </style>
@@ -364,7 +377,7 @@
         price: 34,
         level: "Débutant",
         badge: "Kit d’écriture",
-        image: "assets/rituel-du-soir.png",
+        image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=900&q=85",
         description: "Un carnet guidé, des cartes d’introspection et un crayon pour ralentir avant de dormir."
       },
       {
@@ -377,7 +390,7 @@
         price: 42,
         level: "Débutant",
         badge: "Kit collage",
-        image: "assets/collage-du-dimanche.png",
+        image: "https://images.unsplash.com/photo-1547483238-2cbf881a559f?auto=format&fit=crop&w=900&q=85",
         description: "Papiers texturés, cartes, autocollants et guide simple pour composer une page personnelle."
       },
       {
@@ -390,7 +403,7 @@
         price: 29,
         level: "Débutant",
         badge: "Jeu pour deux",
-        image: "assets/cafe-conversation.png",
+        image: "https://images.unsplash.com/photo-1523294587484-bae6cc870010?auto=format&fit=crop&w=900&q=85",
         description: "Des questions chaleureuses pour rire, se raconter et retrouver le plaisir d’une vraie conversation."
       },
       {
@@ -403,7 +416,7 @@
         price: 31,
         level: "Débutant",
         badge: "Kit coloriage",
-        image: "assets/bulle-couleurs.png",
+        image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=900&q=85",
         description: "Illustrations botaniques, crayons de couleur et mini-rituel respiratoire pour créer sans pression."
       },
       {
@@ -416,7 +429,7 @@
         price: 39,
         level: "Intermédiaire",
         badge: "Kit nature",
-        image: "assets/pause-botanique.png",
+        image: "https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=900&q=85",
         description: "Un carnet, une presse légère et des fiches pour observer, récolter et conserver des feuilles."
       },
       {
@@ -429,7 +442,7 @@
         price: 27,
         level: "Débutant",
         badge: "Papeterie",
-        image: "assets/lettre-a-soi.png",
+        image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=85",
         description: "Papier à lettres, enveloppes, autocollants et amorces pour écrire un message qui compte vraiment."
       },
       {
@@ -442,7 +455,7 @@
         price: 45,
         level: "Débutant",
         badge: "Kit famille",
-        image: "assets/journal-creatif.png",
+        image: "https://images.unsplash.com/photo-1607453998774-d533f65dac99?auto=format&fit=crop&w=900&q=85",
         description: "Une activité joyeuse à partager, avec du matériel sécuritaire et des étapes illustrées."
       },
       {
@@ -455,7 +468,7 @@
         price: 36,
         level: "Intermédiaire",
         badge: "Kit dessin",
-        image: "assets/pause-botanique.png",
+        image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=85",
         description: "Apprenez à dessiner des feuilles et des fleurs avec des exercices progressifs et bienveillants."
       },
       {
@@ -468,7 +481,7 @@
         price: 49,
         level: "Intermédiaire",
         badge: "Album créatif",
-        image: "assets/collage-du-dimanche.png",
+        image: "https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=900&q=85",
         description: "Un album, des coins photo, des papiers et des questions pour raconter vos souvenirs en famille."
       },
       {
@@ -481,7 +494,7 @@
         price: 46,
         level: "Débutant",
         badge: "Kit aquarelle",
-        image: "assets/bulle-couleurs.png",
+        image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=900&q=85",
         description: "Une palette douce, du papier adapté et quatre exercices simples pour peindre sans appréhension."
       },
       {
@@ -494,7 +507,7 @@
         price: 32,
         level: "Débutant",
         badge: "Cartes créatives",
-        image: "assets/lettre-a-soi.png",
+        image: "https://images.unsplash.com/photo-1607344645866-009c7dabe16a?auto=format&fit=crop&w=900&q=85",
         description: "Créez six cartes uniques avec papiers, tampons et messages à personnaliser."
       },
       {
@@ -507,7 +520,7 @@
         price: 24,
         level: "Débutant",
         badge: "30 idées",
-        image: "assets/douce-parenthese.png",
+        image: "https://images.unsplash.com/photo-1494059980473-813e73ee784b?auto=format&fit=crop&w=900&q=85",
         description: "Trente petites invitations à jouer, observer, raconter et créer ensemble, sans téléphone."
       }
     ];
@@ -737,9 +750,13 @@
               <div><h4>Aide</h4><a href="#contact">Livraison</a><a href="#contact">Retours</a><a href="#contact">FAQ</a></div>
               <div><h4>Nous suivre</h4><a href="#contact">Instagram</a><a href="#contact">Pinterest</a><a href="#contact">Infolettre</a></div>
             </div>
-            <div className="footer-bottom"><span>© 2026 Pause Papier — Projet académique SEG3525</span><span>Confidentialité · Conditions</span></div>
+            <div className="footer-bottom"><span>© 2026 Pause Papier</span><span>Confidentialité · Conditions</span></div>
           </div>
         </footer>
+
+        <a className="portfolio-link" href="index.html#projets" aria-label="Retourner au portfolio">
+          <i className="bi bi-arrow-left"></i> Retour au portfolio
+        </a>
 
         <button className="survey-trigger" onClick={() => setSurveyOpen(true)}><i className="bi bi-chat-heart"></i> Votre avis</button>
 
