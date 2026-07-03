@@ -296,6 +296,13 @@
     .meta-list { display: grid; gap: 10px; margin: 18px 0; }
     .meta-row { display: flex; gap: 10px; color: var(--muted); font-size: .88rem; }
     .meta-row i { color: var(--green); }
+    .kit-details { margin: 20px 0 22px; display: grid; gap: 16px; }
+    .kit-detail-box { background: #f8f6f0; border: 1px solid var(--line); border-radius: 13px; padding: 16px 18px; }
+    .kit-detail-box h3 { margin: 0 0 10px; color: var(--green); font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+    .kit-detail-box h3 i { font-size: 1rem; }
+    .kit-contents { margin: 0; padding-left: 20px; display: grid; gap: 7px; color: var(--text); font-size: .86rem; }
+    .kit-result { margin: 0; color: var(--text); font-size: .86rem; line-height: 1.6; }
+    .kit-note { margin: 10px 0 0; color: var(--muted); font-size: .75rem; }
 
     .stepper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-bottom: 27px; }
     .step { text-align: center; position: relative; font-size: .76rem; color: var(--muted); }
@@ -391,7 +398,15 @@
         level: "Débutant",
         badge: "Kit d’écriture",
         image: "assets/rituel-du-soir.png",
-        description: "Un carnet guidé, des cartes d’introspection et un crayon pour ralentir avant de dormir."
+        description: "Un carnet guidé, des cartes d’introspection et un crayon pour ralentir avant de dormir.",
+        contents: [
+          "1 carnet guidé « Rituel du soir »",
+          "30 cartes d’inspiration et d’introspection",
+          "2 crayons en bois",
+          "1 infusion biologique relaxante",
+          "1 pochette en tissu réutilisable"
+        ],
+        outcome: "Vous terminerez la soirée avec une page écrite et un petit rituel personnel pour vous recentrer avant de dormir."
       },
       {
         id: 2,
@@ -404,7 +419,16 @@
         level: "Débutant",
         badge: "Kit collage",
         image: "assets/collage-du-dimanche.png",
-        description: "Papiers texturés, cartes, autocollants et guide simple pour composer une page personnelle."
+        description: "Papiers texturés, cartes, autocollants et guide simple pour composer une page personnelle.",
+        contents: [
+          "20 feuilles de papier créatif aux motifs variés",
+          "1 planche de découpes et d’autocollants botaniques",
+          "1 bâton de colle naturelle",
+          "1 paire de mini-ciseaux",
+          "30 cartes d’inspiration",
+          "1 guide de collage étape par étape"
+        ],
+        outcome: "Vous réaliserez une composition de collage unique, prête à encadrer, offrir ou conserver dans votre journal."
       },
       {
         id: 3,
@@ -417,7 +441,16 @@
         level: "Débutant",
         badge: "Jeu pour deux",
         image: "assets/cafe-et-conversation.png",
-        description: "Des questions chaleureuses pour rire, se raconter et retrouver le plaisir d’une vraie conversation."
+        description: "Des questions chaleureuses pour rire, se raconter et retrouver le plaisir d’une vraie conversation.",
+        contents: [
+          "30 cartes de conversation pour deux",
+          "1 guide de discussion",
+          "2 crayons en bois",
+          "2 sous-verres réutilisables",
+          "2 sachets de boisson chaude",
+          "1 pochette en tissu"
+        ],
+        outcome: "Vous partagerez un moment de qualité et repartirez avec de nouvelles histoires, idées et souvenirs à deux."
       },
       {
         id: 4,
@@ -430,7 +463,15 @@
         level: "Débutant",
         badge: "Kit coloriage",
         image: "assets/bulle-de-couleurs.png",
-        description: "Illustrations botaniques, crayons de couleur et mini-rituel respiratoire pour créer sans pression."
+        description: "Illustrations botaniques, crayons de couleur et mini-rituel respiratoire pour créer sans pression.",
+        contents: [
+          "1 livre de coloriage anti-stress",
+          "12 crayons de couleur",
+          "4 feutres à pointe fine",
+          "1 carte de détente guidée",
+          "1 pochette de rangement en tissu"
+        ],
+        outcome: "Vous compléterez une illustration botanique tout en suivant une courte pause respiratoire."
       },
       {
         id: 5,
@@ -443,7 +484,16 @@
         level: "Intermédiaire",
         badge: "Kit nature",
         image: "assets/pause-botanique.png",
-        description: "Un carnet, une presse légère et des fiches pour observer, récolter et conserver des feuilles."
+        description: "Un carnet, une presse légère et des fiches pour observer, récolter et conserver des feuilles.",
+        contents: [
+          "1 carnet d’observation botanique",
+          "30 cartes botaniques illustrées",
+          "1 mini-presse à fleurs légère",
+          "1 guide créatif botanique",
+          "6 crayons aux tons naturels",
+          "Feuilles de protection pour les spécimens"
+        ],
+        outcome: "Vous créerez un petit herbier personnel avec des feuilles ou des fleurs récoltées pendant votre promenade."
       },
       {
         id: 6,
@@ -456,7 +506,17 @@
         level: "Débutant",
         badge: "Papeterie",
         image: "assets/lettre-a-soi.png",
-        description: "Papier à lettres, enveloppes, autocollants et amorces pour écrire un message qui compte vraiment."
+        description: "Papier à lettres, enveloppes, autocollants et amorces pour écrire un message qui compte vraiment.",
+        contents: [
+          "8 feuilles de papier à lettres",
+          "8 enveloppes kraft assorties",
+          "30 cartes d’inspiration",
+          "2 crayons en bois",
+          "1 planche d’autocollants botaniques",
+          "1 guide d’écriture bienveillante",
+          "1 pochette en tissu"
+        ],
+        outcome: "Vous écrirez un message personnel à conserver, à relire plus tard ou à remettre à une personne importante."
       },
       {
         id: 7,
@@ -469,7 +529,16 @@
         level: "Débutant",
         badge: "Kit famille",
         image: "assets/collage-du-dimanche.png",
-        description: "Une activité joyeuse à partager, avec du matériel sécuritaire et des étapes illustrées."
+        description: "Une activité joyeuse à partager, avec du matériel sécuritaire et des étapes illustrées.",
+        contents: [
+          "12 feuilles de papier coloré et texturé",
+          "Autocollants et formes prédécoupées",
+          "1 colle adaptée aux enfants",
+          "2 paires de ciseaux sécuritaires",
+          "4 cartes d’activités illustrées",
+          "1 nappe de protection en papier"
+        ],
+        outcome: "Chaque participant réalisera une petite création en papier, puis la famille pourra assembler les œuvres en une composition commune."
       },
       {
         id: 8,
@@ -482,7 +551,16 @@
         level: "Intermédiaire",
         badge: "Kit dessin",
         image: "assets/pause-botanique.png",
-        description: "Apprenez à dessiner des feuilles et des fleurs avec des exercices progressifs et bienveillants."
+        description: "Apprenez à dessiner des feuilles et des fleurs avec des exercices progressifs et bienveillants.",
+        contents: [
+          "1 carnet de croquis botanique",
+          "30 cartes de modèles botaniques",
+          "6 crayons de dessin et de couleur",
+          "1 gomme et 1 taille-crayon",
+          "1 guide progressif de dessin",
+          "1 pochette en tissu"
+        ],
+        outcome: "Vous dessinerez plusieurs feuilles et fleurs et commencerez votre propre carnet botanique."
       },
       {
         id: 9,
@@ -495,7 +573,16 @@
         level: "Intermédiaire",
         badge: "Album créatif",
         image: "assets/journal-creatif.png",
-        description: "Un album, des coins photo, des papiers et des questions pour raconter vos souvenirs en famille."
+        description: "Un album, des coins photo, des papiers et des questions pour raconter vos souvenirs en famille.",
+        contents: [
+          "1 album créatif à spirale",
+          "24 papiers décoratifs",
+          "48 coins photo autocollants",
+          "2 feuilles d’étiquettes et de titres",
+          "20 cartes de questions-souvenirs",
+          "2 crayons et 1 rouleau de ruban décoratif"
+        ],
+        outcome: "Vous compléterez plusieurs pages d’album avec vos photos, vos anecdotes et les souvenirs partagés en famille."
       },
       {
         id: 10,
@@ -508,7 +595,16 @@
         level: "Débutant",
         badge: "Kit aquarelle",
         image: "assets/bulle-de-couleurs.png",
-        description: "Une palette douce, du papier adapté et quatre exercices simples pour peindre sans appréhension."
+        description: "Une palette douce, du papier adapté et quatre exercices simples pour peindre sans appréhension.",
+        contents: [
+          "1 palette de 12 couleurs d’aquarelle",
+          "1 pinceau rond et 1 pinceau fin",
+          "10 feuilles de papier aquarelle",
+          "1 crayon à esquisse et 1 gomme",
+          "4 fiches d’exercices guidés",
+          "1 petit godet pliable"
+        ],
+        outcome: "Vous réaliserez quatre exercices simples et une petite illustration à l’aquarelle."
       },
       {
         id: 11,
@@ -521,7 +617,19 @@
         level: "Débutant",
         badge: "Cartes créatives",
         image: "assets/lettre-a-soi.png",
-        description: "Créez six cartes uniques avec papiers, tampons et messages à personnaliser."
+        description: "Créez six cartes uniques avec papiers, tampons et messages à personnaliser.",
+        contents: [
+          "6 cartes épaisses à personnaliser",
+          "6 enveloppes assorties",
+          "1 carnet de messages et d’idées",
+          "2 crayons en bois",
+          "1 ensemble de tampons décoratifs",
+          "1 encreur",
+          "1 planche d’autocollants botaniques",
+          "1 guide illustré étape par étape",
+          "1 pochette en tissu pour ranger le matériel"
+        ],
+        outcome: "Vous aurez créé six cartes personnalisées, prêtes à offrir à vos proches."
       },
       {
         id: 12,
@@ -534,7 +642,16 @@
         level: "Débutant",
         badge: "30 idées",
         image: "assets/douce-parenthese.png",
-        description: "Trente petites invitations à jouer, observer, raconter et créer ensemble, sans téléphone."
+        description: "Trente petites invitations à jouer, observer, raconter et créer ensemble, sans téléphone.",
+        contents: [
+          "30 cartes d’activités sans écran",
+          "1 carnet de défis familiaux",
+          "2 crayons en bois",
+          "1 dé en bois",
+          "Autocollants pour suivre les activités réalisées",
+          "1 pochette de rangement en tissu"
+        ],
+        outcome: "Vous choisirez une activité adaptée au temps disponible et créerez un nouveau moment partagé sans téléphone."
       }
     ];
 
@@ -811,7 +928,7 @@
     function ProductModal({ product, onClose, onAdd }) {
       return <div className="modal-shell"><div className="overlay" onClick={onClose}></div><div className="modal" role="dialog" aria-modal="true" aria-label={`Détails de ${product.name}`} style={{zIndex:101}}>
         <div className="modal-head"><h2>{product.name}</h2><button className="close-btn" onClick={onClose}><i className="bi bi-x-lg"></i></button></div>
-        <div className="modal-body product-modal-grid"><img src={product.image} alt={`Matériel inclus dans ${product.name}`} /><div><span className="eyebrow">{product.category}</span><h2 className="section-title" style={{fontSize:'2rem'}}>{product.name}</h2><p>{product.description}</p><div className="meta-list"><div className="meta-row"><i className="bi bi-clock"></i><span>Durée recommandée : {product.duration}</span></div><div className="meta-row"><i className="bi bi-person"></i><span>Pour : {product.audience}</span></div><div className="meta-row"><i className="bi bi-bar-chart"></i><span>Niveau : {product.level}</span></div><div className="meta-row"><i className="bi bi-box-seam"></i><span>Tout le matériel nécessaire est inclus</span></div></div><h3 style={{color:'var(--green)',fontSize:'1.8rem'}}>{currency(product.price)}</h3><button className="btn btn-primary btn-block" onClick={() => onAdd(product)}>Ajouter au panier</button></div></div>
+        <div className="modal-body product-modal-grid"><img src={product.image} alt={`Matériel inclus dans ${product.name}`} /><div><span className="eyebrow">{product.category}</span><h2 className="section-title" style={{fontSize:'2rem'}}>{product.name}</h2><p>{product.description}</p><div className="meta-list"><div className="meta-row"><i className="bi bi-clock"></i><span>Durée recommandée : {product.duration}</span></div><div className="meta-row"><i className="bi bi-person"></i><span>Pour : {product.audience}</span></div><div className="meta-row"><i className="bi bi-bar-chart"></i><span>Niveau : {product.level}</span></div><div className="meta-row"><i className="bi bi-box-seam"></i><span>Tout le matériel nécessaire est inclus</span></div></div><div className="kit-details"><section className="kit-detail-box"><h3><i className="bi bi-box2-heart"></i> Ce que contient le kit</h3><ul className="kit-contents">{product.contents.map((item,index)=><li key={index}>{item}</li>)}</ul><p className="kit-note">Le contenu présenté correspond au coffret complet vendu.</p></section><section className="kit-detail-box"><h3><i className="bi bi-stars"></i> Ce que vous allez créer</h3><p className="kit-result">{product.outcome}</p></section></div><h3 style={{color:'var(--green)',fontSize:'1.8rem'}}>{currency(product.price)}</h3><button className="btn btn-primary btn-block" onClick={() => onAdd(product)}>Ajouter au panier</button></div></div>
       </div></div>;
     }
 
