@@ -3,277 +3,236 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pause Papier</title>
+<title>Pause Papier — Kits créatifs sans écran</title>
 <meta name="description" content="Des kits d'activités créatives sans écran, prêts à utiliser.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#fbfaf7;
+  --bg:#faf8f3;
   --paper:#ffffff;
-  --cream:#f3eee6;
-  --green:#173b2b;
-  --green-2:#28523e;
-  --brown:#b37452;
-  --text:#222923;
-  --muted:#6f756f;
-  --line:#e4ddd4;
-  --shadow:0 18px 50px rgba(23,59,43,.10);
+  --cream:#f2ece2;
+  --green:#173c2b;
+  --green-2:#2a5640;
+  --text:#252d27;
+  --muted:#737a74;
+  --line:#e3ddd3;
+  --brown:#b37552;
+  --shadow:0 18px 50px rgba(23,60,43,.10);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text)}
 img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-a{text-decoration:none;color:inherit}
-.container{width:min(1180px,calc(100% - 32px));margin:auto}
-.hidden{display:none!important}
+.container{width:min(1180px,calc(100% - 30px));margin:auto}
 
-/* top utility bar */
+/* top utility */
 .utility{
-  height:26px;
-  background:#efe9e0;
-  border-bottom:1px solid #e7dfd4;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:34px;
-  color:#687068;
-  font-size:.68rem;
+  height:24px;background:#eee8df;border-bottom:1px solid #e6ded3;
+  display:flex;align-items:center;justify-content:center;gap:34px;
+  color:#6c736d;font-size:.64rem
 }
-.utility span{display:flex;align-items:center;gap:6px}
+.utility span{display:flex;align-items:center;gap:5px}
+.utility svg{width:12px;height:12px}
 
 /* header */
 header{
-  position:sticky;top:0;z-index:40;
-  background:rgba(251,250,247,.97);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:40;background:rgba(250,248,243,.97);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line)
 }
 .nav{
-  height:68px;
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  align-items:center;
-  gap:28px;
+  height:62px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:28px
 }
-.brand{
-  display:flex;align-items:center;gap:11px
-}
+.brand{display:flex;align-items:center;gap:10px}
 .brand-icon{
-  width:38px;height:38px;border:1px solid rgba(23,59,43,.18);
-  border-radius:50%;display:grid;place-items:center;color:var(--green)
+  width:36px;height:36px;border:1px solid rgba(23,60,43,.18);border-radius:50%;
+  display:grid;place-items:center;color:var(--green);background:#fff
 }
-.brand-icon svg{width:20px;height:20px}
-.brand-name{font-family:"Playfair Display",serif;letter-spacing:.12em;color:var(--green);font-size:.96rem}
-.brand-sub{font-size:.64rem;color:var(--muted);margin-top:2px}
-.navlinks{display:flex;justify-content:center;gap:30px}
-.navlinks a{font-size:.78rem;font-weight:600}
+.brand-icon svg{width:18px;height:18px}
+.brand-name{font-family:"Playfair Display",serif;letter-spacing:.12em;font-size:.9rem;color:var(--green)}
+.brand-sub{font-size:.61rem;color:var(--muted);margin-top:1px}
+.navlinks{display:flex;justify-content:center;gap:28px}
+.navlinks a{font-size:.74rem;font-weight:600}
 .navlinks a:hover{color:var(--brown)}
-.nav-actions{display:flex;align-items:center;gap:9px}
-.lang-btn,.bag-btn{
-  height:40px;border:1px solid var(--line);background:#fff;color:var(--text)
+.nav-actions{display:flex;align-items:center;gap:8px}
+.lang-btn,.cart-btn{
+  height:38px;border:1px solid var(--line);background:#fff;color:var(--text)
 }
-.lang-btn{padding:0 13px;border-radius:9px;font-weight:700;font-size:.78rem}
-.bag-btn{width:42px;border-radius:10px;display:grid;place-items:center;position:relative}
-.bag-btn svg{width:19px;height:19px}
-.bag-count{
+.lang-btn{padding:0 12px;border-radius:8px;font-size:.72rem;font-weight:700}
+.cart-btn{width:40px;border-radius:9px;display:grid;place-items:center;position:relative}
+.cart-btn svg{width:18px;height:18px}
+.cart-count{
   position:absolute;right:-5px;top:-5px;width:18px;height:18px;border-radius:50%;
-  background:var(--green);color:#fff;display:grid;place-items:center;
-  border:2px solid #fff;font-size:.62rem
+  display:grid;place-items:center;background:var(--green);color:#fff;
+  border:2px solid #fff;font-size:.6rem
 }
 
 /* hero */
-.hero{
-  background:linear-gradient(90deg,#f9f6f0 0%,#f9f5ee 47%,#efe5d7 100%);
-  border-bottom:1px solid var(--line);
-}
+.hero{background:linear-gradient(90deg,#f8f5ef 0%,#f7f3ec 47%,#eee4d6 100%)}
 .hero-grid{
-  display:grid;
-  grid-template-columns:42% 58%;
-  min-height:360px;
-  align-items:stretch;
+  display:grid;grid-template-columns:42% 58%;min-height:350px;align-items:stretch
 }
-.hero-copy{
-  padding:42px 28px 34px 0;
-  display:flex;flex-direction:column;justify-content:center
-}
+.hero-copy{padding:40px 24px 30px 0;display:flex;flex-direction:column;justify-content:center}
 .hero-copy h1{
-  font-family:"Playfair Display",serif;
-  color:var(--green);
-  font-size:clamp(2.35rem,3.7vw,3.6rem);
-  line-height:1.08;
-  margin:0 0 14px;
-  max-width:460px;
+  font-family:"Playfair Display",serif;color:var(--green);
+  font-size:clamp(2.2rem,3.5vw,3.35rem);line-height:1.08;
+  margin:0 0 12px;max-width:460px
 }
 .hero-copy p{
-  color:#4d574f;font-size:.88rem;line-height:1.58;
-  max-width:440px;margin:0 0 16px
+  margin:0 0 15px;color:#4f5851;font-size:.82rem;line-height:1.55;max-width:430px
 }
 .cta{
-  align-self:flex-start;border:0;background:var(--green);color:#fff;
-  border-radius:7px;padding:11px 16px;font-weight:700;font-size:.8rem
+  align-self:flex-start;border:0;background:var(--green);color:#fff;border-radius:7px;
+  padding:10px 15px;font-size:.74rem;font-weight:700
 }
-.hero-benefits{
-  margin-top:20px;display:flex;gap:16px;flex-wrap:wrap;
-  color:#5e665f;font-size:.66rem
-}
-.hero-benefits span{display:flex;align-items:center;gap:6px}
-.hero-benefits svg{width:14px;height:14px}
-.hero-image{height:360px;overflow:hidden}
+.hero-benefits{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;color:#5f675f;font-size:.61rem}
+.hero-benefits span{display:flex;align-items:center;gap:5px}
+.hero-benefits svg{width:13px;height:13px}
+.hero-image{height:350px;overflow:hidden}
 .hero-image img{width:100%;height:100%;object-fit:cover}
 
 /* explainer */
-.explainer{padding:28px 0 26px;background:#fff}
-.explainer-grid{
-  display:grid;
-  grid-template-columns:39% 61%;
-  gap:28px;
-  align-items:center;
-}
-.explainer-photo{
-  border-radius:10px;overflow:hidden;background:#eee7dc;
-  box-shadow:var(--shadow)
-}
-.explainer-photo img{width:100%;height:220px;object-fit:cover}
+.explainer{background:#fff;padding:24px 0}
+.explainer-grid{display:grid;grid-template-columns:39% 61%;gap:26px;align-items:center}
+.explainer-photo{overflow:hidden;border-radius:9px;background:#eee7dc;box-shadow:var(--shadow)}
+.explainer-photo img{width:100%;height:210px;object-fit:cover}
 .explainer-copy h2{
-  font-family:"Playfair Display",serif;color:var(--green);
-  font-size:1.82rem;margin:0 0 7px
+  font-family:"Playfair Display",serif;color:var(--green);font-size:1.72rem;margin:0 0 6px
 }
-.explainer-copy>p{
-  margin:0 0 16px;color:#687069;font-size:.8rem;max-width:560px
-}
-.explainer-items{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:12px
-}
+.explainer-copy>p{margin:0 0 14px;color:#69716a;font-size:.76rem;max-width:560px}
+.explainer-items{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .explainer-item{text-align:center}
-.explainer-item svg{width:28px;height:28px;color:#727a73;margin:0 auto 5px}
-.explainer-item strong{display:block;font-size:.69rem;margin-bottom:3px}
-.explainer-item span{display:block;font-size:.61rem;color:#7d847e;line-height:1.45}
+.explainer-item svg{width:26px;height:26px;color:#747c75;margin:0 auto 5px}
+.explainer-item strong{display:block;font-size:.66rem;margin-bottom:3px}
+.explainer-item span{display:block;font-size:.58rem;color:#7e857f;line-height:1.4}
 
-/* catalogue */
-.catalogue{padding:26px 0 80px}
-.catalogue-head{
-  display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:14px
+/* main shop layout */
+.shop-shell{
+  display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start
 }
+.catalogue{padding:24px 0 72px}
+.catalogue-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:12px}
 .catalogue-head h2{
-  font-family:"Playfair Display",serif;color:var(--green);
-  font-size:1.82rem;margin:0 0 3px
+  font-family:"Playfair Display",serif;color:var(--green);font-size:1.72rem;margin:0 0 3px
 }
-.catalogue-head p{margin:0;color:#747b75;font-size:.74rem}
-.catalogue-tools{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.catalogue-head p{margin:0;color:#767d77;font-size:.7rem}
+.catalogue-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .catalogue-tools button,.catalogue-tools select{
   border:1px solid var(--line);background:#fff;border-radius:7px;
-  padding:8px 10px;color:#48544c;font-size:.7rem
+  padding:7px 9px;font-size:.66rem;color:#4a554d
 }
-.result-count{font-size:.72rem;color:#687169}
+.result-count{font-size:.67rem;color:#6c746d}
 
+/* filters */
 .filters-panel{
-  display:none;
-  background:#fff;border:1px solid var(--line);border-radius:10px;
-  padding:14px;margin-bottom:14px
+  display:none;background:#fff;border:1px solid var(--line);border-radius:9px;
+  padding:12px;margin-bottom:12px
 }
 .filters-panel.open{display:block}
-.filters-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.filters-top strong{font-size:.82rem}
-.clear-btn{border:0;background:none;color:var(--brown);font-weight:700;font-size:.72rem;padding:0}
-.filters-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.filter-group strong{display:block;font-size:.76rem;margin-bottom:7px}
-.option{display:flex;gap:7px;align-items:center;margin:6px 0;font-size:.72rem;color:#5a655d}
+.filters-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.filters-top strong{font-size:.76rem}
+.clear-btn{border:0;background:none;color:var(--brown);padding:0;font-size:.66rem;font-weight:700}
+.filters-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.filter-group strong{display:block;font-size:.7rem;margin-bottom:6px}
+.option{display:flex;align-items:center;gap:7px;margin:5px 0;font-size:.66rem;color:#5b665e}
 .option input{accent-color:var(--green)}
 
-.product-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .product{
   background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;
-  display:flex;flex-direction:column;transition:.22s
+  display:flex;flex-direction:column;transition:.2s
 }
 .product:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
 .product-photo{
-  border:0;padding:0;width:100%;background:#eee7dc;position:relative;
-  aspect-ratio:1/1;overflow:hidden
+  position:relative;aspect-ratio:1/1;border:0;padding:0;background:#eee7dc;overflow:hidden;width:100%
 }
 .product-photo img{width:100%;height:100%;object-fit:cover;transition:.3s}
 .product:hover .product-photo img{transform:scale(1.03)}
 .product-tag,.product-time{
-  position:absolute;top:9px;border-radius:999px;padding:5px 7px;
-  font-size:.53rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em
+  position:absolute;top:8px;border-radius:999px;padding:5px 7px;
+  font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em
 }
-.product-tag{left:9px;background:rgba(23,59,43,.95);color:#fff}
-.product-time{right:9px;background:rgba(255,255,255,.96);color:var(--green)}
-.product-body{padding:9px 10px 11px;display:flex;flex-direction:column;flex:1}
-.product-body h3{margin:0 0 3px;font-family:"DM Sans",sans-serif;font-size:.86rem}
-.product-sub{margin:0 0 7px;color:#717871;font-size:.66rem}
-.product-contains{margin:0 0 9px;color:#566158;font-size:.61rem;line-height:1.4}
-.product-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.product-price{font-weight:700;font-size:.76rem}
-.product-view{border:1px solid var(--line);background:#fff;border-radius:6px;padding:6px 8px;font-size:.61rem;font-weight:700}
+.product-tag{left:8px;background:rgba(23,60,43,.95);color:#fff}
+.product-time{right:8px;background:rgba(255,255,255,.96);color:var(--green)}
+.product-body{padding:8px 9px 10px;display:flex;flex-direction:column;flex:1}
+.product-body h3{margin:0 0 2px;font-family:"DM Sans",sans-serif;font-size:.8rem}
+.product-sub{margin:0 0 6px;color:#727972;font-size:.62rem}
+.product-contains{margin:0 0 8px;color:#566158;font-size:.56rem;line-height:1.38}
+.product-footer{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.product-price{font-size:.7rem;font-weight:700}
+.product-view{border:1px solid var(--line);background:#fff;border-radius:6px;padding:6px 8px;font-size:.56rem;font-weight:700}
 
-/* cart */
-.overlay{
-  position:fixed;inset:0;background:rgba(18,29,22,.28);
-  opacity:0;pointer-events:none;transition:.2s;z-index:80
+/* persistent desktop cart */
+.desktop-cart{
+  position:sticky;top:78px;background:#fff;border:1px solid var(--line);
+  border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(23,60,43,.06)
 }
-.overlay.open{opacity:1;pointer-events:auto}
-.cart-drawer{
-  position:fixed;right:0;top:94px;bottom:0;width:260px;
-  background:#fff;border-left:1px solid var(--line);
-  box-shadow:-16px 0 40px rgba(0,0,0,.08);
-  transform:translateX(100%);transition:.25s;z-index:90;
-  display:flex;flex-direction:column
-}
-.cart-drawer.open{transform:translateX(0)}
-.cart-head{
-  height:52px;padding:0 14px;border-bottom:1px solid var(--line);
+.desktop-cart-head{
+  height:48px;padding:0 13px;border-bottom:1px solid var(--line);
   display:flex;align-items:center;justify-content:space-between
 }
-.cart-head h3{margin:0;font-family:"DM Sans",sans-serif;font-size:.88rem}
+.desktop-cart-head h3{margin:0;font-family:"DM Sans",sans-serif;font-size:.82rem}
+.desktop-cart-body{padding:13px;min-height:180px}
+.desktop-empty{
+  min-height:150px;display:grid;place-items:center;text-align:center;
+  color:#7b837d;font-size:.68rem
+}
+.desktop-empty svg{width:24px;height:24px;margin:0 auto 8px}
+.desktop-cart-foot{padding:12px;border-top:1px solid var(--line)}
+.desktop-cart-row{display:flex;justify-content:space-between;font-size:.7rem;margin-bottom:8px}
+.desktop-checkout{
+  width:100%;border:0;background:var(--green);color:#fff;border-radius:7px;
+  padding:9px;font-size:.68rem;font-weight:700
+}
+.desktop-secure{text-align:center;color:#8a908b;font-size:.56rem;margin-top:6px}
+.desktop-cart-item{
+  display:grid;grid-template-columns:46px 1fr auto;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)
+}
+.desktop-cart-item img{width:46px;height:46px;border-radius:6px;object-fit:cover}
+.desktop-cart-item strong{font-size:.62rem}
+.desktop-qty{display:flex;align-items:center;gap:4px;margin-top:4px}
+.desktop-qty button{width:20px;height:20px;border:1px solid var(--line);background:#fff;border-radius:4px}
+.desktop-remove{border:0;background:none;color:#a75f46;font-size:.56rem;padding:0;margin-top:3px}
+
+/* overlay drawer mobile */
+.overlay{
+  position:fixed;inset:0;background:rgba(18,29,22,.28);opacity:0;pointer-events:none;transition:.2s;z-index:80
+}
+.overlay.open{opacity:1;pointer-events:auto}
+.mobile-cart{
+  position:fixed;right:0;top:62px;bottom:0;width:min(300px,100%);
+  background:#fff;z-index:90;transform:translateX(100%);transition:.25s;
+  display:flex;flex-direction:column
+}
+.mobile-cart.open{transform:translateX(0)}
+.mobile-cart-head{
+  height:50px;padding:0 14px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between
+}
+.mobile-cart-head h3{margin:0;font-family:"DM Sans",sans-serif;font-size:.84rem}
 .close-btn{border:0;background:none;font-size:1.1rem}
-.cart-body{padding:14px;overflow:auto;flex:1}
-.empty-cart{
-  min-height:170px;display:grid;place-items:center;text-align:center;
-  color:#7b837d;font-size:.72rem
-}
-.empty-cart svg{width:24px;height:24px;margin:0 auto 8px}
-.cart-item{
-  display:grid;grid-template-columns:52px 1fr auto;gap:9px;
-  padding:10px 0;border-bottom:1px solid var(--line)
-}
-.cart-item img{width:52px;height:52px;object-fit:cover;border-radius:7px}
-.cart-item strong{font-size:.72rem}
-.qty{display:flex;align-items:center;gap:5px;margin-top:5px}
-.qty button{width:22px;height:22px;border:1px solid var(--line);background:#fff;border-radius:5px}
-.remove-btn{border:0;background:none;color:#a86147;font-size:.66rem;padding:0;margin-top:4px}
-.cart-foot{padding:13px;border-top:1px solid var(--line)}
-.cart-row{display:flex;justify-content:space-between;font-size:.76rem;margin-bottom:9px}
-.checkout-btn{width:100%;border:0;background:var(--green);color:#fff;border-radius:7px;padding:10px;font-weight:700;font-size:.74rem}
-.secure-note{text-align:center;font-size:.6rem;color:#8a908b;margin-top:7px}
+.mobile-cart-body{padding:14px;overflow:auto;flex:1}
+.mobile-cart-foot{padding:13px;border-top:1px solid var(--line)}
 
 /* modal */
 .modal{
   position:fixed;left:50%;top:50%;transform:translate(-50%,-46%) scale(.97);
-  width:min(860px,calc(100% - 24px));max-height:90vh;overflow:auto;
-  background:#fff;border-radius:12px;box-shadow:0 30px 90px rgba(0,0,0,.22);
+  width:min(860px,calc(100% - 24px));max-height:90vh;overflow:auto;background:#fff;
+  border-radius:12px;box-shadow:0 30px 90px rgba(0,0,0,.22);
   opacity:0;pointer-events:none;transition:.2s;z-index:100
 }
 .modal.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
 .modal-close{
-  position:absolute;right:12px;top:12px;z-index:2;
-  width:34px;height:34px;border-radius:50%;
+  position:absolute;right:12px;top:12px;z-index:2;width:34px;height:34px;border-radius:50%;
   border:1px solid var(--line);background:#fff
 }
-.product-modal{
-  display:grid;
-  grid-template-columns:80px 1.15fr .95fr;
-}
+.product-modal{display:grid;grid-template-columns:80px 1.15fr .95fr}
 .thumbs{
-  padding:10px 7px;border-right:1px solid var(--line);
-  display:flex;flex-direction:column;gap:7px;background:#faf8f4
+  padding:10px 7px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:7px;background:#faf8f4
 }
 .thumb{height:58px;border:1px solid var(--line);border-radius:7px;padding:3px;background:#fff}
 .thumb img{width:100%;height:100%;object-fit:cover;border-radius:5px}
@@ -281,22 +240,16 @@ header{
 .main-image img{width:100%;height:100%;object-fit:cover}
 .product-info{padding:26px 22px}
 .product-kicker{
-  display:inline-block;background:#f0eadf;color:var(--green);
-  border-radius:999px;padding:6px 8px;
-  font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em
+  display:inline-block;background:#f0eadf;color:var(--green);border-radius:999px;
+  padding:6px 8px;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em
 }
-.product-info h2{
-  margin:9px 0 4px;font-family:"Playfair Display",serif;
-  color:var(--green);font-size:1.55rem
-}
+.product-info h2{margin:9px 0 4px;font-family:"Playfair Display",serif;color:var(--green);font-size:1.55rem}
 .product-info p,.product-info li{font-size:.74rem;color:#4f5a52;line-height:1.5}
 .product-info ul{padding-left:16px}
 .rating{display:flex;gap:7px;align-items:center;color:#666e67;font-size:.68rem;margin:7px 0 12px}
 .stars{color:#cfaa63}
 .quantity-add{display:grid;grid-template-columns:100px 1fr;gap:10px;margin-top:14px}
-.quantity{
-  display:flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;height:40px
-}
+.quantity{display:flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;height:40px}
 .quantity button{width:32px;border:0;background:#fff}
 .quantity input{width:100%;border:0;text-align:center}
 .add-btn{border:0;background:var(--green);color:#fff;border-radius:7px;font-weight:700;font-size:.74rem}
@@ -325,17 +278,21 @@ header{
 .rating-buttons button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff}
 .rating-buttons button.selected{background:var(--green);color:#fff}
 
+@media(max-width:1080px){
+  .shop-shell{grid-template-columns:1fr}
+  .desktop-cart{display:none}
+  .product-grid{grid-template-columns:repeat(3,1fr)}
+}
 @media(max-width:980px){
   .navlinks{display:none}
   .hero-grid,.explainer-grid{grid-template-columns:1fr}
-  .hero-copy{padding:42px 0 24px}
+  .hero-copy{padding:40px 0 24px}
   .hero-image{height:320px}
   .explainer-items{grid-template-columns:repeat(2,1fr)}
   .product-grid{grid-template-columns:repeat(2,1fr)}
   .product-modal{grid-template-columns:1fr}
   .thumbs{display:none}
   .main-image{min-height:320px}
-  .cart-drawer{top:68px}
 }
 @media(max-width:640px){
   .utility{display:none}
@@ -352,15 +309,15 @@ header{
 
 <div class="utility">
   <span>
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h11v10H3z"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="1.5"/><circle cx="18" cy="18" r="1.5"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h11v10H3z"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="1.5"/><circle cx="18" cy="18" r="1.5"/></svg>
     <span data-i18n="fastShipping">Livraison rapide</span>
   </span>
   <span>
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
     <span data-i18n="securePayment">Paiement sécurisé</span>
   </span>
   <span>
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 11a8 8 0 1 0 2-5.3"/><path d="M4 4v7h7"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 11a8 8 0 1 0 2-5.3"/><path d="M4 4v7h7"/></svg>
     <span data-i18n="easyReturns">Retours faciles 30 jours</span>
   </span>
 </div>
@@ -391,12 +348,12 @@ header{
 
     <div class="nav-actions">
       <button class="lang-btn" id="langBtn">FR</button>
-      <button class="bag-btn" id="bagBtn" aria-label="Ouvrir le panier">
+      <button class="cart-btn" id="cartBtn" aria-label="Ouvrir le panier">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M6 8h12l-1 11H7L6 8Z"/>
           <path d="M9 9V6.8a3 3 0 0 1 6 0V9"/>
         </svg>
-        <span class="bag-count" id="bagCount">0</span>
+        <span class="cart-count" id="cartCount">0</span>
       </button>
     </div>
   </div>
@@ -411,22 +368,10 @@ header{
         <a href="#catalogue" class="cta" data-i18n="heroButton">Découvrir les kits</a>
 
         <div class="hero-benefits">
-          <span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h7v14H4z"/><path d="M13 5h7v14h-7z"/></svg>
-            <b data-i18n="guided">Activités guidées</b>
-          </span>
-          <span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M12 3v18"/></svg>
-            <b data-i18n="included">Tout le matériel inclus</b>
-          </span>
-          <span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></svg>
-            <b data-i18n="screenFree">Sans écran</b>
-          </span>
-          <span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="3"/></svg>
-            <b data-i18n="allAges">Pour tous les âges</b>
-          </span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h7v14H4z"/><path d="M13 5h7v14h-7z"/></svg><b data-i18n="guided">Activités guidées</b></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M12 3v18"/></svg><b data-i18n="included">Tout le matériel inclus</b></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></svg><b data-i18n="screenFree">Sans écran</b></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="3"/></svg><b data-i18n="allAges">Pour tous les âges</b></span>
         </div>
       </div>
 
@@ -439,7 +384,7 @@ header{
   <section class="explainer" id="apropos">
     <div class="container explainer-grid">
       <div class="explainer-photo">
-        <img src="images/rituel-du-soir.png" alt="Contenu d'un kit Pause Papier">
+        <img src="images/rituel-du-soir.png" alt="Contenu du kit Rituel du soir">
       </div>
 
       <div class="explainer-copy">
@@ -450,12 +395,12 @@ header{
           <div class="explainer-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h7v14H4z"/><path d="M13 5h7v14h-7z"/></svg>
             <strong data-i18n="e1t">Une activité guidée</strong>
-            <span data-i18n="e1d">Des cartes ou un guide pas à pas pour vous accompagner.</span>
+            <span data-i18n="e1d">Des cartes ou un guide pas à pas.</span>
           </div>
           <div class="explainer-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M12 3v18"/></svg>
             <strong data-i18n="e2t">Tout le matériel inclus</strong>
-            <span data-i18n="e2d">Papier, crayons, cartes et accessoires selon le kit.</span>
+            <span data-i18n="e2d">Papier, crayons, cartes et accessoires.</span>
           </div>
           <div class="explainer-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></svg>
@@ -473,76 +418,91 @@ header{
   </section>
 
   <section class="catalogue" id="catalogue">
-    <div class="container">
-      <div class="catalogue-head">
-        <div>
-          <h2 data-i18n="catalogueTitle">Notre catalogue de kits créatifs</h2>
-          <p data-i18n="catalogueText">Trouvez le kit parfait pour votre prochaine pause.</p>
+    <div class="container shop-shell">
+      <div>
+        <div class="catalogue-head">
+          <div>
+            <h2 data-i18n="catalogueTitle">Notre catalogue de kits créatifs</h2>
+            <p data-i18n="catalogueText">Trouvez le kit parfait pour votre prochaine pause.</p>
+          </div>
+
+          <div class="catalogue-tools">
+            <button id="filterToggle" data-i18n="filters">Filtres</button>
+            <select id="sortSelect">
+              <option value="featured" data-i18n="sortAll">Tous les kits</option>
+              <option value="priceAsc" data-i18n="sortLow">Prix croissant</option>
+              <option value="priceDesc" data-i18n="sortHigh">Prix décroissant</option>
+              <option value="name" data-i18n="sortName">Nom A à Z</option>
+            </select>
+            <span class="result-count" id="resultCount">10 kits trouvés</span>
+          </div>
         </div>
 
-        <div class="catalogue-tools">
-          <button id="filterToggle" data-i18n="filters">Filtres</button>
-          <select id="sortSelect">
-            <option value="featured" data-i18n="sortAll">Tous les kits</option>
-            <option value="priceAsc" data-i18n="sortLow">Prix croissant</option>
-            <option value="priceDesc" data-i18n="sortHigh">Prix décroissant</option>
-            <option value="name" data-i18n="sortName">Nom A à Z</option>
-          </select>
-          <span class="result-count" id="resultCount">10 kits trouvés</span>
+        <div class="filters-panel" id="filtersPanel">
+          <div class="filters-top">
+            <strong data-i18n="filters">Filtres</strong>
+            <button class="clear-btn" id="clearFilters" data-i18n="clear">Tout effacer</button>
+          </div>
+
+          <div class="filters-grid">
+            <div class="filter-group">
+              <strong data-i18n="activity">Activité</strong>
+              <label class="option"><input type="checkbox" data-filter="activity" value="Écriture"><span data-i18n="writing">Écriture</span></label>
+              <label class="option"><input type="checkbox" data-filter="activity" value="Collage"><span data-i18n="collage">Collage</span></label>
+              <label class="option"><input type="checkbox" data-filter="activity" value="Coloriage"><span data-i18n="coloring">Coloriage</span></label>
+              <label class="option"><input type="checkbox" data-filter="activity" value="Discussion"><span data-i18n="discussion">Discussion</span></label>
+              <label class="option"><input type="checkbox" data-filter="activity" value="Jeu"><span data-i18n="game">Jeu</span></label>
+              <label class="option"><input type="checkbox" data-filter="activity" value="Planification"><span data-i18n="planning">Planification</span></label>
+            </div>
+
+            <div class="filter-group">
+              <strong data-i18n="participants">Participants</strong>
+              <label class="option"><input type="checkbox" data-filter="participants" value="Seul"><span data-i18n="solo">Seul</span></label>
+              <label class="option"><input type="checkbox" data-filter="participants" value="Deux"><span data-i18n="two">À deux</span></label>
+              <label class="option"><input type="checkbox" data-filter="participants" value="Famille"><span data-i18n="family">Famille</span></label>
+              <label class="option"><input type="checkbox" data-filter="participants" value="Groupe"><span data-i18n="group">Groupe</span></label>
+            </div>
+
+            <div class="filter-group">
+              <strong data-i18n="price">Prix</strong>
+              <label class="option"><input type="checkbox" data-filter="price" value="under30"><span data-i18n="under30">Moins de 30 $</span></label>
+              <label class="option"><input type="checkbox" data-filter="price" value="30to40">30–40 $</label>
+              <label class="option"><input type="checkbox" data-filter="price" value="over40"><span data-i18n="over40">Plus de 40 $</span></label>
+            </div>
+          </div>
         </div>
+
+        <div class="product-grid" id="productGrid"></div>
       </div>
 
-      <div class="filters-panel" id="filtersPanel">
-        <div class="filters-top">
-          <strong data-i18n="filters">Filtres</strong>
-          <button class="clear-btn" id="clearFilters" data-i18n="clear">Tout effacer</button>
+      <aside class="desktop-cart">
+        <div class="desktop-cart-head">
+          <h3 data-i18n="yourCart">Votre panier</h3>
+          <span>×</span>
         </div>
-
-        <div class="filters-grid">
-          <div class="filter-group">
-            <strong data-i18n="activity">Activité</strong>
-            <label class="option"><input type="checkbox" data-filter="activity" value="Écriture"><span data-i18n="writing">Écriture</span></label>
-            <label class="option"><input type="checkbox" data-filter="activity" value="Collage"><span data-i18n="collage">Collage</span></label>
-            <label class="option"><input type="checkbox" data-filter="activity" value="Coloriage"><span data-i18n="coloring">Coloriage</span></label>
-            <label class="option"><input type="checkbox" data-filter="activity" value="Discussion"><span data-i18n="discussion">Discussion</span></label>
-            <label class="option"><input type="checkbox" data-filter="activity" value="Jeu"><span data-i18n="game">Jeu</span></label>
-            <label class="option"><input type="checkbox" data-filter="activity" value="Planification"><span data-i18n="planning">Planification</span></label>
-          </div>
-
-          <div class="filter-group">
-            <strong data-i18n="participants">Participants</strong>
-            <label class="option"><input type="checkbox" data-filter="participants" value="Seul"><span data-i18n="solo">Seul</span></label>
-            <label class="option"><input type="checkbox" data-filter="participants" value="Deux"><span data-i18n="two">À deux</span></label>
-            <label class="option"><input type="checkbox" data-filter="participants" value="Famille"><span data-i18n="family">Famille</span></label>
-            <label class="option"><input type="checkbox" data-filter="participants" value="Groupe"><span data-i18n="group">Groupe</span></label>
-          </div>
-
-          <div class="filter-group">
-            <strong data-i18n="price">Prix</strong>
-            <label class="option"><input type="checkbox" data-filter="price" value="under30"><span data-i18n="under30">Moins de 30 $</span></label>
-            <label class="option"><input type="checkbox" data-filter="price" value="30to40">30–40 $</label>
-            <label class="option"><input type="checkbox" data-filter="price" value="over40"><span data-i18n="over40">Plus de 40 $</span></label>
-          </div>
+        <div class="desktop-cart-body" id="desktopCartItems"></div>
+        <div class="desktop-cart-foot">
+          <div class="desktop-cart-row"><span data-i18n="subtotal">Sous-total</span><strong id="desktopSubtotal">0,00 $</strong></div>
+          <button class="desktop-checkout" id="desktopCheckoutBtn" data-i18n="viewCart">Voir le panier</button>
+          <div class="desktop-secure" data-i18n="secureNote">Paiement 100% sécurisé</div>
         </div>
-      </div>
-
-      <div class="product-grid" id="productGrid"></div>
+      </aside>
     </div>
   </section>
 </main>
 
 <div class="overlay" id="overlay"></div>
 
-<aside class="cart-drawer" id="cartDrawer">
-  <div class="cart-head">
+<aside class="mobile-cart" id="mobileCart">
+  <div class="mobile-cart-head">
     <h3 data-i18n="yourCart">Votre panier</h3>
-    <button class="close-btn" id="closeCart">×</button>
+    <button class="close-btn" id="closeMobileCart">×</button>
   </div>
-  <div class="cart-body" id="cartItems"></div>
-  <div class="cart-foot">
-    <div class="cart-row"><span data-i18n="subtotal">Sous-total</span><strong id="subtotal">0,00 $</strong></div>
-    <button class="checkout-btn" id="checkoutBtn" data-i18n="viewCart">Voir le panier</button>
-    <div class="secure-note" data-i18n="secureNote">Paiement 100% sécurisé</div>
+  <div class="mobile-cart-body" id="mobileCartItems"></div>
+  <div class="mobile-cart-foot">
+    <div class="desktop-cart-row"><span data-i18n="subtotal">Sous-total</span><strong id="mobileSubtotal">0,00 $</strong></div>
+    <button class="desktop-checkout" id="mobileCheckoutBtn" data-i18n="viewCart">Voir le panier</button>
+    <div class="desktop-secure" data-i18n="secureNote">Paiement 100% sécurisé</div>
   </div>
 </aside>
 
@@ -566,429 +526,62 @@ header{
 </div>
 
 <script>
-const products = [
-  {
-    id:1,
-    name:"Rituel du soir",
-    nameEn:"Evening Ritual",
-    subtitle:"Kit d’écriture guidée",
-    subtitleEn:"Guided writing kit",
-    tag:"Kit d’écriture",
-    tagEn:"Writing kit",
-    duration:"30 min",
-    durationEn:"30 min",
-    price:39,
-    image:"images/rituel-du-soir.png",
-    activity:["Écriture"],
-    participants:["Seul"],
-    contents:["Journal","20 cartes de réflexion","Masque de repos","Crayon"],
-    reviews:48
-  },
-  {
-    id:2,
-    name:"Collage du dimanche",
-    nameEn:"Sunday Collage",
-    subtitle:"Kit de collage créatif",
-    subtitleEn:"Creative collage kit",
-    tag:"Kit collage",
-    tagEn:"Collage kit",
-    duration:"2–3 h",
-    durationEn:"2–3 hr",
-    price:49,
-    image:"images/collage-du-dimanche.png",
-    activity:["Collage"],
-    participants:["Seul","Deux"],
-    contents:["Papiers","Images","Colle","Ciseaux","12 idées guidées"],
-    reviews:52
-  },
-  {
-    id:3,
-    name:"Café et conversation",
-    nameEn:"Coffee & Conversation",
-    subtitle:"Jeu de cartes pour deux",
-    subtitleEn:"Card game for two",
-    tag:"Jeu pour deux",
-    tagEn:"Game for two",
-    duration:"60 min",
-    durationEn:"60 min",
-    price:36,
-    image:"images/cafe-et-conversation.png",
-    activity:["Discussion","Jeu"],
-    participants:["Deux"],
-    contents:["60 cartes questions","2 sous-verres","Carnet de souvenirs"],
-    reviews:36
-  },
-  {
-    id:4,
-    name:"Bulle de couleurs",
-    nameEn:"Bubble of Colours",
-    subtitle:"Kit de coloriage anti-stress",
-    subtitleEn:"Anti-stress colouring kit",
-    tag:"Kit coloriage",
-    tagEn:"Colouring kit",
-    duration:"45–60 min",
-    durationEn:"45–60 min",
-    price:34,
-    image:"images/bulle-de-couleurs.png",
-    activity:["Coloriage"],
-    participants:["Seul"],
-    contents:["18 illustrations","12 crayons","Feutre","Guide relaxation"],
-    reviews:29
-  },
-  {
-    id:5,
-    name:"Pause express",
-    nameEn:"Quick Pause",
-    subtitle:"Mini kit d’écriture",
-    subtitleEn:"Mini writing kit",
-    tag:"Mini kit",
-    tagEn:"Mini kit",
-    duration:"15 min",
-    durationEn:"15 min",
-    price:24,
-    image:"images/pause-express.png",
-    activity:["Écriture"],
-    participants:["Seul"],
-    contents:["12 cartes","Mini carnet","Crayon"],
-    reviews:21
-  },
-  {
-    id:6,
-    name:"Respirer et écrire",
-    nameEn:"Breathe and Write",
-    subtitle:"Kit bien-être",
-    subtitleEn:"Wellness kit",
-    tag:"Kit bien-être",
-    tagEn:"Wellness kit",
-    duration:"30–45 min",
-    durationEn:"30–45 min",
-    price:33,
-    image:"images/respirer-et-ecrire.png",
-    activity:["Écriture"],
-    participants:["Seul"],
-    contents:["Journal","18 cartes","Crayon"],
-    reviews:31
-  },
-  {
-    id:7,
-    name:"Lettres à soi-même",
-    nameEn:"Letters to Myself",
-    subtitle:"Kit de correspondance",
-    subtitleEn:"Letter-writing kit",
-    tag:"Correspondance",
-    tagEn:"Letter kit",
-    duration:"1 h",
-    durationEn:"1 hr",
-    price:35,
-    image:"images/lettres-a-soi-meme.png",
-    activity:["Écriture"],
-    participants:["Seul"],
-    contents:["12 enveloppes","Papier à lettres","Sceaux"],
-    reviews:18
-  },
-  {
-    id:8,
-    name:"Matin tranquille",
-    nameEn:"Quiet Morning",
-    subtitle:"Kit de planification",
-    subtitleEn:"Planning kit",
-    tag:"Planification",
-    tagEn:"Planning kit",
-    duration:"30 min",
-    durationEn:"30 min",
-    price:32,
-    image:"images/matin-tranquille.png",
-    activity:["Planification","Écriture"],
-    participants:["Seul"],
-    contents:["Planificateur","20 cartes","Crayon"],
-    reviews:24
-  },
-  {
-    id:9,
-    name:"Soirée sans téléphone",
-    nameEn:"Screen-Free Evening",
-    subtitle:"Jeu de groupe",
-    subtitleEn:"Group game",
-    tag:"Jeu collectif",
-    tagEn:"Group game",
-    duration:"2–3 h",
-    durationEn:"2–3 hr",
-    price:47,
-    image:"images/soiree-sans-telephone.png",
-    activity:["Jeu","Discussion"],
-    participants:["Deux","Groupe"],
-    contents:["24 défis","Cartes conversation","Pochette téléphone"],
-    reviews:27
-  },
-  {
-    id:10,
-    name:"Moment en famille",
-    nameEn:"Family Moment",
-    subtitle:"Kit créatif collaboratif",
-    subtitleEn:"Collaborative creative kit",
-    tag:"Kit famille",
-    tagEn:"Family kit",
-    duration:"2 h",
-    durationEn:"2 hr",
-    price:49,
-    image:"images/moment-en-famille.png",
-    activity:["Jeu","Coloriage"],
-    participants:["Famille","Groupe"],
-    contents:["Grande affiche","Autocollants","Cartes souvenirs"],
-    reviews:22
-  }
+const products=[
+{id:1,name:"Rituel du soir",nameEn:"Evening Ritual",subtitle:"Kit d’écriture guidée",subtitleEn:"Guided writing kit",tag:"Kit d’écriture",tagEn:"Writing kit",duration:"30 min",durationEn:"30 min",price:39,image:"images/rituel-du-soir.png",activity:["Écriture"],participants:["Seul"],contents:["Journal","20 cartes de réflexion","Masque de repos","Crayon"],reviews:48},
+{id:2,name:"Collage du dimanche",nameEn:"Sunday Collage",subtitle:"Kit de collage créatif",subtitleEn:"Creative collage kit",tag:"Kit collage",tagEn:"Collage kit",duration:"2–3 h",durationEn:"2–3 hr",price:49,image:"images/collage-du-dimanche.png",activity:["Collage"],participants:["Seul","Deux"],contents:["Papiers","Images","Colle","Ciseaux","12 idées guidées"],reviews:52},
+{id:3,name:"Café et conversation",nameEn:"Coffee & Conversation",subtitle:"Jeu de cartes pour deux",subtitleEn:"Card game for two",tag:"Jeu pour deux",tagEn:"Game for two",duration:"60 min",durationEn:"60 min",price:36,image:"images/cafe-et-conversation.png",activity:["Discussion","Jeu"],participants:["Deux"],contents:["60 cartes questions","2 sous-verres","Carnet de souvenirs"],reviews:36},
+{id:4,name:"Bulle de couleurs",nameEn:"Bubble of Colours",subtitle:"Kit de coloriage anti-stress",subtitleEn:"Anti-stress colouring kit",tag:"Kit coloriage",tagEn:"Colouring kit",duration:"45–60 min",durationEn:"45–60 min",price:34,image:"images/bulle-de-couleurs.png",activity:["Coloriage"],participants:["Seul"],contents:["18 illustrations","12 crayons","Feutre","Guide relaxation"],reviews:29},
+{id:5,name:"Pause express",nameEn:"Quick Pause",subtitle:"Mini kit d’écriture",subtitleEn:"Mini writing kit",tag:"Mini kit",tagEn:"Mini kit",duration:"15 min",durationEn:"15 min",price:24,image:"images/pause-express.png",activity:["Écriture"],participants:["Seul"],contents:["12 cartes","Mini carnet","Crayon"],reviews:21},
+{id:6,name:"Respirer et écrire",nameEn:"Breathe and Write",subtitle:"Kit bien-être",subtitleEn:"Wellness kit",tag:"Kit bien-être",tagEn:"Wellness kit",duration:"30–45 min",durationEn:"30–45 min",price:33,image:"images/respirer-et-ecrire.png",activity:["Écriture"],participants:["Seul"],contents:["Journal","18 cartes","Crayon"],reviews:31},
+{id:7,name:"Lettres à soi-même",nameEn:"Letters to Myself",subtitle:"Kit de correspondance",subtitleEn:"Letter-writing kit",tag:"Correspondance",tagEn:"Letter kit",duration:"1 h",durationEn:"1 hr",price:35,image:"images/lettres-a-soi-meme.png",activity:["Écriture"],participants:["Seul"],contents:["12 enveloppes","Papier à lettres","Sceaux"],reviews:18},
+{id:8,name:"Matin tranquille",nameEn:"Quiet Morning",subtitle:"Kit de planification",subtitleEn:"Planning kit",tag:"Planification",tagEn:"Planning kit",duration:"30 min",durationEn:"30 min",price:32,image:"images/matin-tranquille.png",activity:["Planification","Écriture"],participants:["Seul"],contents:["Planificateur","20 cartes","Crayon"],reviews:24},
+{id:9,name:"Soirée sans téléphone",nameEn:"Screen-Free Evening",subtitle:"Jeu de groupe",subtitleEn:"Group game",tag:"Jeu collectif",tagEn:"Group game",duration:"2–3 h",durationEn:"2–3 hr",price:47,image:"images/soiree-sans-telephone.png",activity:["Jeu","Discussion"],participants:["Deux","Groupe"],contents:["24 défis","Cartes conversation","Pochette téléphone"],reviews:27},
+{id:10,name:"Moment en famille",nameEn:"Family Moment",subtitle:"Kit créatif collaboratif",subtitleEn:"Collaborative creative kit",tag:"Kit famille",tagEn:"Family kit",duration:"2 h",durationEn:"2 hr",price:49,image:"images/moment-en-famille.png",activity:["Jeu","Coloriage"],participants:["Famille","Groupe"],contents:["Grande affiche","Autocollants","Cartes souvenirs"],reviews:22}
 ];
 
-const i18n = {
-  fr:{
-    fastShipping:"Livraison rapide",
-    securePayment:"Paiement sécurisé",
-    easyReturns:"Retours faciles 30 jours",
-    brandSub:"Des kits créatifs sans écran",
-    home:"Accueil",
-    kits:"Kits créatifs",
-    about:"À propos",
-    journal:"Journal",
-    contact:"Contact",
-    heroTitle:"Des kits d’activités créatives sans écran, prêts à vivre.",
-    heroText:"Chaque kit contient tout le matériel et une activité guidée pour créer, écrire, se détendre ou partager un vrai moment.",
-    heroButton:"Découvrir les kits",
-    guided:"Activités guidées",
-    included:"Tout le matériel inclus",
-    screenFree:"Sans écran",
-    allAges:"Pour tous les âges",
-    whatTitle:"Qu’est-ce qu’un kit Pause Papier ?",
-    whatText:"Un kit complet, livré chez vous, avec tout le nécessaire pour profiter d’une activité créative sans écran.",
-    e1t:"Une activité guidée",
-    e1d:"Des cartes ou un guide pas à pas pour vous accompagner.",
-    e2t:"Tout le matériel inclus",
-    e2d:"Papier, crayons, cartes et accessoires selon le kit.",
-    e3t:"Une durée claire",
-    e3d:"Chaque kit indique la durée recommandée.",
-    e4t:"Pour tous",
-    e4d:"En solo, en famille ou entre amis.",
-    catalogueTitle:"Notre catalogue de kits créatifs",
-    catalogueText:"Trouvez le kit parfait pour votre prochaine pause.",
-    filters:"Filtres",
-    clear:"Tout effacer",
-    sortAll:"Tous les kits",
-    sortLow:"Prix croissant",
-    sortHigh:"Prix décroissant",
-    sortName:"Nom A à Z",
-    activity:"Activité",
-    participants:"Participants",
-    price:"Prix",
-    writing:"Écriture",
-    collage:"Collage",
-    coloring:"Coloriage",
-    discussion:"Discussion",
-    game:"Jeu",
-    planning:"Planification",
-    solo:"Seul",
-    two:"À deux",
-    family:"Famille",
-    group:"Groupe",
-    under30:"Moins de 30 $",
-    over40:"Plus de 40 $",
-    yourCart:"Votre panier",
-    subtotal:"Sous-total",
-    viewCart:"Voir le panier",
-    secureNote:"Paiement 100% sécurisé",
-    checkoutTitle:"Finaliser votre commande",
-    cartStep:"Panier",
-    shippingStep:"Livraison",
-    paymentStep:"Paiement",
-    confirmationStep:"Confirmation",
-    found:"kits trouvés",
-    includes:"Contient :",
-    viewKit:"Voir le kit",
-    emptyCart:"Votre panier est vide.",
-    remove:"Retirer",
-    inside:"Dans le kit",
-    durationLabel:"Durée recommandée",
-    add:"Ajouter au panier",
-    editCart:"Modifier le panier",
-    continue:"Continuer",
-    back:"Retour",
-    firstName:"Prénom",
-    lastName:"Nom",
-    email:"Courriel",
-    address:"Adresse",
-    city:"Ville",
-    postal:"Code postal",
-    cardName:"Nom sur la carte",
-    cardNumber:"Numéro de carte",
-    expiry:"Expiration",
-    cvv:"CVV",
-    noRealPayment:"Aucun paiement réel n’est effectué.",
-    required:"Champ obligatoire",
-    invalidEmail:"Courriel invalide",
-    digits:"16 chiffres requis",
-    expiryFormat:"Format MM/AA",
-    cvvFormat:"3 ou 4 chiffres",
-    orderConfirmed:"Commande confirmée",
-    thankYou:"Merci ! Votre kit est prêt à être préparé.",
-    experience:"Comment s’est passée votre expérience ?",
-    comment:"Commentaire",
-    finish:"Terminer",
-    reviews:"avis"
-  },
-  en:{
-    fastShipping:"Fast shipping",
-    securePayment:"Secure payment",
-    easyReturns:"Easy 30-day returns",
-    brandSub:"Screen-free creative kits",
-    home:"Home",
-    kits:"Creative kits",
-    about:"About",
-    journal:"Journal",
-    contact:"Contact",
-    heroTitle:"Screen-free creative activity kits, ready to enjoy.",
-    heroText:"Each kit includes all materials and a guided activity to create, write, relax, or share a meaningful moment.",
-    heroButton:"Explore the kits",
-    guided:"Guided activities",
-    included:"All materials included",
-    screenFree:"Screen-free",
-    allAges:"For all ages",
-    whatTitle:"What is a Pause Papier kit?",
-    whatText:"A complete kit, delivered to your door, with everything needed for a creative screen-free activity.",
-    e1t:"A guided activity",
-    e1d:"Cards or a simple guide to help you get started.",
-    e2t:"Everything included",
-    e2d:"Paper, pencils, cards, and accessories depending on the kit.",
-    e3t:"A clear duration",
-    e3d:"Each kit clearly shows the recommended duration.",
-    e4t:"For everyone",
-    e4d:"Solo, with family, or with friends.",
-    catalogueTitle:"Our creative kit catalogue",
-    catalogueText:"Find the perfect kit for your next pause.",
-    filters:"Filters",
-    clear:"Clear all",
-    sortAll:"All kits",
-    sortLow:"Price low to high",
-    sortHigh:"Price high to low",
-    sortName:"Name A to Z",
-    activity:"Activity",
-    participants:"Participants",
-    price:"Price",
-    writing:"Writing",
-    collage:"Collage",
-    coloring:"Colouring",
-    discussion:"Conversation",
-    game:"Game",
-    planning:"Planning",
-    solo:"Solo",
-    two:"For two",
-    family:"Family",
-    group:"Group",
-    under30:"Under $30",
-    over40:"Over $40",
-    yourCart:"Your cart",
-    subtotal:"Subtotal",
-    viewCart:"View cart",
-    secureNote:"100% secure payment",
-    checkoutTitle:"Complete your order",
-    cartStep:"Cart",
-    shippingStep:"Shipping",
-    paymentStep:"Payment",
-    confirmationStep:"Confirmation",
-    found:"kits found",
-    includes:"Includes:",
-    viewKit:"View kit",
-    emptyCart:"Your cart is empty.",
-    remove:"Remove",
-    inside:"Inside the kit",
-    durationLabel:"Recommended duration",
-    add:"Add to cart",
-    editCart:"Edit cart",
-    continue:"Continue",
-    back:"Back",
-    firstName:"First name",
-    lastName:"Last name",
-    email:"Email",
-    address:"Address",
-    city:"City",
-    postal:"Postal code",
-    cardName:"Name on card",
-    cardNumber:"Card number",
-    expiry:"Expiry",
-    cvv:"CVV",
-    noRealPayment:"No real payment is processed.",
-    required:"Required field",
-    invalidEmail:"Invalid email",
-    digits:"16 digits required",
-    expiryFormat:"Use MM/YY",
-    cvvFormat:"3 or 4 digits",
-    orderConfirmed:"Order confirmed",
-    thankYou:"Thank you! Your kit is ready to be prepared.",
-    experience:"How was your experience?",
-    comment:"Comment",
-    finish:"Finish",
-    reviews:"reviews"
-  }
+const i18n={
+fr:{fastShipping:"Livraison rapide",securePayment:"Paiement sécurisé",easyReturns:"Retours faciles 30 jours",brandSub:"Des kits créatifs sans écran",home:"Accueil",kits:"Kits créatifs",about:"À propos",journal:"Journal",contact:"Contact",heroTitle:"Des kits d’activités créatives sans écran, prêts à vivre.",heroText:"Chaque kit contient tout le matériel et une activité guidée pour créer, écrire, se détendre ou partager un vrai moment.",heroButton:"Découvrir les kits",guided:"Activités guidées",included:"Tout le matériel inclus",screenFree:"Sans écran",allAges:"Pour tous les âges",whatTitle:"Qu’est-ce qu’un kit Pause Papier ?",whatText:"Un kit complet, livré chez vous, avec tout le nécessaire pour profiter d’une activité créative sans écran.",e1t:"Une activité guidée",e1d:"Des cartes ou un guide pas à pas.",e2t:"Tout le matériel inclus",e2d:"Papier, crayons, cartes et accessoires.",e3t:"Une durée claire",e3d:"Chaque kit indique la durée recommandée.",e4t:"Pour tous",e4d:"En solo, en famille ou entre amis.",catalogueTitle:"Notre catalogue de kits créatifs",catalogueText:"Trouvez le kit parfait pour votre prochaine pause.",filters:"Filtres",clear:"Tout effacer",sortAll:"Tous les kits",sortLow:"Prix croissant",sortHigh:"Prix décroissant",sortName:"Nom A à Z",activity:"Activité",participants:"Participants",price:"Prix",writing:"Écriture",collage:"Collage",coloring:"Coloriage",discussion:"Discussion",game:"Jeu",planning:"Planification",solo:"Seul",two:"À deux",family:"Famille",group:"Groupe",under30:"Moins de 30 $",over40:"Plus de 40 $",yourCart:"Votre panier",subtotal:"Sous-total",viewCart:"Voir le panier",secureNote:"Paiement 100% sécurisé",checkoutTitle:"Finaliser votre commande",cartStep:"Panier",shippingStep:"Livraison",paymentStep:"Paiement",confirmationStep:"Confirmation",found:"kits trouvés",includes:"Contient :",viewKit:"Voir le kit",emptyCart:"Votre panier est vide.",remove:"Retirer",durationLabel:"Durée recommandée",add:"Ajouter au panier",editCart:"Modifier le panier",continue:"Continuer",back:"Retour",firstName:"Prénom",lastName:"Nom",email:"Courriel",address:"Adresse",city:"Ville",postal:"Code postal",cardName:"Nom sur la carte",cardNumber:"Numéro de carte",expiry:"Expiration",cvv:"CVV",noRealPayment:"Aucun paiement réel n’est effectué.",required:"Champ obligatoire",invalidEmail:"Courriel invalide",digits:"16 chiffres requis",expiryFormat:"Format MM/AA",cvvFormat:"3 ou 4 chiffres",orderConfirmed:"Commande confirmée",thankYou:"Merci ! Votre kit est prêt à être préparé.",experience:"Comment s’est passée votre expérience ?",comment:"Commentaire",finish:"Terminer",reviews:"avis"},
+en:{fastShipping:"Fast shipping",securePayment:"Secure payment",easyReturns:"Easy 30-day returns",brandSub:"Screen-free creative kits",home:"Home",kits:"Creative kits",about:"About",journal:"Journal",contact:"Contact",heroTitle:"Screen-free creative activity kits, ready to enjoy.",heroText:"Each kit includes all materials and a guided activity to create, write, relax, or share a meaningful moment.",heroButton:"Explore the kits",guided:"Guided activities",included:"All materials included",screenFree:"Screen-free",allAges:"For all ages",whatTitle:"What is a Pause Papier kit?",whatText:"A complete kit delivered to your door with everything needed for a creative screen-free activity.",e1t:"A guided activity",e1d:"Cards or a simple step-by-step guide.",e2t:"Everything included",e2d:"Paper, pencils, cards and accessories.",e3t:"A clear duration",e3d:"Each kit shows the recommended duration.",e4t:"For everyone",e4d:"Solo, with family, or with friends.",catalogueTitle:"Our creative kit catalogue",catalogueText:"Find the perfect kit for your next pause.",filters:"Filters",clear:"Clear all",sortAll:"All kits",sortLow:"Price low to high",sortHigh:"Price high to low",sortName:"Name A to Z",activity:"Activity",participants:"Participants",price:"Price",writing:"Writing",collage:"Collage",coloring:"Colouring",discussion:"Conversation",game:"Game",planning:"Planning",solo:"Solo",two:"For two",family:"Family",group:"Group",under30:"Under $30",over40:"Over $40",yourCart:"Your cart",subtotal:"Subtotal",viewCart:"View cart",secureNote:"100% secure payment",checkoutTitle:"Complete your order",cartStep:"Cart",shippingStep:"Shipping",paymentStep:"Payment",confirmationStep:"Confirmation",found:"kits found",includes:"Includes:",viewKit:"View kit",emptyCart:"Your cart is empty.",remove:"Remove",durationLabel:"Recommended duration",add:"Add to cart",editCart:"Edit cart",continue:"Continue",back:"Back",firstName:"First name",lastName:"Last name",email:"Email",address:"Address",city:"City",postal:"Postal code",cardName:"Name on card",cardNumber:"Card number",expiry:"Expiry",cvv:"CVV",noRealPayment:"No real payment is processed.",required:"Required field",invalidEmail:"Invalid email",digits:"16 digits required",expiryFormat:"Use MM/YY",cvvFormat:"3 or 4 digits",orderConfirmed:"Order confirmed",thankYou:"Thank you! Your kit is ready to be prepared.",experience:"How was your experience?",comment:"Comment",finish:"Finish",reviews:"reviews"}
 };
 
-let language = localStorage.getItem("pausePapierLanguage") || "fr";
-let cart = JSON.parse(localStorage.getItem("pausePapierCart") || "[]");
-let activeProduct = null;
-let checkoutStep = 0;
-let rating = 0;
+let language=localStorage.getItem("pausePapierLanguage")||"fr";
+let cart=JSON.parse(localStorage.getItem("pausePapierCart")||"[]");
+let activeProduct=null;
+let checkoutStep=0;
 
-function t(key){ return i18n[language][key] || key; }
-function money(value){
-  return new Intl.NumberFormat(language==="fr"?"fr-CA":"en-CA",{style:"currency",currency:"CAD"}).format(value);
-}
-function saveCart(){ localStorage.setItem("pausePapierCart",JSON.stringify(cart)); }
+function t(key){return i18n[language][key]||key}
+function money(value){return new Intl.NumberFormat(language==="fr"?"fr-CA":"en-CA",{style:"currency",currency:"CAD"}).format(value)}
+function saveCart(){localStorage.setItem("pausePapierCart",JSON.stringify(cart))}
 function applyLanguage(){
-  document.documentElement.lang = language;
+  document.documentElement.lang=language;
   document.querySelectorAll("[data-i18n]").forEach(el=>{
-    const key = el.dataset.i18n;
-    if(i18n[language][key]) el.textContent = i18n[language][key];
+    const key=el.dataset.i18n;
+    if(i18n[language][key])el.textContent=i18n[language][key];
   });
-  document.getElementById("langBtn").textContent = language === "fr" ? "FR" : "EN";
+  document.getElementById("langBtn").textContent=language==="fr"?"FR":"EN";
   localStorage.setItem("pausePapierLanguage",language);
   renderProducts();
   renderCart();
-  if(activeProduct && document.getElementById("productModal").classList.contains("open")){
-    openProduct(activeProduct.id);
-  }
+  if(activeProduct&&document.getElementById("productModal").classList.contains("open"))openProduct(activeProduct.id);
 }
-function selectedValues(name){
-  return [...document.querySelectorAll(`input[data-filter="${name}"]:checked`)].map(i=>i.value);
-}
+function selectedValues(name){return[...document.querySelectorAll(`input[data-filter="${name}"]:checked`)].map(i=>i.value)}
 function priceMatches(price,values){
-  if(!values.length) return true;
-  return values.some(v=>{
-    if(v==="under30") return price<30;
-    if(v==="30to40") return price>=30 && price<=40;
-    if(v==="over40") return price>40;
-    return true;
-  });
+  if(!values.length)return true;
+  return values.some(v=>v==="under30"?price<30:v==="30to40"?price>=30&&price<=40:price>40);
 }
 function filteredProducts(){
-  const activities = selectedValues("activity");
-  const participants = selectedValues("participants");
-  const prices = selectedValues("price");
-  let result = products.filter(p=>{
-    return (!activities.length || activities.some(v=>p.activity.includes(v)))
-      && (!participants.length || participants.some(v=>p.participants.includes(v)))
-      && priceMatches(p.price,prices);
-  });
-
-  const sort = document.getElementById("sortSelect").value;
-  if(sort==="priceAsc") result.sort((a,b)=>a.price-b.price);
-  if(sort==="priceDesc") result.sort((a,b)=>b.price-a.price);
-  if(sort==="name") result.sort((a,b)=>{
-    const A = language==="fr"?a.name:a.nameEn;
-    const B = language==="fr"?b.name:b.nameEn;
-    return A.localeCompare(B);
-  });
+  const activities=selectedValues("activity"),participants=selectedValues("participants"),prices=selectedValues("price");
+  let result=products.filter(p=>(!activities.length||activities.some(v=>p.activity.includes(v)))&&(!participants.length||participants.some(v=>p.participants.includes(v)))&&priceMatches(p.price,prices));
+  const sort=document.getElementById("sortSelect").value;
+  if(sort==="priceAsc")result.sort((a,b)=>a.price-b.price);
+  if(sort==="priceDesc")result.sort((a,b)=>b.price-a.price);
+  if(sort==="name")result.sort((a,b)=>(language==="fr"?a.name:a.nameEn).localeCompare(language==="fr"?b.name:b.nameEn));
   return result;
 }
 function renderProducts(){
-  const list = filteredProducts();
-  document.getElementById("resultCount").textContent = `${list.length} ${t("found")}`;
-  document.getElementById("productGrid").innerHTML = list.length ? list.map(p=>`
+  const list=filteredProducts();
+  document.getElementById("resultCount").textContent=`${list.length} ${t("found")}`;
+  document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`
     <article class="product">
       <button class="product-photo" onclick="openProduct(${p.id})">
         <img src="${p.image}" alt="${language==="fr"?p.name:p.nameEn}">
@@ -1004,96 +597,67 @@ function renderProducts(){
           <button class="product-view" onclick="openProduct(${p.id})">${t("viewKit")}</button>
         </div>
       </div>
-    </article>
-  `).join("") : `<div style="grid-column:1/-1;padding:40px;text-align:center;border:1px dashed var(--line);border-radius:10px;color:#7c847e">${language==="fr"?"Aucun kit ne correspond à ces filtres.":"No kit matches these filters."}</div>`;
+    </article>`).join(""):`<div style="grid-column:1/-1;padding:36px;text-align:center;border:1px dashed var(--line);border-radius:9px;color:#7c847e">${language==="fr"?"Aucun kit ne correspond à ces filtres.":"No kit matches these filters."}</div>`;
 }
-function renderCart(){
-  document.getElementById("bagCount").textContent = cart.reduce((s,i)=>s+i.qty,0);
-  const subtotal = cart.reduce((sum,item)=>{
-    const p = products.find(x=>x.id===item.id);
-    return sum + p.price*item.qty;
-  },0);
-  document.getElementById("subtotal").textContent = money(subtotal);
-
-  const box = document.getElementById("cartItems");
+function cartHTML(){
   if(!cart.length){
-    box.innerHTML = `
-      <div class="empty-cart">
-        <div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-            <path d="M6 8h12l-1 11H7L6 8Z"/>
-            <path d="M9 9V6.8a3 3 0 0 1 6 0V9"/>
-          </svg>
-          <div>${t("emptyCart")}</div>
-        </div>
-      </div>`;
-    return;
+    return `<div class="desktop-empty"><div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1 11H7L6 8Z"/><path d="M9 9V6.8a3 3 0 0 1 6 0V9"/></svg>
+      <div>${t("emptyCart")}</div>
+    </div></div>`;
   }
-
-  box.innerHTML = cart.map(item=>{
-    const p = products.find(x=>x.id===item.id);
-    return `
-      <div class="cart-item">
-        <img src="${p.image}" alt="">
-        <div>
-          <strong>${language==="fr"?p.name:p.nameEn}</strong>
-          <div class="qty">
-            <button onclick="changeQty(${p.id},-1)">−</button>
-            <span>${item.qty}</span>
-            <button onclick="changeQty(${p.id},1)">+</button>
-          </div>
-          <button class="remove-btn" onclick="removeItem(${p.id})">${t("remove")}</button>
+  return cart.map(item=>{
+    const p=products.find(x=>x.id===item.id);
+    return `<div class="desktop-cart-item">
+      <img src="${p.image}" alt="">
+      <div>
+        <strong>${language==="fr"?p.name:p.nameEn}</strong>
+        <div class="desktop-qty">
+          <button onclick="changeQty(${p.id},-1)">−</button>
+          <span>${item.qty}</span>
+          <button onclick="changeQty(${p.id},1)">+</button>
         </div>
-        <strong>${money(p.price*item.qty)}</strong>
+        <button class="desktop-remove" onclick="removeItem(${p.id})">${t("remove")}</button>
       </div>
-    `;
+      <strong>${money(p.price*item.qty)}</strong>
+    </div>`;
   }).join("");
 }
+function renderCart(){
+  document.getElementById("cartCount").textContent=cart.reduce((s,i)=>s+i.qty,0);
+  const subtotal=cart.reduce((sum,item)=>sum+products.find(p=>p.id===item.id).price*item.qty,0);
+  document.getElementById("desktopSubtotal").textContent=money(subtotal);
+  document.getElementById("mobileSubtotal").textContent=money(subtotal);
+  document.getElementById("desktopCartItems").innerHTML=cartHTML();
+  document.getElementById("mobileCartItems").innerHTML=cartHTML();
+}
 function changeQty(id,delta){
-  const item = cart.find(i=>i.id===id);
-  if(!item) return;
-  item.qty = Math.max(1,item.qty+delta);
+  const item=cart.find(i=>i.id===id);
+  if(!item)return;
+  item.qty=Math.max(1,item.qty+delta);
   saveCart();renderCart();
 }
-function removeItem(id){
-  cart = cart.filter(i=>i.id!==id);
-  saveCart();renderCart();
-}
+function removeItem(id){cart=cart.filter(i=>i.id!==id);saveCart();renderCart()}
 function addToCart(id,qty=1){
-  const existing = cart.find(i=>i.id===id);
-  if(existing) existing.qty += qty;
-  else cart.push({id,qty});
-  saveCart();renderCart();
-  closeProduct();
-  openCart();
+  const existing=cart.find(i=>i.id===id);
+  if(existing)existing.qty+=qty;else cart.push({id,qty});
+  saveCart();renderCart();closeProduct();openMobileCart();
 }
-function openOverlay(){
-  document.getElementById("overlay").classList.add("open");
-  document.body.style.overflow="hidden";
-}
+function openOverlay(){document.getElementById("overlay").classList.add("open");document.body.style.overflow="hidden"}
 function closeOverlayIfIdle(){
-  const anyOpen = document.querySelector(".cart-drawer.open,.modal.open");
-  if(!anyOpen){
-    document.getElementById("overlay").classList.remove("open");
-    document.body.style.overflow="";
+  if(!document.querySelector(".mobile-cart.open,.modal.open")){
+    document.getElementById("overlay").classList.remove("open");document.body.style.overflow="";
   }
 }
-function openCart(){
-  document.getElementById("cartDrawer").classList.add("open");
-  openOverlay();
-}
-function closeCart(){
-  document.getElementById("cartDrawer").classList.remove("open");
-  closeOverlayIfIdle();
-}
+function openMobileCart(){document.getElementById("mobileCart").classList.add("open");openOverlay()}
+function closeMobileCart(){document.getElementById("mobileCart").classList.remove("open");closeOverlayIfIdle()}
 function openProduct(id){
-  activeProduct = products.find(p=>p.id===id);
-  const name = language==="fr"?activeProduct.name:activeProduct.nameEn;
-  const subtitle = language==="fr"?activeProduct.subtitle:activeProduct.subtitleEn;
-  const tag = language==="fr"?activeProduct.tag:activeProduct.tagEn;
-  const duration = language==="fr"?activeProduct.duration:activeProduct.durationEn;
-
-  document.getElementById("productModalContent").innerHTML = `
+  activeProduct=products.find(p=>p.id===id);
+  const name=language==="fr"?activeProduct.name:activeProduct.nameEn;
+  const subtitle=language==="fr"?activeProduct.subtitle:activeProduct.subtitleEn;
+  const tag=language==="fr"?activeProduct.tag:activeProduct.tagEn;
+  const duration=language==="fr"?activeProduct.duration:activeProduct.durationEn;
+  document.getElementById("productModalContent").innerHTML=`
     <div class="product-modal">
       <div class="thumbs">
         <div class="thumb"><img src="${activeProduct.image}" alt=""></div>
@@ -1101,9 +665,7 @@ function openProduct(id){
         <div class="thumb"><img src="${activeProduct.image}" alt=""></div>
         <div class="thumb"><img src="${activeProduct.image}" alt=""></div>
       </div>
-      <div class="main-image">
-        <img src="${activeProduct.image}" alt="${name}">
-      </div>
+      <div class="main-image"><img src="${activeProduct.image}" alt="${name}"></div>
       <div class="product-info">
         <span class="product-kicker">${tag}</span>
         <h2>${name}</h2>
@@ -1122,198 +684,68 @@ function openProduct(id){
           <button class="add-btn" onclick="addFromModal()">${t("add")}</button>
         </div>
       </div>
-    </div>
-  `;
-  document.getElementById("productModal").classList.add("open");
-  openOverlay();
+    </div>`;
+  document.getElementById("productModal").classList.add("open");openOverlay();
 }
-function changeModalQty(delta){
-  const input = document.getElementById("modalQty");
-  input.value = Math.max(1,(parseInt(input.value)||1)+delta);
-}
-function addFromModal(){
-  const qty = Math.max(1,parseInt(document.getElementById("modalQty").value)||1);
-  addToCart(activeProduct.id,qty);
-}
-function closeProduct(){
-  document.getElementById("productModal").classList.remove("open");
-  closeOverlayIfIdle();
-}
-function openCheckout(){
-  if(!cart.length) return;
-  closeCart();
-  checkoutStep=0;
-  renderCheckout();
-  document.getElementById("checkoutModal").classList.add("open");
-  openOverlay();
-}
-function closeCheckout(){
-  document.getElementById("checkoutModal").classList.remove("open");
-  closeOverlayIfIdle();
-}
-function updateSteps(){
-  [...document.querySelectorAll(".step")].forEach((el,i)=>{
-    el.classList.toggle("active",i===checkoutStep);
-    el.classList.toggle("done",i<checkoutStep);
-  });
-}
+function changeModalQty(delta){const input=document.getElementById("modalQty");input.value=Math.max(1,(parseInt(input.value)||1)+delta)}
+function addFromModal(){addToCart(activeProduct.id,Math.max(1,parseInt(document.getElementById("modalQty").value)||1))}
+function closeProduct(){document.getElementById("productModal").classList.remove("open");closeOverlayIfIdle()}
+function updateSteps(){[...document.querySelectorAll(".step")].forEach((el,i)=>{el.classList.toggle("active",i===checkoutStep);el.classList.toggle("done",i<checkoutStep)})}
 function orderSummary(){
-  const total = cart.reduce((sum,item)=>{
-    const p = products.find(x=>x.id===item.id);
-    return sum + p.price*item.qty;
-  },0);
-  return `
-    <div class="order-box">
-      ${cart.map(item=>{
-        const p=products.find(x=>x.id===item.id);
-        return `<div class="summary-row"><span>${item.qty} × ${language==="fr"?p.name:p.nameEn}</span><strong>${money(p.price*item.qty)}</strong></div>`;
-      }).join("")}
-      <hr style="border:0;border-top:1px solid var(--line);margin:9px 0">
-      <div class="summary-row"><strong>Total</strong><strong>${money(total)}</strong></div>
-    </div>
-  `;
+  const total=cart.reduce((sum,item)=>sum+products.find(p=>p.id===item.id).price*item.qty,0);
+  return `<div class="order-box">${cart.map(item=>{const p=products.find(x=>x.id===item.id);return `<div class="summary-row"><span>${item.qty} × ${language==="fr"?p.name:p.nameEn}</span><strong>${money(p.price*item.qty)}</strong></div>`}).join("")}<hr style="border:0;border-top:1px solid var(--line);margin:9px 0"><div class="summary-row"><strong>Total</strong><strong>${money(total)}</strong></div></div>`;
 }
-function field(id,label,type="text",full=false){
-  return `
-    <div class="field ${full?"full":""}">
-      <label for="${id}">${label}</label>
-      <input id="${id}" type="${type}">
-      <div class="error" id="${id}Err"></div>
-    </div>
-  `;
+function field(id,label,type="text",full=false){return `<div class="field ${full?"full":""}"><label for="${id}">${label}</label><input id="${id}" type="${type}"><div class="error" id="${id}Err"></div></div>`}
+function openCheckout(){
+  if(!cart.length)return;
+  closeMobileCart();checkoutStep=0;renderCheckout();
+  document.getElementById("checkoutModal").classList.add("open");openOverlay();
 }
+function closeCheckout(){document.getElementById("checkoutModal").classList.remove("open");closeOverlayIfIdle()}
 function renderCheckout(){
   updateSteps();
-  const box = document.getElementById("checkoutContent");
-
-  if(checkoutStep===0){
-    box.innerHTML = `
-      ${orderSummary()}
-      <div class="actions-row">
-        <button class="secondary" onclick="closeCheckout();openCart()">${t("editCart")}</button>
-        <button class="primary" onclick="checkoutStep=1;renderCheckout()">${t("continue")} →</button>
-      </div>`;
-    return;
-  }
-
-  if(checkoutStep===1){
-    box.innerHTML = `
-      <div class="form-grid">
-        ${field("firstName",t("firstName"))}
-        ${field("lastName",t("lastName"))}
-        ${field("email",t("email"),"email",true)}
-        ${field("address",t("address"),"text",true)}
-        ${field("city",t("city"))}
-        ${field("postal",t("postal"))}
-      </div>
-      <div class="actions-row">
-        <button class="secondary" onclick="checkoutStep=0;renderCheckout()">${t("back")}</button>
-        <button class="primary" onclick="validateShipping()">${t("continue")} →</button>
-      </div>`;
-    return;
-  }
-
-  if(checkoutStep===2){
-    box.innerHTML = `
-      ${orderSummary()}
-      <div class="form-grid">
-        ${field("cardName",t("cardName"),"text",true)}
-        ${field("cardNumber",t("cardNumber"),"text",true)}
-        ${field("expiry",t("expiry"))}
-        ${field("cvv",t("cvv"))}
-      </div>
-      <p style="font-size:.7rem;color:#737a74">${t("noRealPayment")}</p>
-      <div class="actions-row">
-        <button class="secondary" onclick="checkoutStep=1;renderCheckout()">${t("back")}</button>
-        <button class="primary" onclick="validatePayment()">${t("continue")} →</button>
-      </div>`;
-    return;
-  }
-
-  box.innerHTML = `
-    <div class="confirm">
-      <div class="checkmark">✓</div>
-      <h3 style="font-family:'Playfair Display',serif;color:var(--green);font-size:1.6rem;margin:0 0 6px">${t("orderConfirmed")}</h3>
-      <p style="font-size:.8rem;color:#687069">${t("thankYou")}</p>
-      <div class="survey">
-        <strong>${t("experience")}</strong>
-        <div class="rating-buttons">
-          ${[1,2,3,4,5].map(n=>`<button data-rating="${n}" onclick="selectRating(${n})">${n}</button>`).join("")}
-        </div>
-        <div class="field full">
-          <label for="feedback">${t("comment")}</label>
-          <textarea id="feedback" rows="4"></textarea>
-        </div>
-        <div class="actions-row">
-          <span></span>
-          <button class="primary" onclick="finishOrder()">${t("finish")}</button>
-        </div>
-      </div>
-    </div>`;
+  const box=document.getElementById("checkoutContent");
+  if(checkoutStep===0){box.innerHTML=`${orderSummary()}<div class="actions-row"><button class="secondary" onclick="closeCheckout();openMobileCart()">${t("editCart")}</button><button class="primary" onclick="checkoutStep=1;renderCheckout()">${t("continue")} →</button></div>`;return}
+  if(checkoutStep===1){box.innerHTML=`<div class="form-grid">${field("firstName",t("firstName"))}${field("lastName",t("lastName"))}${field("email",t("email"),"email",true)}${field("address",t("address"),"text",true)}${field("city",t("city"))}${field("postal",t("postal"))}</div><div class="actions-row"><button class="secondary" onclick="checkoutStep=0;renderCheckout()">${t("back")}</button><button class="primary" onclick="validateShipping()">${t("continue")} →</button></div>`;return}
+  if(checkoutStep===2){box.innerHTML=`${orderSummary()}<div class="form-grid">${field("cardName",t("cardName"),"text",true)}${field("cardNumber",t("cardNumber"),"text",true)}${field("expiry",t("expiry"))}${field("cvv",t("cvv"))}</div><p style="font-size:.7rem;color:#737a74">${t("noRealPayment")}</p><div class="actions-row"><button class="secondary" onclick="checkoutStep=1;renderCheckout()">${t("back")}</button><button class="primary" onclick="validatePayment()">${t("continue")} →</button></div>`;return}
+  box.innerHTML=`<div class="confirm"><div class="checkmark">✓</div><h3 style="font-family:'Playfair Display',serif;color:var(--green);font-size:1.6rem;margin:0 0 6px">${t("orderConfirmed")}</h3><p style="font-size:.8rem;color:#687069">${t("thankYou")}</p><div class="survey"><strong>${t("experience")}</strong><div class="rating-buttons">${[1,2,3,4,5].map(n=>`<button data-rating="${n}" onclick="selectRating(${n})">${n}</button>`).join("")}</div><div class="field full"><label for="feedback">${t("comment")}</label><textarea id="feedback" rows="4"></textarea></div><div class="actions-row"><span></span><button class="primary" onclick="finishOrder()">${t("finish")}</button></div></div></div>`;
 }
-function setError(id,msg){
-  const el=document.getElementById(id+"Err");
-  if(el) el.textContent=msg;
-}
+function setError(id,msg){const el=document.getElementById(id+"Err");if(el)el.textContent=msg}
 function validateShipping(){
   let ok=true;
   ["firstName","lastName","email","address","city","postal"].forEach(id=>{
     const value=(document.getElementById(id).value||"").trim();
-    let err="";
-    if(!value) err=t("required");
-    if(id==="email" && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) err=t("invalidEmail");
-    setError(id,err);
-    if(err) ok=false;
+    let err="";if(!value)err=t("required");
+    if(id==="email"&&value&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))err=t("invalidEmail");
+    setError(id,err);if(err)ok=false;
   });
-  if(ok){checkoutStep=2;renderCheckout();}
+  if(ok){checkoutStep=2;renderCheckout()}
 }
 function validatePayment(){
   const name=(document.getElementById("cardName").value||"").trim();
   const number=(document.getElementById("cardNumber").value||"").replace(/\s/g,"");
   const expiry=(document.getElementById("expiry").value||"").trim();
   const cvv=(document.getElementById("cvv").value||"").trim();
-
   let ok=true;
-  setError("cardName",name?"":t("required")); if(!name) ok=false;
-  const numberOk=/^\d{16}$/.test(number); setError("cardNumber",numberOk?"":t("digits")); if(!numberOk) ok=false;
-  const expiryOk=/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry); setError("expiry",expiryOk?"":t("expiryFormat")); if(!expiryOk) ok=false;
-  const cvvOk=/^\d{3,4}$/.test(cvv); setError("cvv",cvvOk?"":t("cvvFormat")); if(!cvvOk) ok=false;
+  setError("cardName",name?"":t("required"));if(!name)ok=false;
+  const numberOk=/^\d{16}$/.test(number);setError("cardNumber",numberOk?"":t("digits"));if(!numberOk)ok=false;
+  const expiryOk=/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry);setError("expiry",expiryOk?"":t("expiryFormat"));if(!expiryOk)ok=false;
+  const cvvOk=/^\d{3,4}$/.test(cvv);setError("cvv",cvvOk?"":t("cvvFormat"));if(!cvvOk)ok=false;
+  if(ok){checkoutStep=3;renderCheckout()}
+}
+function selectRating(value){document.querySelectorAll("[data-rating]").forEach(btn=>btn.classList.toggle("selected",Number(btn.dataset.rating)===value))}
+function finishOrder(){cart=[];saveCart();renderCart();closeCheckout();window.scrollTo({top:0,behavior:"smooth"})}
 
-  if(ok){checkoutStep=3;renderCheckout();}
-}
-function selectRating(value){
-  rating=value;
-  document.querySelectorAll("[data-rating]").forEach(btn=>{
-    btn.classList.toggle("selected",Number(btn.dataset.rating)===value);
-  });
-}
-function finishOrder(){
-  cart=[];
-  saveCart();
-  renderCart();
-  closeCheckout();
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-document.getElementById("langBtn").addEventListener("click",()=>{
-  language=language==="fr"?"en":"fr";
-  applyLanguage();
-});
-document.getElementById("bagBtn").addEventListener("click",openCart);
-document.getElementById("closeCart").addEventListener("click",closeCart);
-document.getElementById("checkoutBtn").addEventListener("click",openCheckout);
+document.getElementById("langBtn").addEventListener("click",()=>{language=language==="fr"?"en":"fr";applyLanguage()});
+document.getElementById("cartBtn").addEventListener("click",openMobileCart);
+document.getElementById("closeMobileCart").addEventListener("click",closeMobileCart);
+document.getElementById("desktopCheckoutBtn").addEventListener("click",openCheckout);
+document.getElementById("mobileCheckoutBtn").addEventListener("click",openCheckout);
 document.getElementById("closeProduct").addEventListener("click",closeProduct);
 document.getElementById("closeCheckout").addEventListener("click",closeCheckout);
-document.getElementById("overlay").addEventListener("click",()=>{
-  closeCart();closeProduct();closeCheckout();
-});
-document.getElementById("filterToggle").addEventListener("click",()=>{
-  document.getElementById("filtersPanel").classList.toggle("open");
-});
-document.getElementById("clearFilters").addEventListener("click",()=>{
-  document.querySelectorAll(".filters-panel input").forEach(input=>input.checked=false);
-  renderProducts();
-});
+document.getElementById("overlay").addEventListener("click",()=>{closeMobileCart();closeProduct();closeCheckout()});
+document.getElementById("filterToggle").addEventListener("click",()=>document.getElementById("filtersPanel").classList.toggle("open"));
+document.getElementById("clearFilters").addEventListener("click",()=>{document.querySelectorAll(".filters-panel input").forEach(input=>input.checked=false);renderProducts()});
 document.getElementById("sortSelect").addEventListener("change",renderProducts);
 document.querySelectorAll(".filters-panel input").forEach(input=>input.addEventListener("change",renderProducts));
 
