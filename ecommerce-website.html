@@ -243,6 +243,14 @@
     .info-modal-content p, .info-modal-content li { line-height:1.65; }
     .newsletter-form { display:flex; gap:10px; margin-top:16px; }
     .newsletter-form input { flex:1; border:1px solid var(--line); border-radius:10px; padding:12px 14px; font:inherit; }
+    .promo-code-box { margin: 24px 0 18px; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: #fbf8f2; }
+    .promo-code-box label { display: block; font-weight: 700; margin-bottom: 9px; }
+    .promo-code-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+    .promo-code-row input { min-width: 0; width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font: inherit; text-transform: uppercase; }
+    .promo-feedback { margin: 9px 0 0; font-size: .84rem; }
+    .promo-feedback.success-message { color: #1f6a46; }
+    .promo-feedback.error-message { color: #a33a32; }
+    .discount-line { color: #1f6a46; font-weight: 700; }
 
     .footer-bottom { margin-top: 35px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); display: flex; justify-content: space-between; font-size: .78rem; }
 
@@ -931,7 +939,23 @@
       const [step, setStep] = useState(1);
       const [errors, setErrors] = useState({});
       const [form, setForm] = useState({ name:'', email:'', address:'', city:'', postal:'', card:'', expiry:'', cvv:'' });
+      const [promoCode, setPromoCode] = useState('');
+      const [promoApplied, setPromoApplied] = useState(false);
+      const [promoMessage, setPromoMessage] = useState('');
       const set = (key, value) => setForm(f => ({...f,[key]:value}));
+      const discount = promoApplied ? subtotal * 0.10 : 0;
+      const finalTotal = Math.max(0, subtotal - discount);
+      const applyPromo = () => {
+        const normalizedCode = promoCode.trim().toUpperCase();
+        if (normalizedCode === 'PAUSE10') {
+          setPromoApplied(true);
+          setPromoCode('PAUSE10');
+          setPromoMessage('Code appliqué : vous économisez 10 %.');
+        } else {
+          setPromoApplied(false);
+          setPromoMessage('Ce code promotionnel n’est pas valide. Essayez PAUSE10.');
+        }
+      };
       const validate = () => {
         const required = step === 1 ? ['name','email','address','city','postal'] : ['card','expiry','cvv'];
         const next = {};
@@ -946,8 +970,8 @@
         <div className="modal-body">
           <div className="stepper">{['Livraison','Paiement','Confirmation'].map((label,i) => { const n=i+1; return <div key={label} className={`step ${step===n?'active':''} ${step>n?'done':''}`}><div className="step-circle">{step>n?<i className="bi bi-check"></i>:n}</div><span>{label}</span></div>; })}</div>
           {step === 1 && <><h3>Où devons-nous livrer votre kit&nbsp;?</h3><p className="section-lead">Étape 1 sur 3 — vos articles sont conservés dans le panier.</p><div className="form-grid"><Field label="Nom complet" value={form.name} onChange={v=>set('name',v)} error={errors.name} /><Field label="Courriel" type="email" value={form.email} onChange={v=>set('email',v)} error={errors.email} /><Field label="Adresse" value={form.address} onChange={v=>set('address',v)} error={errors.address} full /><Field label="Ville" value={form.city} onChange={v=>set('city',v)} error={errors.city} /><Field label="Code postal" value={form.postal} onChange={v=>set('postal',v)} error={errors.postal} /></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={onClose}>Retour au panier</button><button className="btn btn-primary" onClick={next}>Continuer au paiement</button></div></>}
-          {step === 2 && <><h3>Informations de paiement</h3><p className="section-lead">Étape 2 sur 3 — ceci est un prototype, aucune donnée n’est transmise.</p><div className="form-grid"><Field label="Numéro de carte" value={form.card} onChange={v=>set('card',v)} error={errors.card} full placeholder="4242 4242 4242 4242" /><Field label="Expiration" value={form.expiry} onChange={v=>set('expiry',v)} error={errors.expiry} placeholder="MM/AA" /><Field label="CVV" value={form.cvv} onChange={v=>set('cvv',v)} error={errors.cvv} placeholder="123" /></div><div className="order-summary"><strong>Résumé de la commande</strong>{cart.map(item=><div className="order-line" key={item.id}><span>{item.qty} × {item.name}</span><span>{currency(item.qty*item.price)}</span></div>)}<hr/><div className="order-line"><span>Sous-total</span><span>{currency(subtotal)}</span></div><div className="order-line"><span>Livraison</span><span>Gratuite</span></div><div className="order-line"><span>Taxes</span><span>Incluses dans ce prototype</span></div><hr/><div className="order-line"><strong>Total</strong><strong>{currency(subtotal)}</strong></div></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={()=>setStep(1)}>Retour</button><button className="btn btn-primary" onClick={next}>Confirmer la commande</button></div></>}
-          {step === 3 && <div className="success"><div className="success-icon"><i className="bi bi-check2"></i></div><h2>Commande confirmée&nbsp;!</h2><p>Merci, {form.name || 'votre commande'} est prête. Un courriel de confirmation serait envoyé à <strong>{form.email || 'votre adresse courriel'}</strong>.</p><div className="order-summary"><div className="order-line"><span>Numéro de commande</span><strong>PP-{Math.floor(100000+Math.random()*900000)}</strong></div><div className="order-line"><span>Total</span><strong>{currency(subtotal)}</strong></div></div><button className="btn btn-primary" onClick={onComplete}>Terminer et donner mon avis</button></div>}
+          {step === 2 && <><h3>Informations de paiement</h3><p className="section-lead">Étape 2 sur 3 — ceci est un prototype, aucune donnée n’est transmise.</p><div className="form-grid"><Field label="Numéro de carte" value={form.card} onChange={v=>set('card',v)} error={errors.card} full placeholder="4242 4242 4242 4242" /><Field label="Expiration" value={form.expiry} onChange={v=>set('expiry',v)} error={errors.expiry} placeholder="MM/AA" /><Field label="CVV" value={form.cvv} onChange={v=>set('cvv',v)} error={errors.cvv} placeholder="123" /></div><div className="promo-code-box"><label htmlFor="promo-code">Code promotionnel</label><div className="promo-code-row"><input id="promo-code" value={promoCode} onChange={e=>{setPromoCode(e.target.value);setPromoMessage('');if(promoApplied)setPromoApplied(false);}} onKeyDown={e=>{if(e.key==='Enter'){e.preventDefault();applyPromo();}}} placeholder="Ex. PAUSE10" aria-describedby="promo-feedback"/><button type="button" className="btn btn-secondary" onClick={applyPromo}>Appliquer</button></div>{promoMessage && <p id="promo-feedback" className={`promo-feedback ${promoApplied?'success-message':'error-message'}`}>{promoMessage}</p>}</div><div className="order-summary"><strong>Résumé de la commande</strong>{cart.map(item=><div className="order-line" key={item.id}><span>{item.qty} × {item.name}</span><span>{currency(item.qty*item.price)}</span></div>)}<hr/><div className="order-line"><span>Sous-total</span><span>{currency(subtotal)}</span></div>{promoApplied && <div className="order-line discount-line"><span>Rabais PAUSE10 (10 %)</span><span>− {currency(discount)}</span></div>}<div className="order-line"><span>Livraison</span><span>Gratuite</span></div><div className="order-line"><span>Taxes</span><span>Incluses dans ce prototype</span></div><hr/><div className="order-line"><strong>Total</strong><strong>{currency(finalTotal)}</strong></div></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={()=>setStep(1)}>Retour</button><button className="btn btn-primary" onClick={next}>Confirmer la commande</button></div></>}
+          {step === 3 && <div className="success"><div className="success-icon"><i className="bi bi-check2"></i></div><h2>Commande confirmée&nbsp;!</h2><p>Merci, {form.name || 'votre commande'} est prête. Un courriel de confirmation serait envoyé à <strong>{form.email || 'votre adresse courriel'}</strong>.</p><div className="order-summary"><div className="order-line"><span>Numéro de commande</span><strong>PP-{Math.floor(100000+Math.random()*900000)}</strong></div>{promoApplied && <div className="order-line discount-line"><span>Rabais appliqué</span><strong>− {currency(discount)}</strong></div>}<div className="order-line"><span>Total</span><strong>{currency(finalTotal)}</strong></div></div><button className="btn btn-primary" onClick={onComplete}>Terminer et donner mon avis</button></div>}
         </div>
       </div></div>;
     }
