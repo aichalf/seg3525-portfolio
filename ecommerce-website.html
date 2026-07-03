@@ -233,6 +233,17 @@
     .footer h3, .footer h4 { color: white; }
     .footer h4 { font-family: "DM Sans", sans-serif; font-size: .88rem; }
     .footer a { display: block; margin: 8px 0; font-size: .86rem; }
+
+    .promo-banner { background: #214f3a; color: #fff; text-align: center; padding: 10px 16px; font-weight: 700; letter-spacing: .01em; }
+    .promo-banner i { margin-right: 8px; }
+    .footer-link-btn { display:block; border:0; background:none; color:inherit; padding:0; margin:8px 0; font:inherit; cursor:pointer; text-align:left; }
+    .footer-link-btn:hover { color:#fff; text-decoration:underline; }
+    .legal-links { display:flex; gap:18px; flex-wrap:wrap; }
+    .info-modal-content h3 { margin:20px 0 8px; color:var(--green); }
+    .info-modal-content p, .info-modal-content li { line-height:1.65; }
+    .newsletter-form { display:flex; gap:10px; margin-top:16px; }
+    .newsletter-form input { flex:1; border:1px solid var(--line); border-radius:10px; padding:12px 14px; font:inherit; }
+
     .footer-bottom { margin-top: 35px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); display: flex; justify-content: space-between; font-size: .78rem; }
 
 
@@ -469,7 +480,7 @@
         price: 39,
         level: "Intermédiaire",
         badge: "Kit nature",
-        image: "assets/pause-botanique.png",
+        image: "assets/herbier-de-poche.png",
         description: "Un carnet, une presse légère et des fiches pour observer, récolter et conserver des feuilles.",
         contents: [
           "1 carnet d’observation botanique",
@@ -514,7 +525,7 @@
         price: 45,
         level: "Débutant",
         badge: "Kit famille",
-        image: "assets/collage-du-dimanche.png",
+        image: "assets/petites-mains-creatives.png",
         description: "Une activité joyeuse à partager, avec du matériel sécuritaire et des étapes illustrées.",
         contents: [
           "12 feuilles de papier coloré et texturé",
@@ -580,7 +591,7 @@
         price: 46,
         level: "Débutant",
         badge: "Kit aquarelle",
-        image: "assets/bulle-de-couleurs.png",
+        image: "assets/pause-aquarelle.png",
         description: "Une palette douce, du papier adapté et quatre exercices simples pour peindre sans appréhension.",
         contents: [
           "1 palette de 12 couleurs d’aquarelle",
@@ -602,7 +613,7 @@
         price: 32,
         level: "Débutant",
         badge: "Cartes créatives",
-        image: "assets/lettre-a-soi.png",
+        image: "assets/mots-doux-a-offrir.png",
         description: "Créez six cartes uniques avec papiers, tampons et messages à personnaliser.",
         contents: [
           "6 cartes épaisses à personnaliser",
@@ -649,6 +660,7 @@
       const [selectedProduct, setSelectedProduct] = useState(null);
       const [checkoutOpen, setCheckoutOpen] = useState(false);
       const [surveyOpen, setSurveyOpen] = useState(false);
+      const [infoModal, setInfoModal] = useState(null);
       const [mobileOpen, setMobileOpen] = useState(false);
       const [toast, setToast] = useState('');
       const [query, setQuery] = useState('');
@@ -656,8 +668,8 @@
       const [filters, setFilters] = useState({ category: [], audience: [], level: [], min: '', max: '' });
 
       useEffect(() => {
-        document.body.classList.toggle('no-scroll', cartOpen || selectedProduct || checkoutOpen || surveyOpen);
-      }, [cartOpen, selectedProduct, checkoutOpen, surveyOpen]);
+        document.body.classList.toggle('no-scroll', cartOpen || selectedProduct || checkoutOpen || surveyOpen || infoModal);
+      }, [cartOpen, selectedProduct, checkoutOpen, surveyOpen, infoModal]);
 
       useEffect(() => {
         if (!toast) return;
@@ -713,9 +725,10 @@
       const activeChips = ['category','audience','level'].flatMap(group => filters[group].map(value => ({group,value})));
 
       return <>
+        <div className="promo-banner"><i className="bi bi-gift"></i> Offre découverte : 10 % de rabais sur votre premier kit avec le code <strong>PAUSE10</strong></div>
         <div className="announcement">
           <div className="container announcement-inner">
-            <span><i className="bi bi-truck"></i> Livraison rapide</span>
+            <span><i className="bi bi-truck"></i> Livraison gratuite dès 60 $</span>
             <span><i className="bi bi-shield-check"></i> Paiement sécurisé</span>
             <span><i className="bi bi-arrow-counterclockwise"></i> Retours faciles 30 jours</span>
           </div>
@@ -736,7 +749,6 @@
               <a href="index.html#projets" className="nav-portfolio"><i className="bi bi-arrow-left-circle"></i> Portfolio</a>
             </nav>
             <div className="nav-actions">
-              <button className="lang-btn" aria-label="Langue française">FR</button>
               <button className="icon-btn cart-button" onClick={() => setCartOpen(true)} aria-label={`Ouvrir le panier, ${cartCount} article(s)`}>
                 <i className="bi bi-bag"></i><span className="cart-count">{cartCount}</span>
               </button>
@@ -866,18 +878,19 @@
             <div className="footer-grid">
               <div><h3>PAUSE PAPIER</h3><p>Des kits créatifs sans écran pour ralentir, créer et partager.</p><p><i className="bi bi-envelope"></i> bonjour@pausepapier.ca</p></div>
               <div><h4>Découvrir</h4><a href="#kits">Tous les kits</a><a href="#apropos">Notre approche</a><a href="#journal">Journal</a></div>
-              <div><h4>Aide</h4><a href="#contact">Livraison</a><a href="#contact">Retours</a><a href="#contact">FAQ</a></div>
-              <div><h4>Nous suivre</h4><a href="#contact">Instagram</a><a href="#contact">Pinterest</a><a href="#contact">Infolettre</a></div>
+              <div><h4>Aide</h4><button className="footer-link-btn" onClick={() => setInfoModal('shipping')}>Livraison et retours</button><button className="footer-link-btn" onClick={() => setInfoModal('faq')}>FAQ</button><a href="mailto:bonjour@pausepapier.ca">Nous contacter</a></div>
+              <div><h4>Rester en contact</h4><button className="footer-link-btn" onClick={() => setInfoModal('newsletter')}>Infolettre</button><p>Recevez des idées créatives et des offres occasionnelles.</p></div>
             </div>
-            <div className="footer-bottom"><span>© 2026 Pause Papier</span><span>Confidentialité · Conditions</span></div>
+            <div className="footer-bottom"><span>© 2026 Pause Papier</span><span className="legal-links"><button className="footer-link-btn" onClick={() => setInfoModal('privacy')}>Confidentialité</button><button className="footer-link-btn" onClick={() => setInfoModal('terms')}>Conditions</button></span></div>
           </div>
         </footer>
 
-        <button className="survey-trigger" onClick={() => setSurveyOpen(true)}><i className="bi bi-chat-heart"></i> Votre avis</button>
+        <button className="survey-trigger" onClick={() => setSurveyOpen(true)} aria-label="Donner votre avis sur le site"><i className="bi bi-chat-heart"></i> Votre avis</button>
 
         {cartOpen && <CartDrawer cart={cart} subtotal={subtotal} onClose={() => setCartOpen(false)} onQty={updateQty} onCheckout={() => { setCartOpen(false); setCheckoutOpen(true); }} />}
         {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} onAdd={(p) => { addToCart(p); setSelectedProduct(null); setCartOpen(true); }} />}
         {checkoutOpen && <CheckoutModal cart={cart} subtotal={subtotal} onClose={() => setCheckoutOpen(false)} onComplete={() => { setCart([]); setCheckoutOpen(false); setSurveyOpen(true); }} />}
+        {infoModal && <InfoModal type={infoModal} onClose={() => setInfoModal(null)} onSubscribe={() => { setInfoModal(null); setToast('Merci ! Votre inscription à l’infolettre est confirmée.'); }} />}
         {surveyOpen && <SurveyModal onClose={() => setSurveyOpen(false)} onSubmit={() => { setSurveyOpen(false); setToast('Merci pour votre avis — il nous aide à nous améliorer.'); }} />}
         {toast && <div className="toast" role="status">{toast}</div>}
       </>;
@@ -901,7 +914,7 @@
       return <><div className="overlay" onClick={onClose}></div><aside className="drawer" aria-modal="true" role="dialog" aria-label="Votre panier">
         <div className="drawer-head"><h2>Votre panier</h2><button className="close-btn" onClick={onClose} aria-label="Fermer le panier"><i className="bi bi-x-lg"></i></button></div>
         <div className="cart-items">
-          {!cart.length ? <div className="cart-empty"><i className="bi bi-bag"></i><strong>Votre panier est vide.</strong><p>Découvrez un kit qui vous ressemble.</p><button className="btn btn-secondary" onClick={onClose}>Continuer mes achats</button></div> : cart.map(item => <div className="cart-item" key={item.id}><img src={item.image} alt="" /><div><div className="cart-item-top"><div><h4>{item.name}</h4><small>{item.type}</small></div><strong>{currency(item.price * item.qty)}</strong></div><div className="qty"><button onClick={() => onQty(item.id,-1)} aria-label="Diminuer la quantité">−</button><span>{item.qty}</span><button onClick={() => onQty(item.id,1)} aria-label="Augmenter la quantité">+</button></div></div></div>)}
+          {!cart.length ? <div className="cart-empty"><i className="bi bi-bag"></i><strong>Votre panier est vide.</strong><p>Découvrez un kit qui vous ressemble.</p><button className="btn btn-secondary" onClick={onClose}>Continuer mes achats</button></div> : cart.map(item => <div className="cart-item" key={item.id}><img src={item.image} alt={`Coffret ${item.name}`} /><div><div className="cart-item-top"><div><h4>{item.name}</h4><small>{item.type}</small></div><strong>{currency(item.price * item.qty)}</strong></div><div className="qty"><button onClick={() => onQty(item.id,-1)} aria-label="Diminuer la quantité">−</button><span>{item.qty}</span><button onClick={() => onQty(item.id,1)} aria-label="Augmenter la quantité">+</button></div></div></div>)}
         </div>
         {cart.length > 0 && <div className="cart-footer"><div className="subtotal"><span>Sous-total</span><span>{currency(subtotal)}</span></div><button className="btn btn-primary btn-block" onClick={onCheckout}>Passer à la caisse</button><div className="secure-note"><i className="bi bi-lock"></i> Prototype de paiement sécurisé — aucun vrai paiement</div></div>}
       </aside></>;
@@ -909,7 +922,7 @@
 
     function ProductModal({ product, onClose, onAdd }) {
       return <div className="modal-shell"><div className="overlay" onClick={onClose}></div><div className="modal" role="dialog" aria-modal="true" aria-label={`Détails de ${product.name}`} style={{zIndex:101}}>
-        <div className="modal-head"><h2>{product.name}</h2><button className="close-btn" onClick={onClose}><i className="bi bi-x-lg"></i></button></div>
+        <div className="modal-head"><h2>{product.name}</h2><button className="close-btn" onClick={onClose} aria-label={`Fermer la fiche de ${product.name}`}><i className="bi bi-x-lg"></i></button></div>
         <div className="modal-body product-modal-grid"><img src={product.image} alt={`Matériel inclus dans ${product.name}`} /><div><span className="eyebrow">{product.category}</span><h2 className="section-title" style={{fontSize:'2rem'}}>{product.name}</h2><p>{product.description}</p><div className="meta-list"><div className="meta-row"><i className="bi bi-clock"></i><span>Durée recommandée : {product.duration}</span></div><div className="meta-row"><i className="bi bi-person"></i><span>Pour : {product.audience}</span></div><div className="meta-row"><i className="bi bi-bar-chart"></i><span>Niveau : {product.level}</span></div><div className="meta-row"><i className="bi bi-box-seam"></i><span>Tout le matériel nécessaire est inclus</span></div></div><div className="kit-details"><section className="kit-detail-box"><h3><i className="bi bi-box2-heart"></i> Ce que contient le kit</h3><ul className="kit-contents">{product.contents.map((item,index)=><li key={index}>{item}</li>)}</ul><p className="kit-note">Le contenu présenté correspond au coffret complet vendu.</p></section><section className="kit-detail-box"><h3><i className="bi bi-stars"></i> Ce que vous allez créer</h3><p className="kit-result">{product.outcome}</p></section></div><h3 style={{color:'var(--green)',fontSize:'1.8rem'}}>{currency(product.price)}</h3><button className="btn btn-primary btn-block" onClick={() => onAdd(product)}>Ajouter au panier</button></div></div>
       </div></div>;
     }
@@ -929,11 +942,11 @@
       };
       const next = () => { if (validate()) setStep(s => s + 1); };
       return <div className="modal-shell"><div className="overlay" onClick={onClose}></div><div className="modal" style={{zIndex:101}} role="dialog" aria-modal="true" aria-label="Finaliser la commande">
-        <div className="modal-head"><h2>Finaliser la commande</h2><button className="close-btn" onClick={onClose}><i className="bi bi-x-lg"></i></button></div>
+        <div className="modal-head"><h2>Finaliser la commande</h2><button className="close-btn" onClick={onClose} aria-label="Fermer le paiement"><i className="bi bi-x-lg"></i></button></div>
         <div className="modal-body">
           <div className="stepper">{['Livraison','Paiement','Confirmation'].map((label,i) => { const n=i+1; return <div key={label} className={`step ${step===n?'active':''} ${step>n?'done':''}`}><div className="step-circle">{step>n?<i className="bi bi-check"></i>:n}</div><span>{label}</span></div>; })}</div>
           {step === 1 && <><h3>Où devons-nous livrer votre kit&nbsp;?</h3><p className="section-lead">Étape 1 sur 3 — vos articles sont conservés dans le panier.</p><div className="form-grid"><Field label="Nom complet" value={form.name} onChange={v=>set('name',v)} error={errors.name} /><Field label="Courriel" type="email" value={form.email} onChange={v=>set('email',v)} error={errors.email} /><Field label="Adresse" value={form.address} onChange={v=>set('address',v)} error={errors.address} full /><Field label="Ville" value={form.city} onChange={v=>set('city',v)} error={errors.city} /><Field label="Code postal" value={form.postal} onChange={v=>set('postal',v)} error={errors.postal} /></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={onClose}>Retour au panier</button><button className="btn btn-primary" onClick={next}>Continuer au paiement</button></div></>}
-          {step === 2 && <><h3>Informations de paiement</h3><p className="section-lead">Étape 2 sur 3 — ceci est un prototype, aucune donnée n’est transmise.</p><div className="form-grid"><Field label="Numéro de carte" value={form.card} onChange={v=>set('card',v)} error={errors.card} full placeholder="4242 4242 4242 4242" /><Field label="Expiration" value={form.expiry} onChange={v=>set('expiry',v)} error={errors.expiry} placeholder="MM/AA" /><Field label="CVV" value={form.cvv} onChange={v=>set('cvv',v)} error={errors.cvv} placeholder="123" /></div><div className="order-summary"><strong>Résumé de la commande</strong>{cart.map(item=><div className="order-line" key={item.id}><span>{item.qty} × {item.name}</span><span>{currency(item.qty*item.price)}</span></div>)}<hr/><div className="order-line"><strong>Total</strong><strong>{currency(subtotal)}</strong></div></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={()=>setStep(1)}>Retour</button><button className="btn btn-primary" onClick={next}>Confirmer la commande</button></div></>}
+          {step === 2 && <><h3>Informations de paiement</h3><p className="section-lead">Étape 2 sur 3 — ceci est un prototype, aucune donnée n’est transmise.</p><div className="form-grid"><Field label="Numéro de carte" value={form.card} onChange={v=>set('card',v)} error={errors.card} full placeholder="4242 4242 4242 4242" /><Field label="Expiration" value={form.expiry} onChange={v=>set('expiry',v)} error={errors.expiry} placeholder="MM/AA" /><Field label="CVV" value={form.cvv} onChange={v=>set('cvv',v)} error={errors.cvv} placeholder="123" /></div><div className="order-summary"><strong>Résumé de la commande</strong>{cart.map(item=><div className="order-line" key={item.id}><span>{item.qty} × {item.name}</span><span>{currency(item.qty*item.price)}</span></div>)}<hr/><div className="order-line"><span>Sous-total</span><span>{currency(subtotal)}</span></div><div className="order-line"><span>Livraison</span><span>Gratuite</span></div><div className="order-line"><span>Taxes</span><span>Incluses dans ce prototype</span></div><hr/><div className="order-line"><strong>Total</strong><strong>{currency(subtotal)}</strong></div></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={()=>setStep(1)}>Retour</button><button className="btn btn-primary" onClick={next}>Confirmer la commande</button></div></>}
           {step === 3 && <div className="success"><div className="success-icon"><i className="bi bi-check2"></i></div><h2>Commande confirmée&nbsp;!</h2><p>Merci, {form.name || 'votre commande'} est prête. Un courriel de confirmation serait envoyé à <strong>{form.email || 'votre adresse courriel'}</strong>.</p><div className="order-summary"><div className="order-line"><span>Numéro de commande</span><strong>PP-{Math.floor(100000+Math.random()*900000)}</strong></div><div className="order-line"><span>Total</span><strong>{currency(subtotal)}</strong></div></div><button className="btn btn-primary" onClick={onComplete}>Terminer et donner mon avis</button></div>}
         </div>
       </div></div>;
@@ -943,13 +956,41 @@
       return <div className={`field ${full?'full':''}`}><label>{label}</label><input type={type} value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder} aria-invalid={!!error} />{error && <span className="error">{error}</span>}</div>;
     }
 
+
+    function InfoModal({ type, onClose, onSubscribe }) {
+      const [email, setEmail] = useState('');
+      const [error, setError] = useState('');
+      const titles = {
+        shipping: 'Livraison et retours',
+        faq: 'Questions fréquentes',
+        newsletter: 'Infolettre Pause Papier',
+        privacy: 'Confidentialité',
+        terms: 'Conditions d’utilisation'
+      };
+      const subscribe = () => {
+        if (!/^\S+@\S+\.\S+$/.test(email)) { setError('Entrez une adresse courriel valide.'); return; }
+        onSubscribe();
+      };
+      return <div className="modal-shell"><div className="overlay" onClick={onClose}></div><div className="modal" style={{zIndex:101,maxWidth:'620px'}} role="dialog" aria-modal="true" aria-label={titles[type]}>
+        <div className="modal-head"><h2>{titles[type]}</h2><button className="close-btn" onClick={onClose} aria-label={`Fermer ${titles[type]}`}><i className="bi bi-x-lg"></i></button></div>
+        <div className="modal-body info-modal-content">
+          {type === 'shipping' && <><h3>Livraison</h3><p>Livraison gratuite partout au Canada dès 60 $ d’achat. Les commandes sont préparées en 1 à 2 jours ouvrables, puis livrées selon les délais du transporteur.</p><h3>Retours</h3><p>Vous disposez de 30 jours après la réception pour retourner un kit non utilisé dans son emballage d’origine. Écrivez à bonjour@pausepapier.ca avant l’envoi.</p></>}
+          {type === 'faq' && <><h3>Le matériel est-il inclus&nbsp;?</h3><p>Oui. Chaque fiche détaille précisément le contenu de la boîte.</p><h3>Les kits conviennent-ils aux débutants&nbsp;?</h3><p>Oui. Le niveau et la durée recommandée sont indiqués sur chaque produit.</p><h3>Puis-je offrir un kit&nbsp;?</h3><p>Oui. Les coffrets sont prêts à offrir et ne contiennent pas de facture imprimée.</p><h3>Est-ce un vrai paiement&nbsp;?</h3><p>Non. Ce site est un prototype : aucune donnée bancaire n’est transmise.</p></>}
+          {type === 'newsletter' && <><p>Recevez une idée créative, une nouveauté ou une offre occasionnelle. Pas de pourriel.</p><div className="newsletter-form"><input type="email" value={email} onChange={e=>{setEmail(e.target.value);setError('')}} placeholder="votre@courriel.ca" aria-label="Adresse courriel"/><button className="btn btn-primary" onClick={subscribe}>S’inscrire</button></div>{error && <p className="error">{error}</p>}</>}
+          {type === 'privacy' && <><p>Dans ce prototype, aucune donnée personnelle ou bancaire n’est enregistrée ni transmise. Les informations saisies servent uniquement à démontrer le parcours de commande dans le navigateur.</p></>}
+          {type === 'terms' && <><p>Les produits, prix et opérations de paiement présentés sur ce site sont fictifs. Le site sert de démonstration interactive et ne permet pas de conclure une transaction réelle.</p></>}
+          <div className="checkout-actions"><button className="btn btn-secondary" onClick={onClose}>Fermer</button></div>
+        </div>
+      </div></div>;
+    }
+
     function SurveyModal({ onClose, onSubmit }) {
       const [rating, setRating] = useState(0);
       const [comment, setComment] = useState('');
       const [error, setError] = useState('');
       const submit = () => { if (!rating) { setError('Choisissez une note avant d’envoyer votre avis.'); return; } onSubmit(); };
       return <div className="modal-shell"><div className="overlay" onClick={onClose}></div><div className="modal" style={{zIndex:101,maxWidth:'560px'}} role="dialog" aria-modal="true" aria-label="Sondage sur votre expérience">
-        <div className="modal-head"><h2>Comment s’est passée votre visite&nbsp;?</h2><button className="close-btn" onClick={onClose}><i className="bi bi-x-lg"></i></button></div>
+        <div className="modal-head"><h2>Comment s’est passée votre visite&nbsp;?</h2><button className="close-btn" onClick={onClose} aria-label="Fermer le sondage"><i className="bi bi-x-lg"></i></button></div>
         <div className="modal-body"><p>Votre avis compte. Deux petites questions nous aideront à rendre chaque pause encore plus simple et agréable.</p><label><strong>Quelle note donnez-vous à votre expérience&nbsp;?</strong></label><div className="stars" aria-label="Note sur cinq">{[1,2,3,4,5].map(n=><button key={n} className={n<=rating?'on':''} onClick={()=>{setRating(n);setError('')}} aria-label={`${n} étoile${n>1?'s':''}`}><i className={`bi ${n<=rating?'bi-star-fill':'bi-star'}`}></i></button>)}</div>{error&&<p className="error">{error}</p>}<div className="field"><label>Qu’aimeriez-vous nous dire&nbsp;? <span style={{fontWeight:400}}>(facultatif)</span></label><textarea value={comment} onChange={e=>setComment(e.target.value)} placeholder="Partagez une impression, une difficulté ou une idée…"></textarea></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={onClose}>Plus tard</button><button className="btn btn-primary" onClick={submit}>Envoyer mon avis</button></div></div>
       </div></div>;
     }
