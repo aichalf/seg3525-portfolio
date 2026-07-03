@@ -248,18 +248,6 @@
     }
     .nav-portfolio:hover { background: var(--soft); }
 
-    .portfolio-link {
-      position: fixed; left: 20px; bottom: 20px; z-index: 70;
-      display: inline-flex; align-items: center; gap: 9px;
-      padding: 11px 15px; border-radius: 999px;
-      background: rgba(255,255,255,.96); color: var(--green);
-      border: 1px solid var(--line); box-shadow: 0 10px 28px rgba(20,40,29,.16);
-      font-size: .82rem; font-weight: 800;
-      transition: transform .2s, box-shadow .2s, background .2s;
-    }
-    .portfolio-link:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(20,40,29,.22); background: white; }
-    .portfolio-link i { font-size: 1rem; }
-
     .overlay { position: fixed; inset: 0; background: rgba(15,25,19,.50); z-index: 80; animation: fade .2s; }
     @keyframes fade { from { opacity: 0; } }
     .drawer {
@@ -375,9 +363,7 @@
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .footer-grid > div:first-child, .footer-grid > div:last-child { grid-column: 1/-1; }
       .footer-bottom { flex-direction: column; gap: 8px; }
-      .portfolio-link { left: 12px; bottom: 12px; padding: 10px 13px; }
-      .survey-trigger { right: 12px; bottom: 12px; padding: 11px 14px; }
-    }
+      }
   </style>
 </head>
 <body>
@@ -886,10 +872,6 @@
             <div className="footer-bottom"><span>© 2026 Pause Papier</span><span>Confidentialité · Conditions</span></div>
           </div>
         </footer>
-
-        <a className="portfolio-link" href="index.html#projets" aria-label="Retourner au portfolio">
-          <i className="bi bi-arrow-left"></i> Retour au portfolio
-        </a>
 
         <button className="survey-trigger" onClick={() => setSurveyOpen(true)}><i className="bi bi-chat-heart"></i> Votre avis</button>
 
