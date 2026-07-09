@@ -160,7 +160,7 @@
       display: grid; place-items: center; margin: 0 auto 12px; color: var(--green); font-size: 1.3rem;
     }
     .benefit strong { display: block; font-size: .88rem; margin-bottom: 5px; }
-    .benefit small { color: var(--muted); line-height: 1.45; display: block; }
+    .benefit small { color: var(--muted); line-height: 1.45; display: none; }
 
     .catalog { background: #fbfaf7; border-top: 1px solid var(--line); }
     .catalog-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 28px; }
@@ -226,7 +226,8 @@
     .journal-card img { aspect-ratio: 16/10; object-fit: cover; }
     .journal-body { padding: 19px; }
     .journal-body small { color: var(--sand); font-weight: 700; }
-    .journal-body h3 { font-size: 1.2rem; color: var(--green); margin: 8px 0; }
+    .journal-body h3 { font-size: 1.05rem; color: var(--green); margin: 8px 0 0; }
+    .journal-body p { display: none; }
 
     .footer { background: #17291f; color: rgba(255,255,255,.78); padding: 52px 0 26px; }
     .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(3,1fr); gap: 42px; }
@@ -303,12 +304,15 @@
     .meta-list { display: grid; gap: 10px; margin: 18px 0; }
     .meta-row { display: flex; gap: 10px; color: var(--muted); font-size: .88rem; }
     .meta-row i { color: var(--green); }
-    .kit-details { margin: 20px 0 22px; display: grid; gap: 16px; }
-    .kit-detail-box { background: #f8f6f0; border: 1px solid var(--line); border-radius: 13px; padding: 16px 18px; }
-    .kit-detail-box h3 { margin: 0 0 10px; color: var(--green); font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+    .kit-details { margin: 18px 0 20px; display: grid; gap: 12px; }
+    .kit-detail-box { background: #f8f6f0; border: 1px solid var(--line); border-radius: 13px; padding: 14px 16px; }
+    .kit-detail-box h3 { margin: 0 0 8px; color: var(--green); font-size: .95rem; display: flex; align-items: center; gap: 8px; }
     .kit-detail-box h3 i { font-size: 1rem; }
-    .kit-contents { margin: 0; padding-left: 20px; display: grid; gap: 7px; color: var(--text); font-size: .86rem; }
-    .kit-result { margin: 0; color: var(--text); font-size: .86rem; line-height: 1.6; }
+    .kit-contents { margin: 0; padding-left: 18px; display: grid; gap: 5px; color: var(--text); font-size: .84rem; }
+    .kit-result { margin: 0; color: var(--text); font-size: .84rem; line-height: 1.45; }
+    .kit-preview { margin: 0; color: var(--text); font-size: .9rem; line-height: 1.5; }
+    .more-details { margin-top: 9px; font-size: .84rem; color: var(--text); }
+    .more-details summary { cursor: pointer; color: var(--green); font-weight: 800; }
     .kit-note { margin: 10px 0 0; color: var(--muted); font-size: .75rem; }
 
     .stepper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-bottom: 27px; }
@@ -782,7 +786,7 @@
               <div className="hero-content">
                 <span className="eyebrow"><i className="bi bi-stars"></i> Retrouver le plaisir de créer</span>
                 <h1>Des kits d’activités créatives sans écran, prêts à vivre.</h1>
-                <p>Chaque kit contient tout le matériel et une activité guidée pour créer, écrire, se détendre ou partager un vrai moment.</p>
+                <p>Tout le matériel est inclus. Il suffit d’ouvrir la boîte et de commencer.</p>
                 <a href="#kits" className="btn btn-primary">Découvrir les kits <i className="bi bi-arrow-down"></i></a>
                 <div className="hero-features">
                   <span><i className="bi bi-check2-circle"></i> Activités guidées</span>
@@ -802,12 +806,12 @@
               <div>
                 <span className="eyebrow">Une pause qui fait du bien</span>
                 <h2 className="section-title">Qu’est-ce qu’un kit Pause Papier&nbsp;?</h2>
-                <p className="section-lead">Un kit complet, livré chez vous, avec tout le nécessaire pour profiter d’une activité créative sans écran.</p>
+                <p className="section-lead">Une boîte prête à utiliser pour créer sans écran.</p>
                 <div className="benefits">
-                  <div className="benefit"><div className="benefit-icon"><i className="bi bi-book"></i></div><strong>Une activité guidée</strong><small>Des cartes ou un guide pas à pas pour vous accompagner.</small></div>
-                  <div className="benefit"><div className="benefit-icon"><i className="bi bi-box2-heart"></i></div><strong>Tout le matériel inclus</strong><small>Papier, crayons, cartes, autocollants… selon le kit.</small></div>
-                  <div className="benefit"><div className="benefit-icon"><i className="bi bi-clock"></i></div><strong>Une durée claire</strong><small>Chaque kit indique le temps recommandé pour votre pause.</small></div>
-                  <div className="benefit"><div className="benefit-icon"><i className="bi bi-people"></i></div><strong>Pour tous</strong><small>En solo, en duo ou en famille, à votre rythme.</small></div>
+                  <div className="benefit"><div className="benefit-icon"><i className="bi bi-book"></i></div><strong>Une activité guidée</strong><small>Des étapes simples.</small></div>
+                  <div className="benefit"><div className="benefit-icon"><i className="bi bi-box2-heart"></i></div><strong>Tout le matériel inclus</strong><small>Aucun achat séparé.</small></div>
+                  <div className="benefit"><div className="benefit-icon"><i className="bi bi-clock"></i></div><strong>Une durée claire</strong><small>20 à 90 minutes.</small></div>
+                  <div className="benefit"><div className="benefit-icon"><i className="bi bi-people"></i></div><strong>Pour tous</strong><small>Solo, duo ou famille.</small></div>
                 </div>
               </div>
             </div>
@@ -819,7 +823,7 @@
                 <div>
                   <span className="eyebrow">Choisissez votre prochaine pause</span>
                   <h2 className="section-title">Notre catalogue de kits créatifs</h2>
-                  <p className="section-lead">Explorez librement, puis affinez vos choix selon l’activité, le public, le niveau et le prix.</p>
+                  <p className="section-lead">Filtrez par activité, public, niveau et prix.</p>
                 </div>
                 <div className="catalog-tools">
                   <div className="search-box"><i className="bi bi-search"></i><label className="sr-only" htmlFor="search">Rechercher un kit</label><input id="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Rechercher un kit…" /></div>
@@ -856,14 +860,14 @@
             <div className="container story-grid">
               <div>
                 <span className="eyebrow" style={{color:'#d7e7db'}}>Pourquoi Pause Papier</span>
-                <h2 className="section-title">Un petit rituel pour remettre les mains et l’imagination en mouvement.</h2>
-                <p>Nous préparons chaque kit comme une invitation à ralentir. Pas besoin d’être artiste, ni de chercher du matériel : ouvrez la boîte et commencez.</p>
+                <h2 className="section-title">Créer plus facilement, sans surcharge.</h2>
+                <p>Pas besoin d’être artiste : ouvrez la boîte et commencez.</p>
                 <a href="#kits" className="btn btn-secondary">Trouver mon kit</a>
               </div>
               <div className="story-card story-points">
-                <div className="story-point"><i className="bi bi-heart"></i><div><strong>Simple et bienveillant</strong><p>Des consignes courtes, un ton chaleureux et aucune pression de performance.</p></div></div>
-                <div className="story-point"><i className="bi bi-recycle"></i><div><strong>Choisi avec soin</strong><p>Des matériaux utiles, durables et emballés sans superflu.</p></div></div>
-                <div className="story-point"><i className="bi bi-gift"></i><div><strong>Prêt à offrir</strong><p>Chaque boîte est pensée pour faire plaisir dès son ouverture.</p></div></div>
+                <div className="story-point"><i className="bi bi-heart"></i><div><strong>Simple et bienveillant</strong><p>Des consignes courtes.</p></div></div>
+                <div className="story-point"><i className="bi bi-recycle"></i><div><strong>Choisi avec soin</strong><p>L’essentiel, sans superflu.</p></div></div>
+                <div className="story-point"><i className="bi bi-gift"></i><div><strong>Prêt à offrir</strong><p>Un cadeau prêt à vivre.</p></div></div>
               </div>
             </div>
           </section>
@@ -871,11 +875,11 @@
           <section className="section" id="journal">
             <div className="container">
               <span className="eyebrow">Le journal Pause Papier</span>
-              <h2 className="section-title">Des idées pour créer plus souvent</h2>
+              <h2 className="section-title">Trois idées rapides</h2>
               <div className="journal-grid">
-                <article className="journal-card"><img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=900&q=82" alt="Carnet posé près d'une tasse" /><div className="journal-body"><small>RITUEL</small><h3>Créer une vraie pause en 20 minutes</h3><p>Un mini-rituel réaliste pour décrocher du téléphone et retrouver votre attention.</p></div></article>
-                <article className="journal-card"><img src="https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=900&q=82" alt="Matériel de collage sur une table" /><div className="journal-body"><small>INSPIRATION</small><h3>Le collage sans chercher la perfection</h3><p>Trois façons simples de commencer quand la page blanche vous intimide.</p></div></article>
-                <article className="journal-card"><img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=82" alt="Personne écrivant dans un carnet" /><div className="journal-body"><small>BIEN-ÊTRE</small><h3>Pourquoi écrire à la main apaise</h3><p>Quelques repères pour transformer l’écriture en moment de présence.</p></div></article>
+                <article className="journal-card"><img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=900&q=82" alt="Carnet posé près d'une tasse" /><div className="journal-body"><small>RITUEL</small><h3>Une pause en 20 minutes</h3><p>Un mini-rituel réaliste pour décrocher du téléphone et retrouver votre attention.</p></div></article>
+                <article className="journal-card"><img src="https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=900&q=82" alt="Matériel de collage sur une table" /><div className="journal-body"><small>INSPIRATION</small><h3>Coller sans pression</h3><p>Trois façons simples de commencer quand la page blanche vous intimide.</p></div></article>
+                <article className="journal-card"><img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=82" alt="Personne écrivant dans un carnet" /><div className="journal-body"><small>BIEN-ÊTRE</small><h3>Écrire pour ralentir</h3><p>Quelques repères pour transformer l’écriture en moment de présence.</p></div></article>
               </div>
             </div>
           </section>
@@ -931,7 +935,7 @@
     function ProductModal({ product, onClose, onAdd }) {
       return <div className="modal-shell"><div className="overlay" onClick={onClose}></div><div className="modal" role="dialog" aria-modal="true" aria-label={`Détails de ${product.name}`} style={{zIndex:101}}>
         <div className="modal-head"><h2>{product.name}</h2><button className="close-btn" onClick={onClose} aria-label={`Fermer la fiche de ${product.name}`}><i className="bi bi-x-lg"></i></button></div>
-        <div className="modal-body product-modal-grid"><img src={product.image} alt={`Matériel inclus dans ${product.name}`} /><div><span className="eyebrow">{product.category}</span><h2 className="section-title" style={{fontSize:'2rem'}}>{product.name}</h2><p>{product.description}</p><div className="meta-list"><div className="meta-row"><i className="bi bi-clock"></i><span>Durée recommandée : {product.duration}</span></div><div className="meta-row"><i className="bi bi-person"></i><span>Pour : {product.audience}</span></div><div className="meta-row"><i className="bi bi-bar-chart"></i><span>Niveau : {product.level}</span></div><div className="meta-row"><i className="bi bi-box-seam"></i><span>Tout le matériel nécessaire est inclus</span></div></div><div className="kit-details"><section className="kit-detail-box"><h3><i className="bi bi-box2-heart"></i> Ce que contient le kit</h3><ul className="kit-contents">{product.contents.map((item,index)=><li key={index}>{item}</li>)}</ul><p className="kit-note">Le contenu présenté correspond au coffret complet vendu.</p></section><section className="kit-detail-box"><h3><i className="bi bi-stars"></i> Ce que vous allez créer</h3><p className="kit-result">{product.outcome}</p></section></div><h3 style={{color:'var(--green)',fontSize:'1.8rem'}}>{currency(product.price)}</h3><button className="btn btn-primary btn-block" onClick={() => onAdd(product)}>Ajouter au panier</button></div></div>
+        <div className="modal-body product-modal-grid"><img src={product.image} alt={`Matériel inclus dans ${product.name}`} /><div><span className="eyebrow">{product.category}</span><h2 className="section-title" style={{fontSize:'2rem'}}>{product.name}</h2><p className="kit-preview">{product.description}</p><div className="meta-list"><div className="meta-row"><i className="bi bi-clock"></i><span>{product.duration}</span></div><div className="meta-row"><i className="bi bi-person"></i><span>{product.audience}</span></div><div className="meta-row"><i className="bi bi-bar-chart"></i><span>{product.level}</span></div></div><div className="kit-details"><section className="kit-detail-box"><h3><i className="bi bi-box2-heart"></i> Inclus</h3><p className="kit-preview">{product.contents.slice(0,4).join(' · ')}{product.contents.length > 4 ? '…' : ''}</p><details className="more-details"><summary>Voir la liste complète</summary><ul className="kit-contents">{product.contents.map((item,index)=><li key={index}>{item}</li>)}</ul></details></section><section className="kit-detail-box"><h3><i className="bi bi-stars"></i> Résultat</h3><p className="kit-result">{product.outcome}</p></section></div><h3 style={{color:'var(--green)',fontSize:'1.8rem'}}>{currency(product.price)}</h3><button className="btn btn-primary btn-block" onClick={() => onAdd(product)}>Ajouter au panier</button></div></div>
       </div></div>;
     }
 
@@ -1015,7 +1019,7 @@
       const submit = () => { if (!rating) { setError('Choisissez une note avant d’envoyer votre avis.'); return; } onSubmit(); };
       return <div className="modal-shell"><div className="overlay" onClick={onClose}></div><div className="modal" style={{zIndex:101,maxWidth:'560px'}} role="dialog" aria-modal="true" aria-label="Sondage sur votre expérience">
         <div className="modal-head"><h2>Comment s’est passée votre visite&nbsp;?</h2><button className="close-btn" onClick={onClose} aria-label="Fermer le sondage"><i className="bi bi-x-lg"></i></button></div>
-        <div className="modal-body"><p>Votre avis compte. Deux petites questions nous aideront à rendre chaque pause encore plus simple et agréable.</p><label><strong>Quelle note donnez-vous à votre expérience&nbsp;?</strong></label><div className="stars" aria-label="Note sur cinq">{[1,2,3,4,5].map(n=><button key={n} className={n<=rating?'on':''} onClick={()=>{setRating(n);setError('')}} aria-label={`${n} étoile${n>1?'s':''}`}><i className={`bi ${n<=rating?'bi-star-fill':'bi-star'}`}></i></button>)}</div>{error&&<p className="error">{error}</p>}<div className="field"><label>Qu’aimeriez-vous nous dire&nbsp;? <span style={{fontWeight:400}}>(facultatif)</span></label><textarea value={comment} onChange={e=>setComment(e.target.value)} placeholder="Partagez une impression, une difficulté ou une idée…"></textarea></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={onClose}>Plus tard</button><button className="btn btn-primary" onClick={submit}>Envoyer mon avis</button></div></div>
+        <div className="modal-body"><p>Votre avis nous aide à améliorer la boutique.</p><label><strong>Quelle note donnez-vous à votre expérience&nbsp;?</strong></label><div className="stars" aria-label="Note sur cinq">{[1,2,3,4,5].map(n=><button key={n} className={n<=rating?'on':''} onClick={()=>{setRating(n);setError('')}} aria-label={`${n} étoile${n>1?'s':''}`}><i className={`bi ${n<=rating?'bi-star-fill':'bi-star'}`}></i></button>)}</div>{error&&<p className="error">{error}</p>}<div className="field"><label>Qu’aimeriez-vous nous dire&nbsp;? <span style={{fontWeight:400}}>(facultatif)</span></label><textarea value={comment} onChange={e=>setComment(e.target.value)} placeholder="Votre commentaire…"></textarea></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={onClose}>Plus tard</button><button className="btn btn-primary" onClick={submit}>Envoyer mon avis</button></div></div>
       </div></div>;
     }
 
