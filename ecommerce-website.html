@@ -110,7 +110,7 @@
     .mobile-menu { display: none; }
 
     .hero {
-      min-height: 510px;
+      min-height: 455px;
       background:
         linear-gradient(90deg, rgba(250,247,241,.98) 0%, rgba(250,247,241,.91) 40%, rgba(250,247,241,.12) 68%),
         url('https://images.unsplash.com/photo-1510172951991-856a654063f9?auto=format&fit=crop&w=1800&q=88') center 52% / cover;
@@ -139,12 +139,23 @@
     .btn-block { width: 100%; }
     .hero-features {
       display: flex; flex-wrap: wrap; gap: 20px 30px;
-      margin-top: 45px; color: #4f5b53; font-size: .83rem; font-weight: 600;
+      margin-top: 28px; color: #4f5b53; font-size: .83rem; font-weight: 600;
     }
     .hero-features span { display: inline-flex; align-items: center; gap: 8px; }
     .hero-features i { color: var(--green); font-size: 1rem; }
 
-    .section { padding: 78px 0; }
+    .section { padding: 64px 0; }
+
+    .compact-about { padding: 52px 0; background: var(--paper); }
+    .compact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+    .compact-grid .section-title { margin-bottom: 0; }
+    .mini-benefits { display: grid; gap: 12px; }
+    .mini-benefits span { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: white; font-weight: 700; color: var(--green); }
+    .mini-benefits i { font-size: 1.1rem; }
+    .compact-meta { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; margin: 12px 0 16px; }
+    .compact-meta .meta-row { background: #f8f6f0; border: 1px solid var(--line); border-radius: 10px; padding: 9px; justify-content: center; }
+    .minimal-detail { margin: 12px 0 18px; }
+
     .intro-grid { display: grid; grid-template-columns: .95fr 1.45fr; gap: 54px; align-items: center; }
     .intro-photo {
       min-height: 380px; border-radius: var(--radius); overflow: hidden;
@@ -356,7 +367,7 @@
       .nav-actions { display: none; }
       .mobile-menu { display: grid; justify-self: end; }
       .mobile-panel { position: absolute; top: 78px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--line); padding: 18px 20px; display: grid; gap: 14px; box-shadow: var(--shadow); }
-      .intro-grid, .story-grid { grid-template-columns: 1fr; }
+      .intro-grid, .story-grid, .compact-grid { grid-template-columns: 1fr; }
       .intro-photo { min-height: 330px; }
       .benefits { grid-template-columns: 1fr 1fr; }
       .catalog-layout { grid-template-columns: 1fr; }
@@ -370,7 +381,7 @@
       .container { width: min(100% - 24px, 1180px); }
       .announcement-inner { gap: 16px; overflow: hidden; justify-content: flex-start; white-space: nowrap; }
       .announcement span:nth-child(3) { display: none; }
-      .hero { min-height: 570px; background-position: 62% center; }
+      .hero { min-height: 500px; background-position: 62% center; }
       .hero-content { padding-top: 60px; }
       .hero h1 { font-size: 2.65rem; }
       .hero-features { gap: 13px 18px; }
@@ -756,8 +767,6 @@
               <a href="#accueil">Accueil</a>
               <a href="#kits">Kits créatifs</a>
               <a href="#apropos">À propos</a>
-              <a href="#journal">Journal</a>
-              <a href="#contact">Contact</a>
               <a href="index.html#projets" className="nav-portfolio"><i className="bi bi-arrow-left-circle"></i> Portfolio</a>
             </nav>
             <div className="nav-actions">
@@ -772,8 +781,6 @@
               <a href="#accueil" onClick={() => setMobileOpen(false)}>Accueil</a>
               <a href="#kits" onClick={() => setMobileOpen(false)}>Kits créatifs</a>
               <a href="#apropos" onClick={() => setMobileOpen(false)}>À propos</a>
-              <a href="#journal" onClick={() => setMobileOpen(false)}>Journal</a>
-              <a href="#contact" onClick={() => setMobileOpen(false)}>Contact</a>
               <a href="index.html#projets" onClick={() => setMobileOpen(false)}><i className="bi bi-arrow-left-circle"></i> Portfolio</a>
               <button className="btn btn-primary" onClick={() => { setCartOpen(true); setMobileOpen(false); }}>Panier ({cartCount})</button>
             </div>}
@@ -784,35 +791,28 @@
           <section className="hero" id="accueil">
             <div className="container">
               <div className="hero-content">
-                <span className="eyebrow"><i className="bi bi-stars"></i> Retrouver le plaisir de créer</span>
-                <h1>Des kits d’activités créatives sans écran, prêts à vivre.</h1>
-                <p>Tout le matériel est inclus. Il suffit d’ouvrir la boîte et de commencer.</p>
+                <span className="eyebrow"><i className="bi bi-stars"></i> Kits créatifs prêts à vivre</span>
+                <h1>Créer sans écran, simplement.</h1>
+                <p>Choisissez un kit. Ouvrez la boîte. Commencez.</p>
                 <a href="#kits" className="btn btn-primary">Découvrir les kits <i className="bi bi-arrow-down"></i></a>
                 <div className="hero-features">
-                  <span><i className="bi bi-check2-circle"></i> Activités guidées</span>
-                  <span><i className="bi bi-box-seam"></i> Tout le matériel inclus</span>
+                  <span><i className="bi bi-check2-circle"></i> Guidé</span>
+                  <span><i className="bi bi-box-seam"></i> Matériel inclus</span>
                   <span><i className="bi bi-phone"></i> Sans écran</span>
-                  <span><i className="bi bi-people"></i> Pour tous les âges</span>
                 </div>
               </div>
             </div>
           </section>
-
-          <section className="section" id="apropos">
-            <div className="container intro-grid">
-              <div className="intro-photo">
-                <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1100&q=88" alt="Matériel créatif, carnet et crayons disposés sur une table" />
-              </div>
+          <section className="section compact-about" id="apropos">
+            <div className="container compact-grid">
               <div>
-                <span className="eyebrow">Une pause qui fait du bien</span>
-                <h2 className="section-title">Qu’est-ce qu’un kit Pause Papier&nbsp;?</h2>
-                <p className="section-lead">Une boîte prête à utiliser pour créer sans écran.</p>
-                <div className="benefits">
-                  <div className="benefit"><div className="benefit-icon"><i className="bi bi-book"></i></div><strong>Une activité guidée</strong><small>Des étapes simples.</small></div>
-                  <div className="benefit"><div className="benefit-icon"><i className="bi bi-box2-heart"></i></div><strong>Tout le matériel inclus</strong><small>Aucun achat séparé.</small></div>
-                  <div className="benefit"><div className="benefit-icon"><i className="bi bi-clock"></i></div><strong>Une durée claire</strong><small>20 à 90 minutes.</small></div>
-                  <div className="benefit"><div className="benefit-icon"><i className="bi bi-people"></i></div><strong>Pour tous</strong><small>Solo, duo ou famille.</small></div>
-                </div>
+                <span className="eyebrow">En bref</span>
+                <h2 className="section-title">Une boîte. Une activité. Un moment calme.</h2>
+              </div>
+              <div className="mini-benefits">
+                <span><i className="bi bi-box2-heart"></i> Matériel inclus</span>
+                <span><i className="bi bi-clock"></i> Durée claire</span>
+                <span><i className="bi bi-people"></i> Solo, duo ou famille</span>
               </div>
             </div>
           </section>
@@ -821,9 +821,9 @@
             <div className="container">
               <div className="catalog-head">
                 <div>
-                  <span className="eyebrow">Choisissez votre prochaine pause</span>
-                  <h2 className="section-title">Notre catalogue de kits créatifs</h2>
-                  <p className="section-lead">Filtrez par activité, public, niveau et prix.</p>
+                  <span className="eyebrow">Catalogue</span>
+                  <h2 className="section-title">Choisir un kit</h2>
+                  <p className="section-lead">Filtrez, comparez, ajoutez au panier.</p>
                 </div>
                 <div className="catalog-tools">
                   <div className="search-box"><i className="bi bi-search"></i><label className="sr-only" htmlFor="search">Rechercher un kit</label><input id="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Rechercher un kit…" /></div>
@@ -846,7 +846,7 @@
                 </aside>
 
                 <div>
-                  <div className="results-head"><span>{filteredProducts.length} kit{filteredProducts.length !== 1 ? 's' : ''} trouvé{filteredProducts.length !== 1 ? 's' : ''}</span><span>Recherche à facettes active</span></div>
+                  <div className="results-head"><span>{filteredProducts.length} kit{filteredProducts.length !== 1 ? 's' : ''} trouvé{filteredProducts.length !== 1 ? 's' : ''}</span></div>
                   {activeChips.length > 0 && <div className="active-filters">{activeChips.map(chip => <button key={`${chip.group}-${chip.value}`} className="chip" onClick={() => removeChip(chip.group,chip.value)}>{chip.value}<i className="bi bi-x"></i></button>)}</div>}
                   <div className="products-grid">
                     {filteredProducts.length ? filteredProducts.map(product => <ProductCard key={product.id} product={product} onAdd={addToCart} onView={setSelectedProduct} />) : <div className="empty-results"><i className="bi bi-search" style={{fontSize:'2rem',color:'var(--green)'}}></i><h3>Aucun kit ne correspond à ces critères</h3><p>Essayez de retirer un filtre ou d’élargir votre fourchette de prix.</p><button className="btn btn-secondary" onClick={clearFilters}>Réinitialiser les filtres</button></div>}
@@ -855,43 +855,15 @@
               </div>
             </div>
           </section>
-
-          <section className="section story-section">
-            <div className="container story-grid">
-              <div>
-                <span className="eyebrow" style={{color:'#d7e7db'}}>Pourquoi Pause Papier</span>
-                <h2 className="section-title">Créer plus facilement, sans surcharge.</h2>
-                <p>Pas besoin d’être artiste : ouvrez la boîte et commencez.</p>
-                <a href="#kits" className="btn btn-secondary">Trouver mon kit</a>
-              </div>
-              <div className="story-card story-points">
-                <div className="story-point"><i className="bi bi-heart"></i><div><strong>Simple et bienveillant</strong><p>Des consignes courtes.</p></div></div>
-                <div className="story-point"><i className="bi bi-recycle"></i><div><strong>Choisi avec soin</strong><p>L’essentiel, sans superflu.</p></div></div>
-                <div className="story-point"><i className="bi bi-gift"></i><div><strong>Prêt à offrir</strong><p>Un cadeau prêt à vivre.</p></div></div>
-              </div>
-            </div>
-          </section>
-
-          <section className="section" id="journal">
-            <div className="container">
-              <span className="eyebrow">Le journal Pause Papier</span>
-              <h2 className="section-title">Trois idées rapides</h2>
-              <div className="journal-grid">
-                <article className="journal-card"><img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=900&q=82" alt="Carnet posé près d'une tasse" /><div className="journal-body"><small>RITUEL</small><h3>Une pause en 20 minutes</h3><p>Un mini-rituel réaliste pour décrocher du téléphone et retrouver votre attention.</p></div></article>
-                <article className="journal-card"><img src="https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=900&q=82" alt="Matériel de collage sur une table" /><div className="journal-body"><small>INSPIRATION</small><h3>Coller sans pression</h3><p>Trois façons simples de commencer quand la page blanche vous intimide.</p></div></article>
-                <article className="journal-card"><img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=82" alt="Personne écrivant dans un carnet" /><div className="journal-body"><small>BIEN-ÊTRE</small><h3>Écrire pour ralentir</h3><p>Quelques repères pour transformer l’écriture en moment de présence.</p></div></article>
-              </div>
-            </div>
-          </section>
         </main>
 
         <footer className="footer" id="contact">
           <div className="container">
             <div className="footer-grid">
-              <div><h3>PAUSE PAPIER</h3><p>Des kits créatifs sans écran pour ralentir, créer et partager.</p><p><i className="bi bi-envelope"></i> bonjour@pausepapier.ca</p></div>
-              <div><h4>Découvrir</h4><a href="#kits">Tous les kits</a><a href="#apropos">Notre approche</a><a href="#journal">Journal</a></div>
+              <div><h3>PAUSE PAPIER</h3><p>Kits créatifs prêts à utiliser.</p><p><i className="bi bi-envelope"></i> bonjour@pausepapier.ca</p></div>
+              <div><h4>Découvrir</h4><a href="#kits">Tous les kits</a><a href="#apropos">Notre approche</a></div>
               <div><h4>Aide</h4><button className="footer-link-btn" onClick={() => setInfoModal('shipping')}>Livraison et retours</button><button className="footer-link-btn" onClick={() => setInfoModal('faq')}>FAQ</button><a href="mailto:bonjour@pausepapier.ca">Nous contacter</a></div>
-              <div><h4>Rester en contact</h4><button className="footer-link-btn" onClick={() => setInfoModal('newsletter')}>Infolettre</button><p>Recevez des idées créatives et des offres occasionnelles.</p></div>
+              <div><h4>Rester en contact</h4><button className="footer-link-btn" onClick={() => setInfoModal('newsletter')}>Infolettre</button></div>
             </div>
             <div className="footer-bottom"><span>© 2026 Pause Papier</span><span className="legal-links"><button className="footer-link-btn" onClick={() => setInfoModal('privacy')}>Confidentialité</button><button className="footer-link-btn" onClick={() => setInfoModal('terms')}>Conditions</button></span></div>
           </div>
@@ -916,7 +888,7 @@
       return <article className="product-card">
         <div className="product-image"><span className="badge">{product.badge}</span><span className="badge time-badge">{product.duration}</span><img src={product.image} alt={`Contenu du ${product.name}`} /></div>
         <div className="product-body">
-          <div className="product-topline"><div><h3>{product.name}</h3><p className="product-type">{product.type}</p></div><span className="price">{currency(product.price)}</span></div>
+          <div className="product-topline"><div><h3>{product.name}</h3><p className="product-type">{product.audience} · {product.level}</p></div><span className="price">{currency(product.price)}</span></div>
           <div className="product-actions"><button className="btn btn-primary" onClick={() => onAdd(product)}>Ajouter au panier</button><button className="quick-btn" onClick={() => onView(product)} aria-label={`Voir les détails de ${product.name}`}><i className="bi bi-eye"></i></button></div>
         </div>
       </article>;
@@ -926,7 +898,7 @@
       return <><div className="overlay" onClick={onClose}></div><aside className="drawer" aria-modal="true" role="dialog" aria-label="Votre panier">
         <div className="drawer-head"><h2>Votre panier</h2><button className="close-btn" onClick={onClose} aria-label="Fermer le panier"><i className="bi bi-x-lg"></i></button></div>
         <div className="cart-items">
-          {!cart.length ? <div className="cart-empty"><i className="bi bi-bag"></i><strong>Votre panier est vide.</strong><p>Découvrez un kit qui vous ressemble.</p><button className="btn btn-secondary" onClick={onClose}>Continuer mes achats</button></div> : cart.map(item => <div className="cart-item" key={item.id}><img src={item.image} alt={`Coffret ${item.name}`} /><div><div className="cart-item-top"><div><h4>{item.name}</h4><small>{item.type}</small></div><strong>{currency(item.price * item.qty)}</strong></div><div className="qty"><button onClick={() => onQty(item.id,-1)} aria-label="Diminuer la quantité">−</button><span>{item.qty}</span><button onClick={() => onQty(item.id,1)} aria-label="Augmenter la quantité">+</button></div></div></div>)}
+          {!cart.length ? <div className="cart-empty"><i className="bi bi-bag"></i><strong>Votre panier est vide.</strong><p>Découvrez un kit qui vous ressemble.</p><button className="btn btn-secondary" onClick={onClose}>Continuer mes achats</button></div> : cart.map(item => <div className="cart-item" key={item.id}><img src={item.image} alt={`Coffret ${item.name}`} /><div><div className="cart-item-top"><div><h4>{item.name}</h4><small>{item.audience} · {item.duration}</small></div><strong>{currency(item.price * item.qty)}</strong></div><div className="qty"><button onClick={() => onQty(item.id,-1)} aria-label="Diminuer la quantité">−</button><span>{item.qty}</span><button onClick={() => onQty(item.id,1)} aria-label="Augmenter la quantité">+</button></div></div></div>)}
         </div>
         {cart.length > 0 && <div className="cart-footer"><div className="subtotal"><span>Sous-total</span><span>{currency(subtotal)}</span></div><button className="btn btn-primary btn-block" onClick={onCheckout}>Passer à la caisse</button><div className="secure-note"><i className="bi bi-lock"></i> Prototype de paiement sécurisé — aucun vrai paiement</div></div>}
       </aside></>;
@@ -935,7 +907,7 @@
     function ProductModal({ product, onClose, onAdd }) {
       return <div className="modal-shell"><div className="overlay" onClick={onClose}></div><div className="modal" role="dialog" aria-modal="true" aria-label={`Détails de ${product.name}`} style={{zIndex:101}}>
         <div className="modal-head"><h2>{product.name}</h2><button className="close-btn" onClick={onClose} aria-label={`Fermer la fiche de ${product.name}`}><i className="bi bi-x-lg"></i></button></div>
-        <div className="modal-body product-modal-grid"><img src={product.image} alt={`Matériel inclus dans ${product.name}`} /><div><span className="eyebrow">{product.category}</span><h2 className="section-title" style={{fontSize:'2rem'}}>{product.name}</h2><p className="kit-preview">{product.description}</p><div className="meta-list"><div className="meta-row"><i className="bi bi-clock"></i><span>{product.duration}</span></div><div className="meta-row"><i className="bi bi-person"></i><span>{product.audience}</span></div><div className="meta-row"><i className="bi bi-bar-chart"></i><span>{product.level}</span></div></div><div className="kit-details"><section className="kit-detail-box"><h3><i className="bi bi-box2-heart"></i> Inclus</h3><p className="kit-preview">{product.contents.slice(0,4).join(' · ')}{product.contents.length > 4 ? '…' : ''}</p><details className="more-details"><summary>Voir la liste complète</summary><ul className="kit-contents">{product.contents.map((item,index)=><li key={index}>{item}</li>)}</ul></details></section><section className="kit-detail-box"><h3><i className="bi bi-stars"></i> Résultat</h3><p className="kit-result">{product.outcome}</p></section></div><h3 style={{color:'var(--green)',fontSize:'1.8rem'}}>{currency(product.price)}</h3><button className="btn btn-primary btn-block" onClick={() => onAdd(product)}>Ajouter au panier</button></div></div>
+        <div className="modal-body product-modal-grid"><img src={product.image} alt={`Matériel inclus dans ${product.name}`} /><div><span className="eyebrow">{product.category}</span><h2 className="section-title" style={{fontSize:'1.85rem'}}>{product.name}</h2><div className="meta-list compact-meta"><div className="meta-row"><i className="bi bi-clock"></i><span>{product.duration}</span></div><div className="meta-row"><i className="bi bi-person"></i><span>{product.audience}</span></div><div className="meta-row"><i className="bi bi-bar-chart"></i><span>{product.level}</span></div></div><section className="kit-detail-box minimal-detail"><h3><i className="bi bi-box2-heart"></i> Dans la boîte</h3><p className="kit-preview">{product.contents.slice(0,3).join(' · ')}{product.contents.length > 3 ? '…' : ''}</p><details className="more-details"><summary>Voir plus</summary><ul className="kit-contents">{product.contents.map((item,index)=><li key={index}>{item}</li>)}</ul><p className="kit-result"><strong>Résultat :</strong> {product.outcome}</p></details></section><h3 style={{color:'var(--green)',fontSize:'1.65rem'}}>{currency(product.price)}</h3><button className="btn btn-primary btn-block" onClick={() => onAdd(product)}>Ajouter au panier</button></div></div>
       </div></div>;
     }
 
@@ -962,19 +934,19 @@
       };
       const validate = () => {
         const required = step === 1 ? ['name','email','address','city','postal'] : ['card','expiry','cvv'];
-        const next = {};
-        required.forEach(k => { if (!form[k].trim()) next[k] = 'Ce champ est requis.'; });
-        if (step === 1 && form.email && !/^\S+@\S+\.\S+$/.test(form.email)) next.email = 'Entrez une adresse courriel valide.';
-        if (step === 2 && form.card && form.card.replace(/\s/g,'').length < 12) next.card = 'Entrez un numéro de carte valide.';
-        setErrors(next); return !Object.keys(next).length;
+        const nextErrors = {};
+        required.forEach(k => { if (!form[k].trim()) nextErrors[k] = 'Ce champ est requis.'; });
+        if (step === 1 && form.email && !/^\S+@\S+\.\S+$/.test(form.email)) nextErrors.email = 'Entrez une adresse courriel valide.';
+        if (step === 2 && form.card && form.card.replace(/\s/g,'').length < 12) nextErrors.card = 'Entrez un numéro de carte valide.';
+        setErrors(nextErrors); return !Object.keys(nextErrors).length;
       };
-      const next = () => { if (validate()) setStep(s => s + 1); };
+      const goNext = () => { if (validate()) setStep(s => s + 1); };
       return <div className="modal-shell"><div className="overlay" onClick={onClose}></div><div className="modal" style={{zIndex:101}} role="dialog" aria-modal="true" aria-label="Finaliser la commande">
         <div className="modal-head"><h2>Finaliser la commande</h2><button className="close-btn" onClick={onClose} aria-label="Fermer le paiement"><i className="bi bi-x-lg"></i></button></div>
         <div className="modal-body">
           <div className="stepper">{['Livraison','Paiement','Confirmation'].map((label,i) => { const n=i+1; return <div key={label} className={`step ${step===n?'active':''} ${step>n?'done':''}`}><div className="step-circle">{step>n?<i className="bi bi-check"></i>:n}</div><span>{label}</span></div>; })}</div>
-          {step === 1 && <><h3>Où devons-nous livrer votre kit&nbsp;?</h3><p className="section-lead">Étape 1 sur 3 — vos articles sont conservés dans le panier.</p><div className="form-grid"><Field label="Nom complet" value={form.name} onChange={v=>set('name',v)} error={errors.name} /><Field label="Courriel" type="email" value={form.email} onChange={v=>set('email',v)} error={errors.email} /><Field label="Adresse" value={form.address} onChange={v=>set('address',v)} error={errors.address} full /><Field label="Ville" value={form.city} onChange={v=>set('city',v)} error={errors.city} /><Field label="Code postal" value={form.postal} onChange={v=>set('postal',v)} error={errors.postal} /></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={onClose}>Retour au panier</button><button className="btn btn-primary" onClick={next}>Continuer au paiement</button></div></>}
-          {step === 2 && <><h3>Informations de paiement</h3><p className="section-lead">Étape 2 sur 3 — ceci est un prototype, aucune donnée n’est transmise.</p><div className="form-grid"><Field label="Numéro de carte" value={form.card} onChange={v=>set('card',v)} error={errors.card} full placeholder="4242 4242 4242 4242" /><Field label="Expiration" value={form.expiry} onChange={v=>set('expiry',v)} error={errors.expiry} placeholder="MM/AA" /><Field label="CVV" value={form.cvv} onChange={v=>set('cvv',v)} error={errors.cvv} placeholder="123" /></div><div className="promo-code-box"><label htmlFor="promo-code">Code promotionnel</label><div className="promo-code-row"><input id="promo-code" value={promoCode} onChange={e=>{setPromoCode(e.target.value);setPromoMessage('');if(promoApplied)setPromoApplied(false);}} onKeyDown={e=>{if(e.key==='Enter'){e.preventDefault();applyPromo();}}} placeholder="Ex. PAUSE10" aria-describedby="promo-feedback"/><button type="button" className="btn btn-secondary" onClick={applyPromo}>Appliquer</button></div>{promoMessage && <p id="promo-feedback" className={`promo-feedback ${promoApplied?'success-message':'error-message'}`}>{promoMessage}</p>}</div><div className="order-summary"><strong>Résumé de la commande</strong>{cart.map(item=><div className="order-line" key={item.id}><span>{item.qty} × {item.name}</span><span>{currency(item.qty*item.price)}</span></div>)}<hr/><div className="order-line"><span>Sous-total</span><span>{currency(subtotal)}</span></div>{promoApplied && <div className="order-line discount-line"><span>Rabais PAUSE10 (10 %)</span><span>− {currency(discount)}</span></div>}<div className="order-line"><span>Livraison</span><span>Gratuite</span></div><div className="order-line"><span>Taxes</span><span>Incluses dans ce prototype</span></div><hr/><div className="order-line"><strong>Total</strong><strong>{currency(finalTotal)}</strong></div></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={()=>setStep(1)}>Retour</button><button className="btn btn-primary" onClick={next}>Confirmer la commande</button></div></>}
+          {step === 1 && <><h3>Où devons-nous livrer votre kit&nbsp;?</h3><p className="section-lead">Étape 1 sur 3 — vos articles sont conservés dans le panier.</p><div className="form-grid"><Field label="Nom complet" value={form.name} onChange={v=>set('name',v)} error={errors.name} /><Field label="Courriel" type="email" value={form.email} onChange={v=>set('email',v)} error={errors.email} /><Field label="Adresse" value={form.address} onChange={v=>set('address',v)} error={errors.address} full /><Field label="Ville" value={form.city} onChange={v=>set('city',v)} error={errors.city} /><Field label="Code postal" value={form.postal} onChange={v=>set('postal',v)} error={errors.postal} /></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={onClose}>Retour au panier</button><button className="btn btn-primary" onClick={goNext}>Continuer au paiement</button></div></>}
+          {step === 2 && <><h3>Informations de paiement</h3><p className="section-lead">Étape 2 sur 3 — ceci est un prototype, aucune donnée n’est transmise.</p><div className="form-grid"><Field label="Numéro de carte" value={form.card} onChange={v=>set('card',v)} error={errors.card} full placeholder="4242 4242 4242 4242" /><Field label="Expiration" value={form.expiry} onChange={v=>set('expiry',v)} error={errors.expiry} placeholder="MM/AA" /><Field label="CVV" value={form.cvv} onChange={v=>set('cvv',v)} error={errors.cvv} placeholder="123" /></div><div className="promo-code-box"><label htmlFor="promo-code">Code promotionnel</label><div className="promo-code-row"><input id="promo-code" value={promoCode} onChange={e=>{setPromoCode(e.target.value);setPromoMessage('');if(promoApplied)setPromoApplied(false);}} onKeyDown={e=>{if(e.key==='Enter'){e.preventDefault();applyPromo();}}} placeholder="Ex. PAUSE10" aria-describedby="promo-feedback"/><button type="button" className="btn btn-secondary" onClick={applyPromo}>Appliquer</button></div>{promoMessage && <p id="promo-feedback" className={`promo-feedback ${promoApplied?'success-message':'error-message'}`}>{promoMessage}</p>}</div><div className="order-summary"><strong>Résumé de la commande</strong>{cart.map(item=><div className="order-line" key={item.id}><span>{item.qty} × {item.name}</span><span>{currency(item.qty*item.price)}</span></div>)}<hr/><div className="order-line"><span>Sous-total</span><span>{currency(subtotal)}</span></div>{promoApplied && <div className="order-line discount-line"><span>Rabais PAUSE10 (10 %)</span><span>− {currency(discount)}</span></div>}<div className="order-line"><span>Livraison</span><span>Gratuite</span></div><div className="order-line"><span>Taxes</span><span>Incluses dans ce prototype</span></div><hr/><div className="order-line"><strong>Total</strong><strong>{currency(finalTotal)}</strong></div></div><div className="checkout-actions"><button className="btn btn-secondary" onClick={()=>setStep(1)}>Retour</button><button className="btn btn-primary" onClick={goNext}>Confirmer la commande</button></div></>}
           {step === 3 && <div className="success"><div className="success-icon"><i className="bi bi-check2"></i></div><h2>Commande confirmée&nbsp;!</h2><p>Merci, {form.name || 'votre commande'} est prête. Un courriel de confirmation serait envoyé à <strong>{form.email || 'votre adresse courriel'}</strong>.</p><div className="order-summary"><div className="order-line"><span>Numéro de commande</span><strong>PP-{Math.floor(100000+Math.random()*900000)}</strong></div>{promoApplied && <div className="order-line discount-line"><span>Rabais appliqué</span><strong>− {currency(discount)}</strong></div>}<div className="order-line"><span>Total</span><strong>{currency(finalTotal)}</strong></div></div><button className="btn btn-primary" onClick={onComplete}>Terminer et donner mon avis</button></div>}
         </div>
       </div></div>;
