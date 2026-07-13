@@ -184,8 +184,8 @@ select:focus-visible,
   grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
   gap: 40px;
   align-items: center;
-  min-height: 500px;
-  padding: 62px 6vw 56px;
+  min-height: 430px;
+  padding: 52px 6vw 48px;
   color: #ffffff;
   background:
     linear-gradient(135deg, rgba(13, 29, 47, 0.99), rgba(20, 45, 69, 0.97)),
