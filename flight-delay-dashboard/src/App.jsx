@@ -68,7 +68,7 @@ const translations = {
     eyebrow: 'OFFICIAL CANADIAN AVIATION DATA',
     title: 'Air Travel Performance in Canada',
     subtitle: 'Explore official indicators on departure punctuality and passenger traffic at Canada’s largest airports.',
-    officialNotice: 'Official data from Transport Canada and Statistics Canada. Reference periods vary by indicator.',
+    officialNotice: 'Official data from Transport Canada and Statistics Canada. Reference periods vary by indicator; airport totals are rounded to the nearest 0.1 million.',
     explore: 'Explore the data',
     metric: 'Performance indicator',
     metricHelp: 'Changes the three-week line chart.',
@@ -85,6 +85,7 @@ const translations = {
     reset: 'Reset filters',
     resetDone: 'Filters reset.',
     nationalPassengers: 'Passengers in Canada, 2024',
+    nationalSource: 'Source: Statistics Canada',
     nationalGrowth: 'Growth from 2023',
     largestAirport: 'Largest Canadian airport',
     million: 'million',
@@ -102,9 +103,9 @@ const translations = {
     barDescription: 'Compare 2023 and 2024 passenger totals side by side, or display each airport’s growth rate.',
     trafficAxis: 'Passengers (millions)',
     sourceTitle: 'Sources and interpretation',
-    sourceText: 'Punctuality data cover the eight largest Canadian airports during three weeks of April. Airport traffic figures represent annual enplaned and deplaned revenue passengers. The two datasets measure different aspects of air transportation and should not be interpreted as a direct causal relationship.',
+    sourceText: 'The three-week performance indicators come from Transport Canada. National and airport passenger totals come from Statistics Canada Table 23-10-0253-01 and are displayed in millions, rounded to one decimal place. These datasets measure different aspects of air transportation and should not be interpreted as a direct causal relationship.',
     sourceOne: 'Transport Canada — Update on Canada’s Air Transportation Sector Performance, April 2024',
-    sourceTwo: 'Transport Canada — ECATS Table A14, passenger traffic by airport, 2015–2024',
+    sourceTwo: 'Statistics Canada — Table 23-10-0253-01, annual air passenger traffic at Canadian airports',
     footer: 'SEG3525 academic project — Interactive bilingual dashboard',
     topSix: 'Top 6',
     topEight: 'Top 8',
@@ -125,7 +126,7 @@ const translations = {
     eyebrow: 'DONNÉES OFFICIELLES SUR L’AVIATION CANADIENNE',
     title: 'Performance du transport aérien au Canada',
     subtitle: 'Explorez des indicateurs officiels sur la ponctualité des départs et le trafic de passagers dans les plus grands aéroports canadiens.',
-    officialNotice: 'Données officielles de Transports Canada et de Statistique Canada. Les périodes de référence varient selon l’indicateur.',
+    officialNotice: 'Données officielles de Transports Canada et de Statistique Canada. Les périodes de référence varient selon l’indicateur; les totaux aéroportuaires sont arrondis au dixième de million.',
     explore: 'Explorer les données',
     metric: 'Indicateur de performance',
     metricHelp: 'Modifie le graphique linéaire sur trois semaines.',
@@ -142,6 +143,7 @@ const translations = {
     reset: 'Réinitialiser les filtres',
     resetDone: 'Les filtres ont été réinitialisés.',
     nationalPassengers: 'Passagers au Canada en 2024',
+    nationalSource: 'Source : Statistique Canada',
     nationalGrowth: 'Croissance depuis 2023',
     largestAirport: 'Plus grand aéroport canadien',
     million: 'millions',
@@ -159,9 +161,9 @@ const translations = {
     barDescription: 'Comparez côte à côte les totaux de 2023 et 2024, ou affichez le taux de croissance de chaque aéroport.',
     trafficAxis: 'Passagers (millions)',
     sourceTitle: 'Sources et interprétation',
-    sourceText: 'Les données de ponctualité portent sur les huit plus grands aéroports canadiens pendant trois semaines d’avril. Les données de trafic représentent les passagers payants embarqués et débarqués pendant une année. Les deux jeux de données mesurent des dimensions différentes et ne démontrent pas directement une relation causale.',
+    sourceText: 'Les indicateurs de performance sur trois semaines proviennent de Transports Canada. Les totaux nationaux et aéroportuaires proviennent du tableau 23-10-0253-01 de Statistique Canada et sont affichés en millions, arrondis à une décimale. Ces jeux de données mesurent des dimensions différentes et ne démontrent pas directement une relation causale.',
     sourceOne: 'Transports Canada — Mise à jour sur la performance du secteur du transport aérien, avril 2024',
-    sourceTwo: 'Transports Canada — Tableau ECATS A14, trafic de passagers par aéroport, 2015 à 2024',
+    sourceTwo: 'Statistique Canada — Tableau 23-10-0253-01, trafic annuel de passagers dans les aéroports canadiens',
     footer: 'Projet universitaire SEG3525 — Tableau de bord interactif bilingue',
     topSix: 'Top 6',
     topEight: 'Top 8',
@@ -567,16 +569,19 @@ function App() {
                 <span className="stat-index" aria-hidden="true">01</span>
                 <p>{t.nationalPassengers}</p>
                 <strong>{decimalFormatter.format(156.7)} <small>{t.million}</small></strong>
+                <small className="stat-source">{t.nationalSource}</small>
               </article>
               <article>
                 <span className="stat-index" aria-hidden="true">02</span>
                 <p>{t.nationalGrowth}</p>
                 <strong>{percentFormatter.format(0.04)}</strong>
+                <small className="stat-source">{t.nationalSource}</small>
               </article>
               <article>
                 <span className="stat-index" aria-hidden="true">03</span>
                 <p>{t.largestAirport}</p>
                 <strong>Toronto · YYZ</strong>
+                <small className="stat-source">{t.nationalSource}</small>
               </article>
             </section>
 
@@ -720,7 +725,7 @@ function App() {
                   </li>
                   <li>
                     <a
-                      href="https://tdih-cdit.tc.canada.ca/en/addendum-tables/2024/table-a14-top-20-busiest-canadian-airports-terms-enplaneddeplaned-revenue-0"
+                      href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2310025301"
                       target="_blank"
                       rel="noreferrer"
                     >
